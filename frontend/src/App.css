@@ -1,0 +1,227 @@
+/* .App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+} */
+
+/* @keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+} */
+:root {
+  --primary-color: #141718;
+  --secondary-color: #d5dadc;
+}
+
+.content {
+  width: 100vw;
+  height: 100%;
+  background-color: white;
+  min-height: 100vh;
+  padding-top: 10vh;
+}
+
+.home {
+  padding: 20px;
+  height: 100%;
+}
+
+.navigation {
+  padding: 10px 2vw;
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+#navigation-menu a.active {
+  background-color: var(--secondary-color);
+  opacity: 0.5;
+}
+
+.login-box {
+  color: #6c7275;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  padding: 40px;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  box-sizing: border-box;
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  font-size: 0.9rem;
+}
+
+.login-box h1 {
+  margin: 0 0 50px;
+  padding: 0;
+  color: #141718;
+  text-align: center;
+  font-weight: 600;
+}
+
+.login-box form {
+  margin: 20px;
+}
+
+.login-box .user-box {
+  position: relative;
+  padding: 10px 0;
+}
+
+.login-box form .submit {
+  position: relative;
+  display: inline-block;
+  padding: 8px 0px;
+  background-color: #141718;
+  color: #fff;
+  text-decoration: none;
+  overflow: hidden;
+  transition: 0.5s;
+  margin-top: 50px;
+  border-radius: 5px;
+  width: 100%;
+  text-align: center;
+}
+
+.login-box .submit:hover {
+  background: #aa96da;
+  color: #fff;
+  border-radius: 5px;
+  /* box-shadow: 0 0 5px #03e9f4, 0 0 25px #03e9f4, 0 0 50px #03e9f4,
+    0 0 100px #03e9f4; */
+}
+
+.login-box button span {
+  position: absolute;
+  display: block;
+  border-radius: 5px;
+}
+
+.login-box button span:nth-child(1) {
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, #282c34, #03e9f4);
+  animation: btn-animate1 1s linear infinite;
+}
+
+@keyframes btn-animate1 {
+  0% {
+    left: -100%;
+  }
+
+  50%,
+  100% {
+    left: 100%;
+  }
+}
+
+.login-box button span:nth-child(2) {
+  top: -100%;
+  right: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(to bottom, #282c34, #03e9f4);
+  animation: btn-animate2 1s linear infinite;
+  animation-delay: 0.25s;
+}
+
+@keyframes btn-animate2 {
+  0% {
+    top: -100%;
+  }
+
+  50%,
+  100% {
+    top: 100%;
+  }
+}
+
+.login-box button span:nth-child(3) {
+  bottom: 0;
+  right: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to left, #282c34, #03e9f4);
+  animation: btn-animate3 1s linear infinite;
+  animation-delay: 0.5s;
+}
+
+@keyframes btn-animate3 {
+  0% {
+    right: -100%;
+  }
+
+  50%,
+  100% {
+    right: 100%;
+  }
+}
+
+.login-box button span:nth-child(4) {
+  bottom: -100%;
+  left: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(to top, #282c34, #03e9f4);
+  animation: btn-animate4 1s linear infinite;
+  animation-delay: 0.75s;
+}
+
+@keyframes btn-animate4 {
+  0% {
+    bottom: -100%;
+  }
+
+  50%,
+  100% {
+    bottom: 100%;
+  }
+}
+
+.login-box a,
+.login-box .redirect {
+  font-weight: 600;
+  overflow: hidden;
+  color: #38cb89;
+}
+
+.login-box .spacing {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.login-box form a div {
+  color: #141718;
+  font-weight: 600;
+}

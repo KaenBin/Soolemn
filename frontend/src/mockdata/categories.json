@@ -1,0 +1,12 @@
+[
+  { "id": 1, "name": "Painting & Vinyl Wall Covering" },
+  { "id": 2, "name": "Elevator" },
+  { "id": 3, "name": "Epoxy Flooring" },
+  { "id": 4, "name": "Framing (Wood)" },
+  { "id": 5, "name": "Granite Surfaces" },
+  { "id": 6, "name": "Drywall & Acoustical (FED)" },
+  { "id": 7, "name": "Plumbing & Medical Gas" },
+  { "id": 8, "name": "Masonry & Precast" },
+  { "id": 9, "name": "Retaining Wall and Brick Pavers" },
+  { "id": 10, "name": "Rebar & Wire Mesh Install" }
+]
