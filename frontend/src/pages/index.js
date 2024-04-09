@@ -6,3 +6,4 @@ export { default as Discounted } from "./discounted";
 export { default as Featured } from "./featured";
 export { default as Categories } from "./categories";
 export { default as ProductDetail } from "./products/productDetail";
+export { default as Cart } from "./cart";

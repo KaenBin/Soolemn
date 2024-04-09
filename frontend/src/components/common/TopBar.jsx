@@ -208,6 +208,8 @@ export default function TopBar() {
                   size="large"
                   aria-label="show 2 items in shopping cart"
                   color="inherit"
+                  component={Link}
+                  to={ROUTE.CART}
                 >
                   <Badge badgeContent={2} sx={badgeStyle}>
                     <LocalMallOutlinedIcon />
