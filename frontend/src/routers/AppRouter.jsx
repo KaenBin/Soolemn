@@ -29,7 +29,12 @@ const AppRouter = () => (
           Component={page.Featured}
         />
         <Route exact path={ROUTES.CATEGORIES} Component={page.Categories} />
-        <Route exact path={ROUTES.VIEW_PRODUCT} Component={page.ProductDetail} />
+        <Route
+          exact
+          path={ROUTES.VIEW_PRODUCT}
+          Component={page.ProductDetail}
+        />
+        <Route exact path={ROUTES.CART} Component={page.Cart} />
 
         {/* <Route component={view.Search} exact path={ROUTES.SEARCH} />
         <Route component={view.Home} exact path={ROUTES.HOME} />
