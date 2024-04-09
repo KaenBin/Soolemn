@@ -5,6 +5,7 @@ import { Stack } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
+import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
@@ -96,13 +97,20 @@ export default function TopBar() {
       }}
       style={{ padding: 0 }}
       open={isMenuOpen}
-      onClose={handleMenuClose}
+      onClose={() => handleMenuClose()}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem
+        onClick={() => {
+          History.navigate("/account");
+          handleMenuClose();
+        }}
+      >
+        My account
+      </MenuItem>
       <MenuItem
         onClick={() => {
           dispatch(signOut());
+          localStorage.removeItem("user");
           handleMenuClose();
         }}
       >
@@ -111,10 +119,10 @@ export default function TopBar() {
     </Menu>
   );
 
-  React.useEffect(() => {
-    if (store.user) History.navigate("/home");
-  });
-  if (!store.user) {
+  // React.useEffect(() => {
+  //   if (localStorage.getItem("user")) History.navigate("/home");
+  // });
+  if (!localStorage.getItem("user")) {
     History.navigate("/signin");
     return null;
   }
@@ -184,17 +192,20 @@ export default function TopBar() {
                 justifyContent="center"
                 spacing={1}
               >
-                <IconButton
-                  size="large"
-                  edge="end"
-                  aria-label="account of current user"
-                  aria-controls={menuId}
-                  aria-haspopup="true"
-                  onClick={handleProfileMenuOpen}
-                  color="secondary"
-                >
-                  <AccountCircleOutlinedIcon />
-                </IconButton>
+                <Tooltip title="Open settings">
+                  <IconButton
+                    size="large"
+                    edge="end"
+                    aria-label="account of current user"
+                    aria-controls={menuId}
+                    aria-haspopup="true"
+                    onClick={handleProfileMenuOpen}
+                    color="secondary"
+                  >
+                    <AccountCircleOutlinedIcon />
+                  </IconButton>
+                </Tooltip>
+                {renderMenu}
                 <IconButton
                   size="large"
                   aria-label="show 3 new notifications"
@@ -220,7 +231,6 @@ export default function TopBar() {
           </Stack>
         </Toolbar>
       </AppBar>
-      {renderMenu}
     </Box>
   );
 }
