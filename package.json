@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@mui/x-data-grid": "^7.1.1",
     "react-swipeable-views": "^0.14.0"
   }
 }
