@@ -5,6 +5,7 @@ import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
 import { alpha, styled } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
+import SelectCountry from "./SelectCountry";
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
   "label + &": {
@@ -45,10 +46,17 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-function ContactInfo() {
+function ShippAddress() {
   return (
     <div>
-      <Box sx={{ width: "100%", border: "1px solid black", borderRadius: 1, marginBottom:"20px"}}>
+      <Box
+        sx={{
+          width: "100%",
+          border: "1px solid black",
+          borderRadius: 1,
+          marginBottom: "20px",
+        }}
+      >
         <Box
           sx={{
             width: "90%",
@@ -60,38 +68,8 @@ function ContactInfo() {
           <Grid container>
             <Grid item xs={12}>
               <Typography fontFamily="" variant="h5" gutterBottom>
-                Contact information
+                Shipping Address
               </Typography>
-            </Grid>
-            <Grid item xs={12} container spacing={2}>
-              <Grid item xs={6}>
-                <FormControl variant="standard" sx={{ width: "100%" }}>
-                  <InputLabel
-                    shrink
-                    htmlFor="bootstrap-input"
-                    sx={{ marginLeft: "2%" }}
-                  >
-                    <Typography fontFamily="" variant="h6" gutterBottom>
-                      First Name
-                    </Typography>
-                  </InputLabel>
-                  <BootstrapInput defaultValue="" id="bootstrap-input" />
-                </FormControl>
-              </Grid>
-              <Grid item xs={6}>
-                <FormControl variant="standard" sx={{ width: "100%" }}>
-                  <InputLabel
-                    shrink
-                    htmlFor="bootstrap-input"
-                    sx={{ marginLeft: "2%" }}
-                  >
-                    <Typography fontFamily="" variant="h6" gutterBottom>
-                      Last Name
-                    </Typography>
-                  </InputLabel>
-                  <BootstrapInput defaultValue="" id="bootstrap-input" />
-                </FormControl>
-              </Grid>
             </Grid>
             <Grid item xs={12}>
               <FormControl variant="standard" sx={{ width: "100%" }}>
@@ -101,11 +79,14 @@ function ContactInfo() {
                   sx={{ marginLeft: "1%" }}
                 >
                   <Typography fontFamily="" variant="h6" gutterBottom>
-                    Phone Number
+                    Street Address
                   </Typography>
                 </InputLabel>
                 <BootstrapInput defaultValue="" id="bootstrap-input" />
               </FormControl>
+            </Grid>
+            <Grid item xs={12}>
+                <SelectCountry/>
             </Grid>
             <Grid item xs={12}>
               {" "}
@@ -116,12 +97,44 @@ function ContactInfo() {
                   sx={{ marginLeft: "1%" }}
                 >
                   <Typography fontFamily="" variant="h6" gutterBottom>
-                    Email
+                    Town / City
                   </Typography>
                 </InputLabel>
                 <BootstrapInput defaultValue="" id="bootstrap-input" />
               </FormControl>
             </Grid>
+            <Grid item xs={12} container spacing={2}>
+              <Grid item xs={6}>
+                <FormControl variant="standard" sx={{ width: "100%" }}>
+                  <InputLabel
+                    shrink
+                    htmlFor="bootstrap-input"
+                    sx={{ marginLeft: "2%" }}
+                  >
+                    <Typography fontFamily="" variant="h6" gutterBottom>
+                      State
+                    </Typography>
+                  </InputLabel>
+                  <BootstrapInput defaultValue="" id="bootstrap-input" />
+                </FormControl>
+              </Grid>
+              
+              <Grid item xs={6}>
+                <FormControl variant="standard" sx={{ width: "100%" }}>
+                  <InputLabel
+                    shrink
+                    htmlFor="bootstrap-input"
+                    sx={{ marginLeft: "2%" }}
+                  >
+                    <Typography fontFamily="" variant="h6" gutterBottom>
+                      Zip Code
+                    </Typography>
+                  </InputLabel>
+                  <BootstrapInput defaultValue="" id="bootstrap-input" />
+                </FormControl>
+              </Grid>
+            </Grid>
+            
           </Grid>
         </Box>
       </Box>
@@ -129,4 +142,4 @@ function ContactInfo() {
   );
 }
 
-export default ContactInfo;
+export default ShippAddress;

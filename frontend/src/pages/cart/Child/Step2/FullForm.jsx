@@ -2,6 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Box, Grid } from "@mui/material";
 import ContactInfo from "./ContactInfo";
+import ShippAddress from "./ShippAddress";
+import PaymentMethod from "./PaymentMethod";
 
 function FullForm() {
   return (
@@ -11,10 +13,10 @@ function FullForm() {
           <ContactInfo/>
         </Grid>
         <Grid item xs={12}>
-          shipp address
+          <ShippAddress/>
         </Grid>
         <Grid item xs={12}>
-          payment method
+          <PaymentMethod/>
         </Grid>
       </Grid>
     </div>
