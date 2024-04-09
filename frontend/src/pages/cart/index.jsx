@@ -55,7 +55,7 @@ export default function Cart() {
             marginBottom="32px"
           >
             <Grid item xs={12} sx={{display:"flex", justifyContent:"center"}}>
-              <Box sx={{width:"60%"}}>
+              <Box sx={{width:"60%", marginBottom:"50px"}}>
               <Stepper
                 // alternativeLabel
                 activeStep={activeStep}
