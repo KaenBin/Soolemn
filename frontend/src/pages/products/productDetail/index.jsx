@@ -7,10 +7,14 @@ import Typography from "@mui/material/Typography";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 import { setAuthenticating } from "@/redux/actions/miscActions";
-import { ProductGroup, ProductGroup2 } from "@/components/product";
+import {
+  ProductGroup,
+  ProductGroup2,
+  ProductImage,
+  ProductDescription,
+} from "@/components/product";
 import mock_product from "@/mockdata/products";
 import { NavLink, Navigate } from "react-router-dom";
-import { ProductImage } from "@/components/product";
 
 export default function ProductDetail(props) {
   const dispatch = useDispatch();
@@ -42,7 +46,11 @@ export default function ProductDetail(props) {
   return (
     <main className="content">
       <div className="home">
-        <Breadcrumbs separator="›" aria-label="breadcrumb">
+        <Breadcrumbs
+          separator="›"
+          aria-label="breadcrumb"
+          sx={{ marginBottom: "3vh" }}
+        >
           {breadcrumbs}
         </Breadcrumbs>
         <Grid
@@ -51,27 +59,16 @@ export default function ProductDetail(props) {
           display="flex"
           justifyContent="center"
           alignItems="center"
-          spacing={3}
+          spacing={10}
         >
-          <Grid
-            container
-            minHeight={160}
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            direction="column"
-          >
+          <Grid item>
             <ProductImage item={mock_product[0]} />
           </Grid>
-          <Grid
-            container
-            minHeight={160}
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            direction="column"
-          >
-            Hi
+          <Grid item>
+            <ProductDescription item={mock_product[0]} />
+          </Grid>
+          <Grid item>
+            <ProductImage item={mock_product[0]} />
           </Grid>
         </Grid>
       </div>

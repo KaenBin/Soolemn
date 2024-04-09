@@ -40,8 +40,8 @@ const ProductContainer = (props) => {
     <Card
       key={props.idx}
       sx={{
-        width: 260,
-        height: 410,
+        width: props.size == "small" ? 70 : 260,
+        height: props.size == "small" ? 140 : 410,
         marginRight: "auto",
         marginLeft: "auto",
         boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.4)",
@@ -58,27 +58,6 @@ const ProductContainer = (props) => {
           onMouseOver={handlePopoverOpen}
           onMouseLeave={handlePopoverClose}
         />
-        {anchorEl ? (
-          <Button
-            onClick={handleButtonAdd}
-            onMouseOver={handlePopoverOpen}
-            style={{
-              position: "absolute",
-              bottom: "30%",
-              left: "10%",
-              color: "#FEFEFE",
-              backgroundColor: "#141718",
-              width: "200px",
-              height: "40px",
-              alignSelf: "center",
-              zIndex: 0,
-            }}
-          >
-            Add to Cart
-          </Button>
-        ) : (
-          <></>
-        )}
         <Typography variant="status">NEW</Typography>
         <Typography
           style={{
@@ -90,26 +69,6 @@ const ProductContainer = (props) => {
         >
           -50%
         </Typography>
-        <IconButton
-          style={{
-            backgroundColor: "#FFFFFF",
-            position: "absolute",
-            width: "35px",
-            height: "35px",
-            top: "3%",
-            left: "80%",
-            boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.4)",
-            borderRadius: "50%",
-            zIndex: "2",
-            "&:hover": {
-              backgroundColor: "#000",
-            },
-          }}
-          variant="contained"
-        >
-          <FavoriteBorderIcon />
-        </IconButton>
-
         <CardContent>
           <StyledRating
             name="customized-color"

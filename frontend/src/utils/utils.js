@@ -63,6 +63,15 @@ export const theme = createTheme({
     price2: {
       color: "#6C7275",
     },
+    price3: {
+      color: "#141718",
+    },
+    price4: {
+      color: "#6C7275",
+    },
+    description: {
+      color: "#6C7275",
+    },
     subBreadCumbs: {
       color: "#605F5F",
     },
@@ -96,6 +105,10 @@ export const theme = createTheme({
       main: "#141718",
       light: "#6C7275",
     },
+    ltrButton: {
+      main: "#141718",
+      backgroundColor: "blue",
+    },
   },
   components: {
     MuiTypography: {
@@ -104,6 +117,9 @@ export const theme = createTheme({
           status: "h4",
           title: "h1",
           price1: "h3",
+          price3: "h2",
+          price4: "h3",
+          description: "h2",
         },
       },
     },
