@@ -18,6 +18,7 @@ import {
   TableContainer,
   TableRow,
   TableCell,
+  Stack,
   Paper,
 } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -43,15 +44,13 @@ const ProductDescription = (props) => {
 
   return (
     <Box
+      px={2}
       sx={{
-        width: 400,
+        width: 500,
         height: "100vh",
-        // flexDirection: "column",
-        // display: "flex",
-        // justifyContent: "space-between",
       }}
     >
-      <Grid container display="flex" justifyContent="center">
+      <Stack display="flex" justifyContent="start" spacing={2}>
         <StyledRating
           name="customized-color"
           defaultValue={2}
@@ -59,75 +58,75 @@ const ProductDescription = (props) => {
           precision={0.5}
           icon={<StarIcon fontSize="inherit" />}
           emptyIcon={<StarBorderIcon fontSize="inherit" />}
-        />{" "}
+        />
         15 reviews
-      </Grid>
-      <Typography variant="title" m="5px">
-        Name of the Product
-      </Typography>
-      <Typography
-        display="inline"
-        style={{ fontWeight: "500" }}
-        variant="price3"
-        m="10px"
-      >
-        ${(props.item.price / 2).toFixed(2)}
-      </Typography>{" "}
-      {true ? (
+        <Typography variant="title" m="5px">
+          Name of the Product
+        </Typography>
         <Typography
           display="inline"
-          style={{ textDecorationLine: "line-through", fontWeight: "normal" }}
-          variant="price4"
+          style={{ fontWeight: "500" }}
+          variant="price3"
+          m="10px"
         >
-          ${props.item.price}
-        </Typography>
-      ) : (
-        <></>
-      )}
-      <Divider />
-      <TableContainer>
-        <Table>
-          <TableBody
-            sx={{
-              [`& .${tableCellClasses.root}`]: {
-                border: "none",
-              },
-            }}
+          ${(props.item.price / 2).toFixed(2)}
+        </Typography>{" "}
+        {true ? (
+          <Typography
+            display="inline"
+            style={{ textDecorationLine: "line-through", fontWeight: "normal" }}
+            variant="price4"
           >
-            <TableRow>
-              <TableCell sx={{ color: "#6C7275" }}>SKU</TableCell>
-              <TableCell sx={{ color: "#141718" }}>ABC123</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell sx={{ color: "#6C7275" }}>CATEGORY</TableCell>
-              <TableCell sx={{ color: "#141718" }}>category</TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <Typography variant="description" m="5px">
-        Description:
-      </Typography>
-      {expanded ? (
-        <Typography variant="price4" sx={{ fontWeight: "normal" }} m="5px">
-          {props.item.description}
+            ${props.item.price}
+          </Typography>
+        ) : (
+          <></>
+        )}
+        <Divider />
+        <TableContainer>
+          <Table>
+            <TableBody
+              sx={{
+                [`& .${tableCellClasses.root}`]: {
+                  border: "none",
+                },
+              }}
+            >
+              <TableRow>
+                <TableCell sx={{ color: "#6C7275" }}>SKU</TableCell>
+                <TableCell sx={{ color: "#141718" }}>ABC123</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell sx={{ color: "#6C7275" }}>CATEGORY</TableCell>
+                <TableCell sx={{ color: "#141718" }}>category</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <Typography variant="description" m="5px">
+          Description:
         </Typography>
-      ) : (
-        <Typography variant="price4" sx={{ fontWeight: "normal" }} m="5px">
-          {props.item.description.length > 100
-            ? `${props.item.description.slice(0, 100)}...`
-            : props.item.description}
+        {expanded ? (
+          <Typography variant="price4" sx={{ fontWeight: "normal" }} m="5px">
+            {props.item.description}
+          </Typography>
+        ) : (
+          <Typography variant="price4" sx={{ fontWeight: "normal" }} m="5px">
+            {props.item.description.length > 125
+              ? `${props.item.description.slice(0, 125)}...`
+              : props.item.description}
+          </Typography>
+        )}
+        {props.item.description.length > 125 && (
+          <Button onClick={toggleExpanded} color="primary">
+            {expanded ? "Show Less" : "Show More"}
+          </Button>
+        )}
+        <Typography variant="description" m="5px">
+          Similar Product:
         </Typography>
-      )}
-      {props.item.description.length > 100 && (
-        <Button onClick={toggleExpanded} color="primary">
-          {expanded ? "Show Less" : "Show More"}
-        </Button>
-      )}
-      <Typography variant="description" m="5px">
-        Similar Product:
-      </Typography>
-      <SimilarProducts list={mock_product} block={3} />
+        <SimilarProducts list={mock_product} block={3} />
+      </Stack>
     </Box>
   );
 };

@@ -10,7 +10,7 @@ const ProductList = (props) => {
       container
       display="flex"
       justifyContent="center"
-      spacing={props.size == "small" ? 2 : 10}
+      columnSpacing={props.size == "small" ? 2 : 10}
     >
       {props.list.map((item, idx) => {
         return (

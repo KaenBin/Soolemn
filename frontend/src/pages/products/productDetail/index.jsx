@@ -12,9 +12,10 @@ import {
   ProductGroup2,
   ProductImage,
   ProductDescription,
+  ProductInfo,
 } from "@/components/product";
 import mock_product from "@/mockdata/products";
-import { NavLink, Navigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export default function ProductDetail(props) {
   const dispatch = useDispatch();
@@ -58,8 +59,7 @@ export default function ProductDetail(props) {
           minHeight={160}
           display="flex"
           justifyContent="center"
-          alignItems="center"
-          spacing={10}
+          columnSpacing={5}
         >
           <Grid item>
             <ProductImage item={mock_product[0]} />
@@ -68,7 +68,7 @@ export default function ProductDetail(props) {
             <ProductDescription item={mock_product[0]} />
           </Grid>
           <Grid item>
-            <ProductImage item={mock_product[0]} />
+            <ProductInfo item={mock_product[0]} />
           </Grid>
         </Grid>
       </div>

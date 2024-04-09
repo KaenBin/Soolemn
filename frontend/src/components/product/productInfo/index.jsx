@@ -18,7 +18,9 @@ import {
   TableContainer,
   TableRow,
   TableCell,
+  Stack,
   Paper,
+  TextField,
 } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
@@ -27,15 +29,28 @@ import SwipeableViews from "react-swipeable-views";
 import { Link, useParams } from "react-router-dom";
 import Grid from "@mui/material/Unstable_Grid2";
 import { tableCellClasses } from "@mui/material/TableCell";
+import StoreIcon from "@mui/icons-material/Store";
+import InputAdornment from "@mui/material/InputAdornment";
+import { Add, Remove } from "@mui/icons-material";
 
 import img from "@/assets/OIP.jpg";
 import { StyledRating } from "@/utils/utils";
 import { CustomCarousel } from "@/components/carousel";
 import SimilarProducts from "../similarProducts";
 import mock_product from "@/mockdata/products";
+import { ToggleColor, CustomButtonGroup } from "@/components/common";
 
 const ProductInfo = (props) => {
   const [expanded, setExpanded] = React.useState(false);
+  const [quantity, setQuantity] = React.useState(1);
+
+  const handleIncrease = () => {
+    setQuantity(Number(quantity + 1));
+  };
+
+  const handleDecrease = () => {
+    setQuantity(Number(quantity - 1));
+  };
 
   const toggleExpanded = () => {
     setExpanded(!expanded);
@@ -43,48 +58,15 @@ const ProductInfo = (props) => {
 
   return (
     <Box
+      border={2}
+      borderColor="tertiary.main"
+      borderRadius={5}
+      p={2}
       sx={{
         width: 400,
-        height: "100vh",
-        // flexDirection: "column",
-        // display: "flex",
-        // justifyContent: "space-between",
+        height: "80vh",
       }}
     >
-      <Grid container display="flex" justifyContent="center">
-        <StyledRating
-          name="customized-color"
-          defaultValue={2}
-          getLabelText={(value) => `${value} Star${value !== 1 ? "s" : ""}`}
-          precision={0.5}
-          icon={<StarIcon fontSize="inherit" />}
-          emptyIcon={<StarBorderIcon fontSize="inherit" />}
-        />{" "}
-        15 reviews
-      </Grid>
-      <Typography variant="title" m="5px">
-        Name of the Product
-      </Typography>
-      <Typography
-        display="inline"
-        style={{ fontWeight: "500" }}
-        variant="price3"
-        m="10px"
-      >
-        ${(props.item.price / 2).toFixed(2)}
-      </Typography>{" "}
-      {true ? (
-        <Typography
-          display="inline"
-          style={{ textDecorationLine: "line-through", fontWeight: "normal" }}
-          variant="price4"
-        >
-          ${props.item.price}
-        </Typography>
-      ) : (
-        <></>
-      )}
-      <Divider />
       <TableContainer>
         <Table>
           <TableBody
@@ -95,39 +77,119 @@ const ProductInfo = (props) => {
             }}
           >
             <TableRow>
-              <TableCell sx={{ color: "#6C7275" }}>SKU</TableCell>
-              <TableCell sx={{ color: "#141718" }}>ABC123</TableCell>
+              <TableCell
+                rowSpan={2}
+                align="center"
+                style={{
+                  padding: "0",
+                }}
+              >
+                <StoreIcon style={{ width: "100px", height: "100px" }} />
+              </TableCell>
+              <TableCell style={{ padding: "0" }}>
+                <Typography variant="price3">Name of the Shop</Typography>
+              </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell sx={{ color: "#6C7275" }}>CATEGORY</TableCell>
-              <TableCell sx={{ color: "#141718" }}>category</TableCell>
+              <TableCell style={{ padding: "0" }}>
+                <StyledRating
+                  name="customized-color"
+                  defaultValue={2}
+                  getLabelText={(value) =>
+                    `${value} Star${value !== 1 ? "s" : ""}`
+                  }
+                  precision={0.5}
+                  icon={<StarIcon fontSize="inherit" />}
+                  emptyIcon={<StarBorderIcon fontSize="inherit" />}
+                />
+              </TableCell>
             </TableRow>
           </TableBody>
         </Table>
       </TableContainer>
-      <Typography variant="description" m="5px">
-        Description:
+      <Typography variant="price3" m={3}>
+        Name of the Product
       </Typography>
-      {expanded ? (
-        <Typography variant="price4" sx={{ fontWeight: "normal" }} m="5px">
-          {props.item.description}
+      <Divider />
+      <Typography variant="breadCumbs" fontWeight={500} m={3}>
+        Shipping fee: $9.99
+      </Typography>
+      <Stack direction="row" spacing="auto" m={3}>
+        <Typography variant="price4" fontWeight={500}>
+          Choose Color
         </Typography>
-      ) : (
-        <Typography variant="price4" sx={{ fontWeight: "normal" }} m="5px">
-          {props.item.description.length > 100
-            ? `${props.item.description.slice(0, 100)}...`
-            : props.item.description}
-        </Typography>
-      )}
-      {props.item.description.length > 100 && (
-        <Button onClick={toggleExpanded} color="primary">
-          {expanded ? "Show Less" : "Show More"}
+        <ToggleColor />
+      </Stack>
+      <Typography variant="price3" component="h1" fontWeight={500} m={3}>
+        Total: $208.99
+      </Typography>
+      <TextField
+        value={quantity}
+        defaultValue={1}
+        onChange={(e) => setQuantity(e.target.value)}
+        sx={{
+          color: "#121212",
+          backgroundColor: "#F5F5F5",
+          marginLeft: 3,
+        }}
+        InputProps={{
+          inputProps: { min: 0 },
+          sx: {
+            input: {
+              textAlign: "center",
+              width: 25,
+            },
+          },
+          startAdornment: (
+            <InputAdornment position="start">
+              <IconButton onClick={handleDecrease}>
+                <Remove />
+              </IconButton>
+            </InputAdornment>
+          ),
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton onClick={handleIncrease}>
+                <Add />
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
+      />
+      <Stack spacing={3} mt={2}>
+        <Button
+          sx={{
+            color: "#FEFEFE",
+            backgroundColor: "#008060",
+            width: "300px",
+            height: "7vh",
+            alignSelf: "center",
+            "&:hover": {
+              backgroundColor: "#008060",
+              opacity: 0.75,
+            },
+          }}
+          title="Buy Now"
+        >
+          Buy Now{" "}
         </Button>
-      )}
-      <Typography variant="description" m="5px">
-        Similar Product:
-      </Typography>
-      <SimilarProducts list={mock_product} block={3} />
+        <Button
+          sx={{
+            color: "#FEFEFE",
+            backgroundColor: "#141718",
+            width: "300px",
+            height: "7vh",
+            alignSelf: "center",
+            "&:hover": {
+              backgroundColor: "#141718",
+              opacity: 0.75,
+            },
+          }}
+          title="Add to Cart"
+        >
+          Add to Cart
+        </Button>
+      </Stack>
     </Box>
   );
 };

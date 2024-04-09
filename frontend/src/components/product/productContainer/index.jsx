@@ -32,16 +32,14 @@ const ProductContainer = (props) => {
     setAnchorEl(null);
   };
 
-  const handleButtonAdd = () => alert("it works");
-
   const handleProduct = () => History.navigate(`/product/${props.item.id}`);
 
   return (
     <Card
       key={props.idx}
       sx={{
-        width: props.size == "small" ? 70 : 260,
-        height: props.size == "small" ? 140 : 410,
+        width: props.size == "small" ? 130 : 260,
+        height: props.size == "small" ? 205 : 410,
         marginRight: "auto",
         marginLeft: "auto",
         boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.4)",
@@ -58,17 +56,19 @@ const ProductContainer = (props) => {
           onMouseOver={handlePopoverOpen}
           onMouseLeave={handlePopoverClose}
         />
-        <Typography variant="status">NEW</Typography>
-        <Typography
-          style={{
-            top: "12%",
-            color: "#FEFEFE",
-            backgroundColor: "#38CB89",
-          }}
-          variant="status"
-        >
-          -50%
-        </Typography>
+        {props.size != "small" && <Typography variant="status">NEW</Typography>}
+        {props.size != "small" && (
+          <Typography
+            style={{
+              top: "12%",
+              color: "#FEFEFE",
+              backgroundColor: "#38CB89",
+            }}
+            variant="status"
+          >
+            -50%
+          </Typography>
+        )}
         <CardContent>
           <StyledRating
             name="customized-color"

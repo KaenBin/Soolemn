@@ -24,7 +24,7 @@ const SimilarProducts = (props) => {
     );
   }
   return (
-    <Box width="300px">
+    <Box width="100%">
       <Grid container flexDirection="column" spacing={2}>
         {output}
       </Grid>

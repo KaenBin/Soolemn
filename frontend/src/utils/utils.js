@@ -101,6 +101,9 @@ export const theme = createTheme({
     secondary: {
       main: "#141718",
     },
+    tertiary: {
+      main: "#D0D0D0",
+    },
     button: {
       main: "#141718",
       light: "#6C7275",
@@ -120,6 +123,7 @@ export const theme = createTheme({
           price3: "h2",
           price4: "h3",
           description: "h2",
+          breadCumbs: "h4",
         },
       },
     },
