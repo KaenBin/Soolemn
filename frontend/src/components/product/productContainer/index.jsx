@@ -32,16 +32,14 @@ const ProductContainer = (props) => {
     setAnchorEl(null);
   };
 
-  const handleButtonAdd = () => alert("it works");
-
   const handleProduct = () => History.navigate(`/product/${props.item.id}`);
 
   return (
     <Card
       key={props.idx}
       sx={{
-        width: 260,
-        height: 410,
+        width: props.size == "small" ? 130 : 260,
+        height: props.size == "small" ? 205 : 410,
         marginRight: "auto",
         marginLeft: "auto",
         boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.4)",
@@ -58,58 +56,19 @@ const ProductContainer = (props) => {
           onMouseOver={handlePopoverOpen}
           onMouseLeave={handlePopoverClose}
         />
-        {anchorEl ? (
-          <Button
-            onClick={handleButtonAdd}
-            onMouseOver={handlePopoverOpen}
+        {props.size != "small" && <Typography variant="status">NEW</Typography>}
+        {props.size != "small" && (
+          <Typography
             style={{
-              position: "absolute",
-              bottom: "30%",
-              left: "10%",
+              top: "12%",
               color: "#FEFEFE",
-              backgroundColor: "#141718",
-              width: "200px",
-              height: "40px",
-              alignSelf: "center",
-              zIndex: 0,
+              backgroundColor: "#38CB89",
             }}
+            variant="status"
           >
-            Add to Cart
-          </Button>
-        ) : (
-          <></>
+            -50%
+          </Typography>
         )}
-        <Typography variant="status">NEW</Typography>
-        <Typography
-          style={{
-            top: "12%",
-            color: "#FEFEFE",
-            backgroundColor: "#38CB89",
-          }}
-          variant="status"
-        >
-          -50%
-        </Typography>
-        <IconButton
-          style={{
-            backgroundColor: "#FFFFFF",
-            position: "absolute",
-            width: "35px",
-            height: "35px",
-            top: "3%",
-            left: "80%",
-            boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.4)",
-            borderRadius: "50%",
-            zIndex: "2",
-            "&:hover": {
-              backgroundColor: "#000",
-            },
-          }}
-          variant="contained"
-        >
-          <FavoriteBorderIcon />
-        </IconButton>
-
         <CardContent>
           <StyledRating
             name="customized-color"

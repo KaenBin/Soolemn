@@ -16,7 +16,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import LocalMallOutlinedIcon from "@mui/icons-material/LocalMallOutlined";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { signOut } from "@/redux/actions/authActions";
 import * as ROUTE from "@/constants/routes";
 
@@ -69,7 +69,6 @@ const badgeStyle = {
 export default function TopBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const dispatch = useDispatch();
-  const store = useSelector((state) => ({ user: state.auth }));
 
   const isMenuOpen = Boolean(anchorEl);
   const menuId = "primary-search-account-menu";
@@ -110,7 +109,6 @@ export default function TopBar() {
       <MenuItem
         onClick={() => {
           dispatch(signOut());
-          localStorage.removeItem("user");
           handleMenuClose();
         }}
       >
@@ -119,13 +117,6 @@ export default function TopBar() {
     </Menu>
   );
 
-  // React.useEffect(() => {
-  //   if (localStorage.getItem("user")) History.navigate("/home");
-  // });
-  if (!localStorage.getItem("user")) {
-    History.navigate("/signin");
-    return null;
-  }
   return (
     <Box sx={{ flexGrow: 1 }} boxShadow={3}>
       <AppBar position="fixed" color="info">
