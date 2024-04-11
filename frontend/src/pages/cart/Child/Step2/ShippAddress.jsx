@@ -46,7 +46,7 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-function ShippAddress() {
+function ShippAddress(prop) {
   return (
     <div>
       <Box
@@ -55,6 +55,7 @@ function ShippAddress() {
           border: "1px solid black",
           borderRadius: 1,
           marginBottom: "20px",
+          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.5)",
         }}
       >
         <Box
@@ -82,11 +83,18 @@ function ShippAddress() {
                     Street Address
                   </Typography>
                 </InputLabel>
-                <BootstrapInput defaultValue="" id="bootstrap-input" />
+                <BootstrapInput
+                  defaultValue={prop.shippingAddress.street}
+                  id="bootstrap-input"
+                  onChange={(e) => prop.handleShipping(e, "street")}
+                />
               </FormControl>
             </Grid>
             <Grid item xs={12}>
-                <SelectCountry/>
+              <SelectCountry
+                shippingAddress={prop.shippingAddress}
+                handleShipping={prop.handleShipping}
+              />
             </Grid>
             <Grid item xs={12}>
               {" "}
@@ -100,7 +108,11 @@ function ShippAddress() {
                     Town / City
                   </Typography>
                 </InputLabel>
-                <BootstrapInput defaultValue="" id="bootstrap-input" />
+                <BootstrapInput
+                  defaultValue={prop.shippingAddress.town}
+                  id="bootstrap-input"
+                  onChange={(e) => prop.handleShipping(e, "town")}
+                />
               </FormControl>
             </Grid>
             <Grid item xs={12} container spacing={2}>
@@ -115,10 +127,10 @@ function ShippAddress() {
                       State
                     </Typography>
                   </InputLabel>
-                  <BootstrapInput defaultValue="" id="bootstrap-input" />
+                  <BootstrapInput defaultValue={prop.shippingAddress.state} id="bootstrap-input" onChange={(e) => prop.handleShipping(e, "state")}/>
                 </FormControl>
               </Grid>
-              
+
               <Grid item xs={6}>
                 <FormControl variant="standard" sx={{ width: "100%" }}>
                   <InputLabel
@@ -130,11 +142,10 @@ function ShippAddress() {
                       Zip Code
                     </Typography>
                   </InputLabel>
-                  <BootstrapInput defaultValue="" id="bootstrap-input" />
+                  <BootstrapInput defaultValue={prop.shippingAddress.zip} id="bootstrap-input" onChange={(e) => prop.handleShipping(e, "zip")}/>
                 </FormControl>
               </Grid>
             </Grid>
-            
           </Grid>
         </Box>
       </Box>

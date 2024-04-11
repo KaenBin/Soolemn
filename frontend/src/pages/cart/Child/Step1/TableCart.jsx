@@ -14,20 +14,19 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { DataGrid } from "@mui/x-data-grid";
 import PropTypes from "prop-types";
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, Button, ButtonGroup } from "@mui/material";
+import { products } from "../ProductDataBase";
+import "../../cart.css";
+import Brightness1RoundedIcon from "@mui/icons-material/Brightness1Rounded";
+import AdjustRoundedIcon from "@mui/icons-material/AdjustRounded";
+import { green, red, blue } from "@mui/material/colors";
+import { ColorList } from "../ColorList";
+import ChooseColor from "./ChooseColor";
+import ProDuctView from "./ProDuctView";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 
-
-function createData(product, quantity, price, subtotal, del) {
-  return {
-    product,
-    quantity,
-    price,
-    subtotal,
-    del,
-  };
-}
-
-function Row(props) {
+export function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
 
@@ -35,93 +34,98 @@ function Row(props) {
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
         <TableCell component="th" scope="row">
-          {row.product.productName}
+          {/* <Box sx={{ width: "100%" }}>
+            <Grid container>
+              <Grid item xs={5}>
+                <img src={row.product.productImg} alt="Logo" />
+              </Grid>
+              <Grid container item xs={7}>
+                <Grid container item xs={12}>
+                  <Grid container item xs={12}>
+                    <Grid item xs={12}>
+                      <Typography fontFamily="" variant="h6" gutterBottom>
+                        {row.product.productName}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Typography fontFamily="" variant="body1" gutterBottom>
+                        Color: {row.product.productColor}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <ChooseColor
+                      row={row}
+                      handleColorChange={props.handleColorChange}
+                    />
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Box> */}
+          <ProDuctView
+            row={props.row}
+            handleColorChange={props.handleColorChange}
+          />
         </TableCell>
-        <TableCell align="right">{row.quantity}</TableCell>
+        {/* <TableCell align="right">{row.quantity}</TableCell> */}
+
+        <TableCell align="right">
+          <ButtonGroup variant="outlined" aria-label="Basic button group">
+            <Button
+              onClick={() => props.handleRemoveQuantity(row.id)}
+              disabled={row.quantity === 1 ? "disabled" : ""}
+            >
+              <RemoveIcon />
+            </Button>
+            <Button>{row.quantity}</Button>
+            <Button onClick={() => props.handleAddQuantity(row.id)}>
+              <AddIcon />
+            </Button>
+          </ButtonGroup>
+        </TableCell>
         <TableCell align="right">{row.price}</TableCell>
-        <TableCell align="right">{row.subtotal}</TableCell>
+        <TableCell align="right">{row.price*row.quantity}</TableCell>
         <TableCell align="center">
-          <DeleteIcon aria-label="expand row"></DeleteIcon>
+          <DeleteIcon aria-label="expand row" onClick={()=>{props.handleRemoveCart(row.id)}}></DeleteIcon>
         </TableCell>
       </TableRow>
     </React.Fragment>
   );
 }
 
-Row.propTypes = {
-  row: PropTypes.shape({
-    quantity: PropTypes.number.isRequired,
-    price: PropTypes.number.isRequired,
-    subtotal: PropTypes.number.isRequired,
-    product: PropTypes.shape({
-      productId: PropTypes.string.isRequired,
-      productName: PropTypes.string.isRequired,
-      productImg: PropTypes.string.isRequired,
-      productColor: PropTypes.string.isRequired,
-      date: PropTypes.string.isRequired,
-    }).isRequired,
-  }).isRequired,
-};
-const rows = [
-  createData(
-    {
-      productId: "12345",
-      productName: "Frozen yoghurt",
-      productImg: "12345",
-      productColor: "12345",
-      date: "12345",
-    },
-    159,
-    6.0,
-    24,
-    4.0,
-    3.99
-  ),
-  createData(
-    {
-      productId: "11111",
-      productName: "coca",
-      productImg: "12345",
-      productColor: "12345",
-      date: "12345",
-    },
-    237,
-    9.0,
-    37,
-    4.3,
-    4.99
-  ),
-  createData(
-    {
-      productId: "22222",
-      productName: "pepsi",
-      productImg: "12345",
-      productColor: "12345",
-      date: "12345",
-    },
-    262,
-    16.0,
-    24,
-    6.0,
-    3.79
-  ),
-  createData(
-    {
-      productId: "33333",
-      productName: "cupcake",
-      productImg: "12345",
-      productColor: "12345",
-      date: "12345",
-    },
-    305,
-    3.7,
-    67,
-    4.3,
-    2.5
-  ),
-];
-
 function TableCart(prop) {
+
+  function handleColorChange(productId, color) {
+    prop.setProducts(
+      prop.productsList.map((product) =>
+        product.id == productId
+          ? { ...product, product: { ...product.product, productColor: color } }
+          : product
+      )
+    );
+  }
+  function handleAddQuantity(productId) {
+    prop.setProducts(
+      prop.productsList.map((product) =>
+        product.id == productId
+          ? { ...product, quantity: product.quantity + 1 }
+          : product
+      )
+    );
+  }
+  function handleRemoveQuantity(productId) {
+    prop.setProducts(
+      prop.productsList.map((product) =>
+        product.id == productId
+          ? { ...product, quantity: product.quantity - 1 }
+          : product
+      )
+    );
+  }
+  function handleRemoveCart(productId) {
+    prop.setProducts(prop.productsList.filter((product) => product.id !== productId));
+  }
   return (
     <div>
       <TableContainer component={Paper}>
@@ -139,8 +143,15 @@ function TableCart(prop) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <Row key={row.name} row={row} />
+            {prop.productsList.map((row) => (
+              <Row
+                key={row.name}
+                row={row}
+                handleColorChange={handleColorChange}
+                handleAddQuantity={handleAddQuantity}
+                handleRemoveQuantity={handleRemoveQuantity}
+                handleRemoveCart={handleRemoveCart}
+              />
             ))}
           </TableBody>
         </Table>
