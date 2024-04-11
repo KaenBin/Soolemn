@@ -11,6 +11,7 @@ function CartSummary(prop) {
   const handleChange = (event) => {
     prop.setValue(event.target.value);
   };
+  
   return (
     <div>
       <Box
@@ -22,11 +23,13 @@ function CartSummary(prop) {
         }}
       >
         <Grid container>
+          {/* //////////////////////////////////////////////////////////// */}
           <Grid item xs={12}>
             <Typography fontFamily="" variant="h5" gutterBottom>
               Cart Summary
             </Typography>
           </Grid>
+          {/* //////////////////////////////////////////////////////////// */}
           <Grid item xs={12}>
             <FormControl sx={{ width: "100%" }}>
               <FormLabel
@@ -156,6 +159,7 @@ function CartSummary(prop) {
               </RadioGroup>
             </FormControl>
           </Grid>
+          {/* //////////////////////////////////////////////////////////// */}
           <Grid item xs={12} sx={{ marginTop: "10px" }}>
             <Box
               sx={{
@@ -172,9 +176,11 @@ function CartSummary(prop) {
               </Typography>
             </Box>
           </Grid>
+          
           <Grid item xs={12}>
             <Divider />
           </Grid>
+          {/* //////////////////////////////////////////////////////////// */}
           <Grid item xs={12}>
             <Divider />
             <Box
@@ -193,6 +199,7 @@ function CartSummary(prop) {
               </Typography>
             </Box>
           </Grid>
+          {/* //////////////////////////////////////////////////////////// */}
           <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", marginTop:"30px" }}>
             <Button
               variant="contained"

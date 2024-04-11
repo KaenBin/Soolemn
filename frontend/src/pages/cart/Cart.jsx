@@ -26,50 +26,67 @@ export default function CartForm() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [productsList, setProducts] = React.useState(products);
   const [value, setValue] = React.useState("Normal Shipping");
-  const [contactInfor, setContactInfor] = React.useState({firstName:"", lastName:"", phonenum:"", email:""})
+  const [contactInfor, setContactInfor] = React.useState({
+    firstName: "",
+    lastName: "",
+    phonenum: "",
+    email: "",
+  });
   // console.log(contactInfor)
-  const [shippingAddress, setShippingAddress] = React.useState({street:"", country:"", town:"", state:"", zip:""})
+  const [shippingAddress, setShippingAddress] = React.useState({
+    street: "",
+    country: "",
+    town: "",
+    state: "",
+    zip: "",
+  });
   // console.log(shippingAddress)
-  const [payment, setPayment] = React.useState({method:"Pay By Cash", cardNum:"", expDate:"", cvc:""})
-  console.log(payment)
-
-  //Contact Infor Function
-  function handleFirstName(e){
-    setContactInfor({...contactInfor, firstName: e.target.value})
-  }
-  function handleLastName(e){
-    setContactInfor({...contactInfor, lastName: e.target.value})
-  }
-  function handlePhoneNum(e){
-    setContactInfor({...contactInfor, phoneNum: e.target.value})
-  }
-  function handleEmail(e){
-    setContactInfor({...contactInfor, email: e.target.value})
-  }
-  //Shipping Address Function
-  function handleShipping(e, comp){
-    setShippingAddress({...shippingAddress, [comp]: e.target.value})
-  }
-  // Payment Function
-  function handlePayment(e, comp){
-    setPayment({...payment, [comp]: e.target.value})
-  }
-  //
+  const [payment, setPayment] = React.useState({
+    method: "Pay By Cash",
+    cardNum: "",
+    expDate: "",
+    cvc: "",
+  });
+  // console.log(payment)
   const subtotal = productsList.reduce(
     (sum, obj) => sum + obj.price * obj.quantity,
     0
   );
-  const total =
-    (subtotal +
+  const total = (
+    subtotal +
     (value == "Normal Shipping"
       ? 9.99
       : value == "Express Shipping"
       ? 14.99
-      : 0)).toFixed(2);
+      : 0)
+  ).toFixed(2);
 
+  //Contact Infor Function
+  function handleFirstName(e) {
+    setContactInfor({ ...contactInfor, firstName: e.target.value });
+  }
+  function handleLastName(e) {
+    setContactInfor({ ...contactInfor, lastName: e.target.value });
+  }
+  function handlePhoneNum(e) {
+    setContactInfor({ ...contactInfor, phoneNum: e.target.value });
+  }
+  function handleEmail(e) {
+    setContactInfor({ ...contactInfor, email: e.target.value });
+  }
+  //Shipping Address Function
+  function handleShipping(e, comp) {
+    setShippingAddress({ ...shippingAddress, [comp]: e.target.value });
+  }
+  // Payment Function
+  function handlePayment(e, comp) {
+    setPayment({ ...payment, [comp]: e.target.value });
+  }
+  //
   const handleChange = (event) => {
     setValue(event.target.value);
   };
+  //Stepper function
   const handleNext = () => {
     const newActiveStep = activeStep + 1;
     setActiveStep(newActiveStep);
@@ -81,6 +98,8 @@ export default function CartForm() {
   const handleStep = (step) => () => {
     setActiveStep(step);
   };
+
+  //call effect
   useEffect(
     () => () => {
       dispatch(setAuthenticating(false));
@@ -100,6 +119,7 @@ export default function CartForm() {
             marginTop="32px"
             marginBottom="32px"
           >
+            {/* stepper */}
             <Grid
               item
               xs={12}
@@ -127,6 +147,7 @@ export default function CartForm() {
             <Grid item xs={12}>
               <Box>
                 <React.Fragment>
+                  {/* Change Step */}
                   {activeStep === 0 ? (
                     <Grid item xs={12} sx={{ paddingBottom: "16px" }}>
                       <Step1
@@ -162,9 +183,10 @@ export default function CartForm() {
                     </Grid>
                   ) : (
                     <Grid item xs={12} sx={{ paddingBottom: "16px" }}>
-                      <Step3 total={total} method={payment.method}/>
+                      <Step3 total={total} method={payment.method} />
                     </Grid>
                   )}
+                  {/* Back and Next Step */}
                   {/* <Grid item xs={12}>
                     <Box
                       sx={{
