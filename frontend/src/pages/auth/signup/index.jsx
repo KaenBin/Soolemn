@@ -92,6 +92,7 @@ export default function Signup() {
             onClick={() => navigate("/signin")}
             className="redirect"
             component="button"
+            type="button"
             variant="body1"
             underline="none"
           >

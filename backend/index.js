@@ -2,6 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const authMiddleware = require("./auth-middleware");
 const { registerUser, signInUser, getUser } = require("./firebase");
+const { addProduct, getProduct } = require("./firebase/products");
+
 const port = 4000;
 
 const app = express();
@@ -14,6 +16,7 @@ app.use(cors());
 
 app.use(express.urlencoded({ extended: true }));
 
+// auth
 app.post("/signup", async (req, res) => {
   try {
     const response = await registerUser(req, res);
@@ -32,10 +35,21 @@ app.post("/signin", async (req, res) => {
   }
 });
 
+// user
 app.get("/user", async (req, res) => {
   try {
     const response = await getUser(req, res);
     res.send(response.data());
+  } catch (error) {
+    res.send(error);
+  }
+});
+
+// product
+app.post("/add-product", async (req, res) => {
+  try {
+    const response = await addProduct(req.body, res);
+    res.send(response);
   } catch (error) {
     res.send(error);
   }

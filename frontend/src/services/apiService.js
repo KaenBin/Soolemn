@@ -1,11 +1,18 @@
 import axios from "axios";
 import { collection, doc, addDoc, getDocs } from "firebase/firestore";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
 import { auth, db } from "./firebase";
 
 class API {
   createAccount = (form) => {
-    console.log(form);
+    console.log(form.email, form.password);
+    createUserWithEmailAndPassword(auth, form.email, form.password).catch(
+      (error) => console.log(error)
+    );
+
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -15,8 +22,6 @@ class API {
     axios
       .post("http://localhost:4000/signup", form, config)
       .catch((e) => console.log(e));
-
-    auth.createUserWithEmailAndPassword(email, password);
   };
 
   signIn = (form) => {

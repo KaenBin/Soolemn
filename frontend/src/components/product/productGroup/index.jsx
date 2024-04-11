@@ -24,7 +24,7 @@ const ProductGroup = (props) => {
   }
   return (
     <Box width="1300px">
-      <Grid container flexDirection="column" spacing={2}>
+      <Grid container flexDirection="column" spacing={5}>
         <Grid
           container
           flexDirection="row"

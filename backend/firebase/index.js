@@ -38,4 +38,4 @@ async function getUser(req, res) {
   return db.collection("users").doc(id).get();
 }
 
-module.exports = { registerUser, getUser };
+module.exports = { registerUser, getUser, db, auth };
