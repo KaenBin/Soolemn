@@ -26,6 +26,7 @@ import { styled } from "@mui/material/styles";
 import EditIcon from "@mui/icons-material/Edit";
 import CloseIcon from "@mui/icons-material/Close";
 import product1 from "../../assets/OIP.jpg";
+import apiInstance from "../../services/apiService";
 
 import { setAuthenticating } from "@/redux/actions/miscActions";
 // import mock_product from "@/mockdata/products";
@@ -34,6 +35,23 @@ import { setAuthenticating } from "@/redux/actions/miscActions";
 export default function Account() {
   const dispatch = useDispatch();
   const [selectedTab, setSelectedTab] = useState("Account");
+  const [userData, setUserData] = useState([]);
+
+  const currentUser = apiInstance.getCurrentUser();
+
+  useEffect(() => {
+    const getUserData = async () => {
+      try {
+        const userData = await apiInstance.getUser(currentUser.email);
+        console.log(userData);
+        setUserData(userData);
+      } catch (error) {
+        console.error("Error occurred:", error);
+      }
+    };
+
+    getUserData();
+  }, [currentUser.email]);
 
   useEffect(
     () => () => {
@@ -61,22 +79,36 @@ export default function Account() {
           <>
             <TextField
               id="outlined-basic"
-              required
-              label="First Name"
+              label="User Name"
               variant="outlined"
+              value={userData.fullname}
+              InputLabelProps={{ shrink: true }}
+              InputProps={{
+                readOnly: true,
+              }}
               sx={{ width: "100%", marginBottom: "3%" }}
             />
             <TextField
               id="outlined-basic"
-              required
-              label="Last Name"
-              variant="outlined"
-              sx={{ width: "100%", marginBottom: "3%" }}
-            />
-            <TextField
-              id="outlined-basic"
-              required
               label="Email"
+              value={userData.email}
+              variant="outlined"
+              InputLabelProps={{ shrink: true }}
+              InputProps={{
+                readOnly: true,
+              }}
+              sx={{ width: "100%", marginBottom: "3%" }}
+            />
+            <TextField
+              id="outlined-basic"
+              label="Address"
+              InputLabelProps={{ shrink: true }}
+              value={
+                userData.address !== "" ? userData.address : "Add an address..."
+              }
+              InputProps={{
+                readOnly: true,
+              }}
               variant="outlined"
               sx={{ width: "100%", marginBottom: "3%" }}
             />
