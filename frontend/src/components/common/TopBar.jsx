@@ -5,6 +5,7 @@ import { Stack } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
+import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
@@ -15,7 +16,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import LocalMallOutlinedIcon from "@mui/icons-material/LocalMallOutlined";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { signOut } from "@/redux/actions/authActions";
 import * as ROUTE from "@/constants/routes";
 
@@ -68,7 +69,6 @@ const badgeStyle = {
 export default function TopBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const dispatch = useDispatch();
-  const store = useSelector((state) => ({ user: state.auth }));
 
   const isMenuOpen = Boolean(anchorEl);
   const menuId = "primary-search-account-menu";
@@ -96,10 +96,16 @@ export default function TopBar() {
       }}
       style={{ padding: 0 }}
       open={isMenuOpen}
-      onClose={handleMenuClose}
+      onClose={() => handleMenuClose()}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem
+        onClick={() => {
+          History.navigate("/account");
+          handleMenuClose();
+        }}
+      >
+        My account
+      </MenuItem>
       <MenuItem
         onClick={() => {
           dispatch(signOut());
@@ -111,13 +117,6 @@ export default function TopBar() {
     </Menu>
   );
 
-  React.useEffect(() => {
-    if (store.user) History.navigate("/home");
-  });
-  if (!store.user) {
-    History.navigate("/signin");
-    return null;
-  }
   return (
     <Box sx={{ flexGrow: 1 }} boxShadow={3}>
       <AppBar position="fixed" color="info">
@@ -184,17 +183,20 @@ export default function TopBar() {
                 justifyContent="center"
                 spacing={1}
               >
-                <IconButton
-                  size="large"
-                  edge="end"
-                  aria-label="account of current user"
-                  aria-controls={menuId}
-                  aria-haspopup="true"
-                  onClick={handleProfileMenuOpen}
-                  color="secondary"
-                >
-                  <AccountCircleOutlinedIcon />
-                </IconButton>
+                <Tooltip title="Open settings">
+                  <IconButton
+                    size="large"
+                    edge="end"
+                    aria-label="account of current user"
+                    aria-controls={menuId}
+                    aria-haspopup="true"
+                    onClick={handleProfileMenuOpen}
+                    color="secondary"
+                  >
+                    <AccountCircleOutlinedIcon />
+                  </IconButton>
+                </Tooltip>
+                {renderMenu}
                 <IconButton
                   size="large"
                   aria-label="show 3 new notifications"
@@ -220,7 +222,6 @@ export default function TopBar() {
           </Stack>
         </Toolbar>
       </AppBar>
-      {renderMenu}
     </Box>
   );
 }

@@ -20,11 +20,11 @@ class API {
   };
 
   signIn = (form) => {
-    signInWithEmailAndPassword(auth, form.email, form.password).catch(
-      (error) => {
+    signInWithEmailAndPassword(auth, form.email, form.password)
+      .then((res) => localStorage.setItem("user", res.user.accessToken))
+      .catch((error) => {
         console.log(error);
-      }
-    );
+      });
   };
 
   // signInWithGoogle = () =>

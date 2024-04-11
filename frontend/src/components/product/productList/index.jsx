@@ -6,11 +6,16 @@ import ProductContainer from "../productContainer";
 
 const ProductList = (props) => {
   return (
-    <Grid container display="flex" justifyContent="center" spacing={10}>
+    <Grid
+      container
+      display="flex"
+      justifyContent="center"
+      columnSpacing={props.size == "small" ? 2 : 10}
+    >
       {props.list.map((item, idx) => {
         return (
           <Grid item>
-            <ProductContainer idx={idx} item={item} />
+            <ProductContainer {...props} idx={idx} item={item} />
           </Grid>
         );
       })}
