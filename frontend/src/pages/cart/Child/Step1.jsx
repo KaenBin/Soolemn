@@ -4,14 +4,17 @@ import PropTypes from "prop-types";
 import { Box, Grid } from "@mui/material";
 import TableCart from "./Step1/TableCart";
 import CartSummary from "./Step1/CartSummary";
+import { products } from "./ProductDataBase";
 
-
-function Step1() {
+function Step1(prop) {
   return (
     <div>
       <Grid container>
         <Grid item xs={8}>
-          <TableCart/>
+          <TableCart
+            productsList={prop.productsList}
+            setProducts={prop.setProducts}
+          />
         </Grid>
         <Grid item xs={4}>
           <Box
@@ -20,7 +23,14 @@ function Step1() {
             <Box
               sx={{ width: "90%", border: "1px solid black", borderRadius: 2 }}
             >
-                <CartSummary/>
+              <CartSummary
+                productsList={prop.productsList}
+                total={prop.total}
+                subtotal={prop.subtotal}
+                value={prop.value}
+                setValue={prop.setValue}
+                handleNext={prop.handleNext}
+              />
             </Box>
           </Box>
         </Grid>
