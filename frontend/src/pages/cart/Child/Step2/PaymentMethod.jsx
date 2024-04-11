@@ -50,11 +50,7 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-function PaymentMethod() {
-  const [value, setValue] = React.useState("Pay By Cash");
-  const handleChange = (event) => {
-    setValue(event.target.value);
-  };
+function PaymentMethod(prop) {
 
   return (
     <div>
@@ -64,6 +60,7 @@ function PaymentMethod() {
           border: "1px solid black",
           borderRadius: 1,
           marginBottom: "20px",
+          boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.5)'
         }}
       >
         <Box
@@ -85,8 +82,8 @@ function PaymentMethod() {
                 <RadioGroup
                   aria-labelledby="demo-controlled-radio-buttons-group"
                   name="controlled-radio-buttons-group"
-                  value={value}
-                  onChange={handleChange}
+                  value={prop.payment.method}
+                  onChange={(e) => prop.handlePayment(e, "method")}
                 >
                   <Box
                     component="label"
@@ -139,7 +136,7 @@ function PaymentMethod() {
                 </RadioGroup>
               </FormControl>
             </Grid>
-            {value == "Pay By Card Credit" ? (
+            {prop.payment.method == "Pay By Card Credit" ? (
               <>
                 <Grid item xs={12}>
                   <Divider />
@@ -156,7 +153,7 @@ function PaymentMethod() {
                           Card Number
                         </Typography>
                       </InputLabel>
-                      <BootstrapInput defaultValue="" id="bootstrap-input" />
+                      <BootstrapInput defaultValue={prop.payment.cardNum} id="bootstrap-input" onChange={(e) => prop.handlePayment(e, "cardNum")}/>
                     </FormControl>
                   </Grid>
                   <Grid item xs={12} container spacing={2}>
@@ -171,7 +168,7 @@ function PaymentMethod() {
                             Expiration Date
                           </Typography>
                         </InputLabel>
-                        <BootstrapInput defaultValue="" id="bootstrap-input" />
+                        <BootstrapInput defaultValue={prop.payment.expDate} id="bootstrap-input" onChange={(e) => prop.handlePayment(e, "expDate")}/>
                       </FormControl>
                     </Grid>
 
@@ -186,7 +183,7 @@ function PaymentMethod() {
                             CVC
                           </Typography>
                         </InputLabel>
-                        <BootstrapInput defaultValue="" id="bootstrap-input" />
+                        <BootstrapInput defaultValue={prop.payment.cvc} id="bootstrap-input" onChange={(e) => prop.handlePayment(e, "cvc")}/>
                       </FormControl>
                     </Grid>
                   </Grid>

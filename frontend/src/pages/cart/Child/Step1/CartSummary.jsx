@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography, Button } from "@mui/material";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -7,11 +7,11 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import Divider from "@mui/material/Divider";
 
-function CartSummary() {
-  const [value, setValue] = React.useState("Normal Shipping");
+function CartSummary(prop) {
   const handleChange = (event) => {
-    setValue(event.target.value);
+    prop.setValue(event.target.value);
   };
+  
   return (
     <div>
       <Box
@@ -23,11 +23,13 @@ function CartSummary() {
         }}
       >
         <Grid container>
+          {/* //////////////////////////////////////////////////////////// */}
           <Grid item xs={12}>
             <Typography fontFamily="" variant="h5" gutterBottom>
               Cart Summary
             </Typography>
           </Grid>
+          {/* //////////////////////////////////////////////////////////// */}
           <Grid item xs={12}>
             <FormControl sx={{ width: "100%" }}>
               <FormLabel
@@ -39,7 +41,7 @@ function CartSummary() {
               <RadioGroup
                 aria-labelledby="demo-controlled-radio-buttons-group"
                 name="controlled-radio-buttons-group"
-                value={value}
+                value={prop.value}
                 onChange={handleChange}
               >
                 <Box
@@ -157,6 +159,7 @@ function CartSummary() {
               </RadioGroup>
             </FormControl>
           </Grid>
+          {/* //////////////////////////////////////////////////////////// */}
           <Grid item xs={12} sx={{ marginTop: "10px" }}>
             <Box
               sx={{
@@ -169,13 +172,15 @@ function CartSummary() {
                 Subtotal
               </Typography>
               <Typography fontFamily="" variant="h5">
-                $597.00
+                ${prop.subtotal}
               </Typography>
             </Box>
           </Grid>
+          
           <Grid item xs={12}>
             <Divider />
           </Grid>
+          {/* //////////////////////////////////////////////////////////// */}
           <Grid item xs={12}>
             <Divider />
             <Box
@@ -190,9 +195,23 @@ function CartSummary() {
                 Total
               </Typography>
               <Typography fontFamily="" variant="h5">
-                $606.99
+                ${prop.total}
               </Typography>
             </Box>
+          </Grid>
+          {/* //////////////////////////////////////////////////////////// */}
+          <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", marginTop:"30px" }}>
+            <Button
+              variant="contained"
+              sx={{
+                width: "100%",
+                height: "50px",
+                boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.5)",
+              }}
+              onClick={prop.handleNext}
+            >
+              CheckOut
+            </Button>
           </Grid>
         </Grid>
       </Box>

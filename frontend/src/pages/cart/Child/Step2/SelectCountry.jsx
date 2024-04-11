@@ -50,11 +50,6 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
 }));
 
 function SelectCountry(prop) {
-  const [country, setCountry] = React.useState("");
-
-  const handleChange = (event) => {
-    setCountry(event.target.value);
-  };
 
   return (
     <div>
@@ -70,8 +65,8 @@ function SelectCountry(prop) {
             </Typography>
           </InputLabel>
           <Select
-            value={country}
-            onChange={handleChange}
+            value={prop.shippingAddress.country}
+            onChange={(e) => prop.handleShipping(e, "country")}
             displayEmpty
             inputProps={{ "aria-label": "Without label" }}
             input={<BootstrapInput />}
@@ -79,7 +74,7 @@ function SelectCountry(prop) {
             <MenuItem value="">
               <em>Country</em>
             </MenuItem>
-            {CountryList.map((comp,index)=><MenuItem value={index}>{comp}</MenuItem>)}
+            {CountryList.map((comp,index)=><MenuItem key={ index} value={comp}>{comp}</MenuItem>)}
           </Select>
         </FormControl>
       </>

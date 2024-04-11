@@ -45,10 +45,10 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-function ContactInfo() {
+function ContactInfo(prop) {
   return (
     <div>
-      <Box sx={{ width: "100%", border: "1px solid black", borderRadius: 1, marginBottom:"20px"}}>
+      <Box sx={{ width: "100%", border: "1px solid black", borderRadius: 1, marginBottom:"20px",boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.5)'}}>
         <Box
           sx={{
             width: "90%",
@@ -75,12 +75,13 @@ function ContactInfo() {
                       First Name
                     </Typography>
                   </InputLabel>
-                  <BootstrapInput defaultValue="" id="bootstrap-input" />
+                  <BootstrapInput defaultValue={prop.contactInfor.firstName} id="bootstrap-input" onChange={(e)=>prop.handleFirstName(e)}/>
                 </FormControl>
               </Grid>
               <Grid item xs={6}>
                 <FormControl variant="standard" sx={{ width: "100%" }}>
                   <InputLabel
+                    defaultValue={prop.contactInfor.firstName}
                     shrink
                     htmlFor="bootstrap-input"
                     sx={{ marginLeft: "2%" }}
@@ -89,7 +90,7 @@ function ContactInfo() {
                       Last Name
                     </Typography>
                   </InputLabel>
-                  <BootstrapInput defaultValue="" id="bootstrap-input" />
+                  <BootstrapInput defaultValue={prop.contactInfor.lastName} id="bootstrap-input" onChange={(e)=>prop.handleLastName(e)} />
                 </FormControl>
               </Grid>
             </Grid>
@@ -104,7 +105,7 @@ function ContactInfo() {
                     Phone Number
                   </Typography>
                 </InputLabel>
-                <BootstrapInput defaultValue="" id="bootstrap-input" />
+                <BootstrapInput defaultValue={prop.contactInfor.phoneNum} id="bootstrap-input" onChange={(e)=>prop.handlePhoneNum(e)}/>
               </FormControl>
             </Grid>
             <Grid item xs={12}>
@@ -119,7 +120,7 @@ function ContactInfo() {
                     Email
                   </Typography>
                 </InputLabel>
-                <BootstrapInput defaultValue="" id="bootstrap-input" />
+                <BootstrapInput defaultValue={prop.contactInfor.email} id="bootstrap-input" onChange={(e)=>prop.handleEmail(e)}/>
               </FormControl>
             </Grid>
           </Grid>
