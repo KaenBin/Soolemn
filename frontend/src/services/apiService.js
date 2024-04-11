@@ -4,7 +4,8 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
-import { auth, db } from "./firebase";
+import { auth, db, storage } from "./firebase";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 class API {
   createAccount = (form) => {
@@ -128,8 +129,44 @@ class API {
 
   // // // PRODUCT ACTIONS --------------
 
+  // uploadImage = async (file) => {
+  //   const dateTime = Date.now();
+  //   const fileName = `images/${dateTime}`;
+  //   const storageRef = ref(storage, fileName);
+  //   const metadata = {
+  //     contentType: file.type,
+  //   };
+  //   await uploadBytesResumable(storageRef, file.buffer, metadata);
+  //   return fileName;
+  // };
+
+  loadImage = async (url) => {
+    return getDownloadURL(ref(storage, url))
+      .then((url) => {
+        return url;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  // };
   // getSingleProduct = (id) => this.db.collection("products").doc(id).get();
 
+  getProducts = async () => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    };
+    return await axios
+      .get("http://localhost:4000/get-product", config)
+      .then((res) => {
+        return res.data;
+      })
+      .catch((e) => console.log(e));
+  };
   // getProducts = (lastRefKey) => {
   //   let didTimeout = false;
 
@@ -291,5 +328,5 @@ class API {
 }
 
 const apiInstance = new API();
-
+export const products = await apiInstance.getProducts();
 export default apiInstance;

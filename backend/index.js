@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const authMiddleware = require("./auth-middleware");
 const { registerUser, signInUser, getUser } = require("./firebase");
-const { addProduct, getProduct } = require("./firebase/products");
+const { addProduct, getProducts } = require("./firebase/products");
 
 const port = 4000;
 
@@ -54,6 +54,31 @@ app.post("/add-product", async (req, res) => {
     res.send(error);
   }
 });
+
+app.get("/get-product", async (req, res) => {
+  try {
+    const response = await getProducts(req, res);
+    res.send(response);
+  } catch (error) {
+    res.send(error);
+  }
+});
+
+// app.post("/test-upload", upload, async (req, res) => {
+//   const file = {
+//     type: req.file.mimetype,
+//     buffer: req.file.buffer,
+//   };
+//   try {
+//     const buildImage = await uploadImage(file, "single");
+//     res.send({
+//       status: "SUCCESS",
+//       imageName: buildImage,
+//     });
+//   } catch (err) {
+//     console.log(err);
+//   }
+// });
 
 app.listen(port, () =>
   console.log(`Server running at http://localhost:${port}/`)

@@ -19,9 +19,11 @@ import StarIcon from "@mui/icons-material/Star";
 import img from "@/assets/OIP.jpg";
 import { StyledRating } from "@/utils/utils";
 import { Link, useParams } from "react-router-dom";
+import apiInstance from "@/services/apiService";
 
 const ProductContainer = (props) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [imageUrl, setImageUrl] = React.useState();
   const open = Boolean(anchorEl);
 
   const handlePopoverOpen = (event) => {
@@ -33,6 +35,20 @@ const ProductContainer = (props) => {
   };
 
   const handleProduct = () => History.navigate(`/product/${props.item.id}`);
+
+  React.useEffect(() => {
+    if (props.item.images)
+      apiInstance
+        .loadImage(
+          "gs://soolemn-cc5b9.appspot.com/products/" + props.item.images[0]
+        )
+        .then((url) => {
+          setImageUrl(url);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+  }, []);
 
   return (
     <Card
@@ -51,7 +67,7 @@ const ProductContainer = (props) => {
           aria-haspopup="true"
           component="img"
           height="320"
-          image={img}
+          image={imageUrl ? imageUrl : img}
           alt="the image of a product"
           onMouseOver={handlePopoverOpen}
           onMouseLeave={handlePopoverClose}

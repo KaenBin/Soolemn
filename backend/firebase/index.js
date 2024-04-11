@@ -1,4 +1,5 @@
 const admin = require("firebase-admin");
+// const { getStorage, ref, uploadBytes } = require("firebase/storage");
 
 const serviceAccount = require("./ServiceAccountKey");
 
@@ -7,8 +8,15 @@ admin.initializeApp({
 });
 
 const db = admin.firestore();
-
 const auth = admin.auth();
+// const storage = getStorage();
+
+// const avatarRef = ref(storage, "../images/defaultAvatar.jpg");
+// const bannerRef = ref(storage, "../images/defaultBanner.jpg");
+
+// uploadBytes(avatarRef, file).then((snapshot) => {
+//   console.log("Uploaded a blob or file!");
+// });
 
 async function registerUser(req, res) {
   const id = req.body.email;
