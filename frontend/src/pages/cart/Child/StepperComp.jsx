@@ -5,6 +5,7 @@ import Check from "@mui/icons-material/Check";
 import PropTypes from "prop-types";
 import HandymanIcon from "@mui/icons-material/Handyman";
 import CheckIcon from '@mui/icons-material/Check';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import StepConnector, {
   stepConnectorClasses,
 } from "@mui/material/StepConnector";
@@ -69,8 +70,8 @@ export function ColorlibStepIcon(props) {
   const { active, completed, className } = props;
 
   const icons = {
-    1: completed? <CheckIcon/>:<PersonIcon />,
-    2: completed? <CheckIcon/>:<HandymanIcon />,
+    1: completed? <CheckIcon/>:<ShoppingCartIcon/>,
+    2: completed? <CheckIcon/>:<PersonIcon />,
     3: completed? <CheckIcon/>:<WorkspacePremiumIcon />,
   };
 
