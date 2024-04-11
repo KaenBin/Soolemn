@@ -74,7 +74,7 @@ export function Row(props) {
           <ButtonGroup variant="outlined" aria-label="Basic button group">
             <Button
               onClick={() => props.handleRemoveQuantity(row.id)}
-              disabled={row.quantity === 1 ? "disabled" : ""}
+              disabled={row.quantity === 1 ? true : false}
             >
               <RemoveIcon />
             </Button>
@@ -143,9 +143,9 @@ function TableCart(prop) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {prop.productsList.map((row) => (
+            {prop.productsList.map((row, index) => (
               <Row
-                key={row.name}
+                key={row.id}
                 row={row}
                 handleColorChange={handleColorChange}
                 handleAddQuantity={handleAddQuantity}

@@ -3,6 +3,7 @@ import { green, red, blue } from "@mui/material/colors";
 import { ColorList } from "../ColorList";
 import Brightness1RoundedIcon from "@mui/icons-material/Brightness1Rounded";
 import AdjustRoundedIcon from "@mui/icons-material/AdjustRounded";
+import { Box, Grid, Typography, Button } from "@mui/material";
 
 export default function ChooseColor(prop) {
   const Colors = ColorList;
@@ -13,13 +14,13 @@ export default function ChooseColor(prop) {
   return (
     <div>
       {Colors.map((color, index) => (
-        <>
+        <Box     key={ index}>
         { colorChoosen != color?
-          (<Brightness1RoundedIcon sx={{ color: { color } }} value={color} onClick={() =>handleColor(color, prop.row.id)} />):(
-            <AdjustRoundedIcon sx={{ color: {color} }} />
+          (<Brightness1RoundedIcon sx={{ color: { color } }} value={color} key={index} onClick={() =>handleColor(color, prop.row.id)} />):(
+            <AdjustRoundedIcon key={index}  sx={{ color: {color} }} />
           )
         }
-        </>
+        </Box>
       ))}
       {/* <AdjustRoundedIcon sx={{ color: blue[500] }} />
       <Brightness1RoundedIcon color="success" /> */}
