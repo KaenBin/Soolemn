@@ -89,6 +89,7 @@ export default function TopBar() {
         horizontal: "right",
       }}
       id={menuId}
+      disableScrollLock={true}
       keepMounted
       transformOrigin={{
         vertical: "top",
