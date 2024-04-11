@@ -7,23 +7,28 @@ import { Box, Grid, Typography, Button } from "@mui/material";
 
 export default function ChooseColor(prop) {
   const Colors = ColorList;
-  const colorChoosen=prop.row.product.productColor;
-  function handleColor(color, id){
-    prop.handleColorChange(id,color)
+  const colorChoosen = prop.row.product.productColor;
+  function handleColor(color, id) {
+    prop.handleColorChange(id, color);
   }
   return (
-    <div>
+    <Box sx={{display:"flex"}}>
       {Colors.map((color, index) => (
-        <Box     key={ index}>
-        { colorChoosen != color?
-          (<Brightness1RoundedIcon sx={{ color: { color } }} value={color} key={index} onClick={() =>handleColor(color, prop.row.id)} />):(
-            <AdjustRoundedIcon key={index}  sx={{ color: {color} }} />
-          )
-        }
+        <Box key={index} >
+          {colorChoosen != color ? (
+            <Brightness1RoundedIcon
+              sx={{ color: { color } }}
+              value={color}
+              key={index}
+              onClick={() => handleColor(color, prop.row.id)}
+            />
+          ) : (
+            <AdjustRoundedIcon key={index} sx={{ color: { color } }} />
+          )}
         </Box>
       ))}
       {/* <AdjustRoundedIcon sx={{ color: blue[500] }} />
       <Brightness1RoundedIcon color="success" /> */}
-    </div>
+    </Box>
   );
 }
