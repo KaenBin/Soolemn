@@ -1,37 +1,35 @@
 const { ref, set, onValue } = require("firebase/database");
 const { db, auth } = require("./index");
 const addData = require("./addData");
+const getData = require("./getData");
 
 async function addProduct(
-  { adminId, name, description, price, quantity, category, imageUrl },
+  { adminId, name, description, price, quantity, category, images },
   res
 ) {
+  const productID = Date.now();
   const productDoc = {
-    productName: name,
-    description: description,
-    price: price,
+    adminId,
+    name,
+    description,
+    price,
     stock: quantity,
-    category: category,
-    // picture: imageUrl,
+    category,
+    images,
   };
 
-  const productRef = await addData("products", "1", productDoc);
+  const productRef = await addData("products", productID, productDoc);
   if (productRef.error) console.log(productRef.error);
-  else return productRef.result;
+  else return { productID };
 }
 
-function getProduct(userId, name, email, imageUrl) {
-  // const userId = auth.currentUser.uid;
-  // return onValue(
-  //   ref(db, "/users/" + userId),
-  //   (snapshot) => {
-  //     const username =
-  //       (snapshot.val() && snapshot.val().username) || "Anonymous";
-  //   },
-  //   {
-  //     onlyOnce: true,
-  //   }
-  // );
+async function getProducts(req, res) {
+  return await getData
+    .getAllData("products")
+    .then((data) => {
+      return data;
+    })
+    .catch((e) => console.log(e));
 }
 
-module.exports = { addProduct, getProduct };
+module.exports = { addProduct, getProducts };

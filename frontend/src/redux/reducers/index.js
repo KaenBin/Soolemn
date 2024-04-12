@@ -6,7 +6,7 @@ import authReducer from "./authReducer";
 // import miscReducer from './miscReducer';
 // import productReducer from './productReducer';
 // import profileReducer from './profileReducer';
-import userReducer from './userReducer';
+import userReducer from "./userReducer";
 
 const rootReducer = combineReducers({
   // products: productReducer,

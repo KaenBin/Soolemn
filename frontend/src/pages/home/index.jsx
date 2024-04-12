@@ -6,6 +6,7 @@ import Grid from "@mui/material/Unstable_Grid2";
 import { setAuthenticating } from "@/redux/actions/miscActions";
 import mock_product from "@/mockdata/products";
 import { ProductGroup } from "@/components/product";
+import { products } from "@/services/apiService";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ export default function Home() {
             justifyContent="center"
             alignItems="center"
           >
-            <ProductGroup title="Newest" list={mock_product} block={4} />
+            <ProductGroup title="Newest" list={products} block={4} />
           </Grid>
           <Grid
             marginTop={5}
