@@ -5,11 +5,12 @@ const serviceAccount = require("./ServiceAccountKey");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount[1]),
+  storageBucket: "gs://soolemn-cc5b9.appspot.com",
 });
 
 const db = admin.firestore();
 const auth = admin.auth();
-// const storage = getStorage();
+const storage = admin.storage();
 
 // const avatarRef = ref(storage, "../images/defaultAvatar.jpg");
 // const bannerRef = ref(storage, "../images/defaultBanner.jpg");
@@ -46,4 +47,4 @@ async function getUser(req, res) {
   return db.collection("users").doc(id).get();
 }
 
-module.exports = { registerUser, getUser, db, auth };
+module.exports = { registerUser, getUser, db, auth, storage };

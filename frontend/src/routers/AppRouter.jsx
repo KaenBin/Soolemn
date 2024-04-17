@@ -10,9 +10,9 @@ import * as ROUTES from "@/constants/routes";
 const AppRouter = () => {
   const store = useSelector((state) => ({ user: state.auth }));
 
-  useEffect(() => {
-    store.user ? History.navigate("/home") : History.navigate("/signin");
-  });
+  // useEffect(() => {
+  //   store.user ? History.navigate("/home") : History.navigate("/signin");
+  // });
 
   return (
     <BrowserRouter>
@@ -44,6 +44,12 @@ const AppRouter = () => {
           />
           <Route exact path={ROUTES.CART} Component={page.Cart} />
           <Route exact path={ROUTES.ACCOUNT} Component={page.Account} />
+
+          <Route
+            exact
+            path="add-product-form"
+            Component={page.AddProductForm}
+          />
 
           {/* <Route component={view.Search} exact path={ROUTES.SEARCH} />
         <Route component={view.Home} exact path={ROUTES.HOME} />

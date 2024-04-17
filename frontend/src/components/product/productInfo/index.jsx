@@ -108,7 +108,7 @@ const ProductInfo = (props) => {
         </Table>
       </TableContainer>
       <Typography variant="price3" m={3}>
-        Name of the Product
+        {props.item.name}
       </Typography>
       <Divider />
       <Typography variant="breadCumbs" fontWeight={500} m={3}>
@@ -171,7 +171,7 @@ const ProductInfo = (props) => {
           }}
           title="Buy Now"
         >
-          Buy Now{" "}
+          Buy Now
         </Button>
         <Button
           sx={{

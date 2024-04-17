@@ -1,5 +1,5 @@
 import axios from "axios";
-import { collection, doc, addDoc, getDocs } from "firebase/firestore";
+import { collection, doc, addDoc, getDoc } from "firebase/firestore";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
@@ -129,15 +129,34 @@ class API {
 
   // // // PRODUCT ACTIONS --------------
 
-  // uploadImage = async (file) => {
-  //   const dateTime = Date.now();
-  //   const fileName = `images/${dateTime}`;
-  //   const storageRef = ref(storage, fileName);
-  //   const metadata = {
-  //     contentType: file.type,
-  //   };
-  //   await uploadBytesResumable(storageRef, file.buffer, metadata);
-  //   return fileName;
+  // uploadImage = async (file, quantity) => {
+  //   if (quantity === "single") {
+  //     const dateTime = Date.now();
+  //     const fileName = `images/${dateTime}`;
+  //     const storageRef = ref(storage, fileName);
+  //     const metadata = {
+  //       contentType: file.type,
+  //     };
+  //     await uploadBytesResumable(storageRef, file.buffer, metadata);
+  //     return fileName;
+  //   }
+
+  //   if (quantity === "multiple") {
+  //     for (let i = 0; i < file.images.length; i++) {
+  //       const dateTime = Date.now();
+  //       const fileName = `images/${dateTime}`;
+  //       const storageRef = ref(storage, fileName);
+  //       const metadata = {
+  //         contentType: file.images[i].mimetype,
+  //       };
+
+  //       const saveImage = await Image.create({ imageUrl: fileName });
+  //       file.item.imageId.push({ _id: saveImage._id });
+  //       await file.item.save();
+
+  //       await uploadBytesResumable(storageRef, file.images[i].buffer, metadata);
+  //     }
+  //   }
   // };
 
   loadImage = async (url) => {
@@ -150,8 +169,16 @@ class API {
       });
   };
 
-  // };
-  // getSingleProduct = (id) => this.db.collection("products").doc(id).get();
+  getProduct = async (id) => {
+    const productRef = doc(db, "products", id);
+    const productSnap = await getDoc(productRef);
+
+    if (productSnap.exists()) {
+      return productSnap.data();
+    } else {
+      console.log("No such document!");
+    }
+  };
 
   getProducts = async () => {
     const config = {

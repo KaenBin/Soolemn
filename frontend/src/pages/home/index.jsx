@@ -36,11 +36,7 @@ export default function Home() {
             justifyContent="center"
             alignItems="center"
           >
-            <ProductGroup
-              title="Exclusive deal"
-              list={mock_product}
-              block={4}
-            />
+            <ProductGroup title="Exclusive deal" list={products} block={4} />
           </Grid>
           <Grid
             marginTop={5}
@@ -48,7 +44,7 @@ export default function Home() {
             justifyContent="center"
             alignItems="center"
           >
-            <ProductGroup title="Popular" list={mock_product} block={8} />
+            <ProductGroup title="Popular" list={products} block={8} />
           </Grid>
           <Grid
             marginTop={5}
@@ -58,7 +54,7 @@ export default function Home() {
           >
             <ProductGroup
               title="Recommended for you"
-              list={mock_product}
+              list={products}
               block={8}
             />
           </Grid>

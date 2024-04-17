@@ -1,8 +1,9 @@
 const express = require("express");
 const cors = require("cors");
-const authMiddleware = require("./auth-middleware");
+const { authMiddleware, imagesMiddleware } = require("./middleware");
 const { registerUser, signInUser, getUser } = require("./firebase");
 const { addProduct, getProducts } = require("./firebase/products");
+const { uploadImage } = require("./firebase/images");
 
 const port = 4000;
 
@@ -64,21 +65,22 @@ app.get("/get-product", async (req, res) => {
   }
 });
 
-// app.post("/test-upload", upload, async (req, res) => {
-//   const file = {
-//     type: req.file.mimetype,
-//     buffer: req.file.buffer,
-//   };
-//   try {
-//     const buildImage = await uploadImage(file, "single");
-//     res.send({
-//       status: "SUCCESS",
-//       imageName: buildImage,
-//     });
-//   } catch (err) {
-//     console.log(err);
-//   }
-// });
+app.post("/test-upload", imagesMiddleware, async (req, res) => {
+  const file = {
+    type: req.file.mimetype,
+    buffer: req.file.buffer,
+  };
+
+  try {
+    const buildImage = await uploadImage(req.file, "single");
+    res.send({
+      status: "SUCCESS",
+      imageName: buildImage,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
 
 app.listen(port, () =>
   console.log(`Server running at http://localhost:${port}/`)

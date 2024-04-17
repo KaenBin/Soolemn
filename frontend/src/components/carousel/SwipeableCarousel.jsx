@@ -14,35 +14,37 @@ const SwipeableCarousel = (props) => (
       // padding="10px"
     >
       {props.images
-        .slice(
-          props.images.length - props.activeStep < 3
-            ? props.images.length - 3
-            : props.activeStep == 1
-            ? 0
-            : props.activeStep,
-          props.images.length - props.activeStep < 3
-            ? props.images.length
-            : props.activeStep == 1
-            ? 3
-            : props.activeStep + 3
-        )
-        .map((step, index) => (
-          <Grid item key={step.label}>
-            <Box
-              component="img"
-              sx={{
-                width: "80px",
-                height: "20vh",
-                display: "block",
-                maxWidth: 400,
-                overflow: "hidden",
-                boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.4)",
-              }}
-              src={step.imgPath}
-              alt={step.label}
-            />
-          </Grid>
-        ))}
+        ? props.images
+            .slice(
+              props.maxSteps - props.activeStep < 3
+                ? props.maxSteps - 3
+                : props.activeStep <= 1
+                ? 0
+                : props.activeStep,
+              props.maxSteps - props.activeStep < 3
+                ? props.maxSteps
+                : props.activeStep <= 1
+                ? 3
+                : props.activeStep + 3
+            )
+            .map((step, index) => (
+              <Grid item key={step}>
+                <Box
+                  component="img"
+                  sx={{
+                    width: "100px",
+                    height: "20vh",
+                    display: "block",
+                    maxWidth: 400,
+                    overflow: "hidden",
+                    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.4)",
+                  }}
+                  src={step}
+                  // alt={step.label}
+                />
+              </Grid>
+            ))
+        : null}
     </Grid>
   </SwipeableViews>
 );
