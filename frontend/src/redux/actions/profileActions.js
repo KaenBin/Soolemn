@@ -1,38 +1,37 @@
-import {
-  CLEAR_PROFILE,
-  SET_PROFILE,
-  UPDATE_EMAIL,
-  UPDATE_PROFILE,
-  UPDATE_PROFILE_SUCCESS
-} from '@/constants/constants';
+import * as type from "@/constants/constants";
 
 export const clearProfile = () => ({
-  type: CLEAR_PROFILE
+  type: type.CLEAR_PROFILE,
 });
 
 export const setProfile = (user) => ({
-  type: SET_PROFILE,
-  payload: user
+  type: type.SET_PROFILE,
+  payload: user,
 });
 
 export const updateEmail = (password, newEmail) => ({
-  type: UPDATE_EMAIL,
+  type: type.UPDATE_EMAIL,
   payload: {
     password,
-    newEmail
-  }
+    newEmail,
+  },
 });
 
 export const updateProfile = (newProfile) => ({
-  type: UPDATE_PROFILE,
+  type: type.UPDATE_PROFILE,
   payload: {
     updates: newProfile.updates,
     files: newProfile.files,
-    credentials: newProfile.credentials
-  }
+    credentials: newProfile.credentials,
+  },
 });
 
 export const updateProfileSuccess = (updates) => ({
-  type: UPDATE_PROFILE_SUCCESS,
-  payload: updates
+  type: type.UPDATE_PROFILE_SUCCESS,
+  payload: updates,
+});
+
+export const makePayment = (payment) => ({
+  type: type.MAKE_PAYMENT,
+  payload: payment,
 });

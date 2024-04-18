@@ -1,4 +1,4 @@
-import { call, put } from "redux-saga/effects";
+import { call, put, select } from "redux-saga/effects";
 import {
   ON_AUTHSTATE_FAIL,
   ON_AUTHSTATE_SUCCESS,
@@ -10,6 +10,7 @@ import {
   SIGNIN_WITH_GOOGLE,
   SIGNOUT,
   SIGNUP,
+  MAKE_PAYMENT,
 } from "@/constants/constants";
 import defaultAvatar from "@/images/defaultAvatar.jpg";
 import defaultBanner from "@/images/defaultBanner.jpg";
@@ -20,8 +21,8 @@ import apiInstance from "@/services/apiService";
 // import { resetCheckout } from "@/redux/actions/checkoutActions";
 // import { resetFilter } from "@/redux/actions/filterActions";
 // import { setAuthenticating, setAuthStatus } from "@/redux/actions/miscActions";
-// import { clearProfile, setProfile } from "@/redux/actions/profileActions";
-// import firebase from "@/services/firebase";
+import { clearProfile, setProfile } from "@/redux/actions/profileActions";
+import { updateProfileSuccess } from "@/redux/actions/profileActions";
 
 function* handleError(e) {
   const obj = { success: false, type: "auth", isError: true };
@@ -122,7 +123,7 @@ function* authSaga({ type, payload }) {
         yield initRequest();
         yield call(apiInstance.signOut);
         //   yield put(clearBasket());
-        //   yield put(clearProfile());
+        // yield put(clearProfile());
         //   yield put(resetFilter());
         //   yield put(resetCheckout());
         yield put(signOutSuccess());
@@ -153,16 +154,13 @@ function* authSaga({ type, payload }) {
     case ON_AUTHSTATE_SUCCESS: {
       yield initRequest();
       const user = yield call(apiInstance.getUser, payload.email);
-
-      //   yield put(setProfile(user));
-      //   yield put(setBasketItems(user.basket));
-      //   yield put(setBasketItems(user.basket));
+      yield put(setProfile(user));
       yield put(
         signInSuccess({
           id: payload.uid,
           role: user.role,
           payload: "password",
-          // provider: payload.providerData[0].providerId,
+          provider: payload.providerData[0].providerId,
         })
       );
       // } else if (

@@ -8,7 +8,9 @@ import { TopBar } from "@/components/common";
 import * as ROUTES from "@/constants/routes";
 
 const AppRouter = () => {
-  const store = useSelector((state) => ({ user: state.auth }));
+  const store = useSelector((state) => ({
+    user: state.auth,
+  }));
   return (
     <BrowserRouter>
       <>

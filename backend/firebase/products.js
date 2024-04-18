@@ -16,6 +16,7 @@ async function addProduct(
     stock: quantity,
     category,
     images,
+    addedDate: userRef.metadata.creationTime || new Date().getTime(),
   };
 
   const productRef = await addData("products", productID, productDoc);
