@@ -22,14 +22,6 @@ import { Link, useParams } from "react-router-dom";
 import apiInstance from "@/services/apiService";
 
 const ProductContainer = (props) => {
-  const handlePopoverOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handlePopoverClose = () => {
-    setAnchorEl(null);
-  };
-
   const handleProduct = () => History.navigate(`/product/${props.item.id}`);
 
   return (
@@ -51,8 +43,6 @@ const ProductContainer = (props) => {
           height="320"
           image={props.item.images[0] ? props.item.images[0] : img}
           alt="the image of a product"
-          onMouseOver={handlePopoverOpen}
-          onMouseLeave={handlePopoverClose}
         />
         {props.size != "small" && <Typography variant="status">NEW</Typography>}
         {props.size != "small" && (

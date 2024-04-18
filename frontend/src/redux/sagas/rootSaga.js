@@ -2,7 +2,7 @@ import { takeLatest } from "redux-saga/effects";
 import * as ACTION from "@/constants/constants";
 import authSaga from "./authSaga";
 // import productSaga from './productSaga';
-// import profileSaga from './profileSaga';
+import profileSaga from "./profileSaga";
 
 function* rootSaga() {
   yield takeLatest(
@@ -18,6 +18,7 @@ function* rootSaga() {
       // ACTION.ON_AUTHSTATE_FAIL,
       // ACTION.SET_AUTH_PERSISTENCE,
       // ACTION.RESET_PASSWORD
+      ACTION.MAKE_PAYMENT,
     ],
     authSaga
   );
@@ -28,10 +29,14 @@ function* rootSaga() {
   //   ACTION.EDIT_PRODUCT,
   //   ACTION.GET_PRODUCTS
   // ], productSaga);
-  // yield takeLatest([
-  //   ACTION.UPDATE_EMAIL,
-  //   ACTION.UPDATE_PROFILE
-  // ], profileSaga);
+  yield takeLatest(
+    [
+      //   ACTION.UPDATE_EMAIL,
+      ACTION.UPDATE_PROFILE,
+      ACTION.MAKE_PAYMENT,
+    ],
+    profileSaga
+  );
 }
 
 export default rootSaga;

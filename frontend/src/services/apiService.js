@@ -1,5 +1,5 @@
 import axios from "axios";
-import { collection, doc, addDoc, getDoc } from "firebase/firestore";
+import { collection, doc, updateDoc, getDoc } from "firebase/firestore";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
@@ -65,6 +65,21 @@ class API {
 
   getCurrentUser = () => auth.currentUser;
 
+  updateUserData = async (wallet, id = auth.currentUser.email) => {
+    const userRef = doc(db, "users", id);
+    await updateDoc(userRef, {
+      wallet,
+    });
+  };
+  // updateMyProfile = (id, updates) => {
+  //   updateProfile(auth.currentUser, updates)
+  //     .then((res) => {
+  //       console.log(res);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
   // passwordUpdate = (password) => this.auth.currentUser.updatePassword(password);
 
   // changePassword = (currentPassword, newPassword) =>

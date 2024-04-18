@@ -78,7 +78,7 @@ export default function ProductDetail(props) {
             <ProductDescription item={product} />
           </Grid>
           <Grid item>
-            <ProductInfo item={products[0]} />
+            <ProductInfo item={product} />
           </Grid>
         </Grid>
       </div>

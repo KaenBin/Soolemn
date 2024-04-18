@@ -1,5 +1,4 @@
 const admin = require("firebase-admin");
-// const { getStorage, ref, uploadBytes } = require("firebase/storage");
 
 const serviceAccount = require("./ServiceAccountKey");
 
@@ -11,13 +10,6 @@ admin.initializeApp({
 const db = admin.firestore();
 const auth = admin.auth();
 const storage = admin.storage();
-
-// const avatarRef = ref(storage, "../images/defaultAvatar.jpg");
-// const bannerRef = ref(storage, "../images/defaultBanner.jpg");
-
-// uploadBytes(avatarRef, file).then((snapshot) => {
-//   console.log("Uploaded a blob or file!");
-// });
 
 async function registerUser(req, res) {
   const id = req.body.email;
@@ -45,6 +37,11 @@ async function registerUser(req, res) {
 async function getUser(req, res) {
   const id = req.query.email;
   return db.collection("users").doc(id).get();
+}
+
+async function updateUser(req, res) {
+  const id = req.body.email;
+  return db.collection("users").doc(id).update(req.body);
 }
 
 module.exports = { registerUser, getUser, db, auth, storage };
