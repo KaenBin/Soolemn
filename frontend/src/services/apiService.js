@@ -207,6 +207,53 @@ class API {
       })
       .catch((e) => console.log(e));
   };
+
+  //ADD PRODUCT TO CART
+  addToCart = async (data) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    };
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/add_to_cart",
+        data,
+        config
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      throw error;
+    }
+  };
+
+  deleteFromCart = async (email, productId) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    };
+
+    try {
+      const response = await axios.delete(
+        `http://localhost:4000/delete_from_cart/${productId}`,
+        {
+          data: { email },
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error deleting from cart:", error);
+      throw error;
+    }
+  };
+
   // getProducts = (lastRefKey) => {
   //   let didTimeout = false;
 

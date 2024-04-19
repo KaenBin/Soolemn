@@ -20,6 +20,7 @@ function Step2(prop) {
             payment={prop.payment}
             handlePayment={prop.handlePayment}
             handleNext={prop.handleNext}
+            productsList={prop.productsList}
           />
         </Grid>
         <Grid item xs={4}>

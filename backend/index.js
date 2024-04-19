@@ -7,6 +7,7 @@ const {
   getProducts,
   getImageDownloadUrl,
 } = require("./firebase/products");
+const { addToCart, deleteFromCart } = require("./firebase/cart");
 const { uploadImage } = require("./firebase/images");
 
 const port = 4000;
@@ -94,6 +95,28 @@ app.get("/get-image-download-url", async (req, res) => {
     .catch((error) => {
       console.error("Error:", error);
     });
+});
+
+app.post("/add_to_cart", async (req, res) => {
+  try {
+    const { email, product_id, name, quantity, price, image, color } = req.body;
+    const newItem = { product_id, name, quantity, price, image, color };
+    const response = await addToCart(email, newItem);
+    res.send(response);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.delete("/delete_from_cart/:productId", async (req, res) => {
+  try {
+    const { email } = req.body;
+    const { productId } = req.params;
+    const response = await deleteFromCart(email, productId);
+    res.send(response);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 app.listen(port, () =>

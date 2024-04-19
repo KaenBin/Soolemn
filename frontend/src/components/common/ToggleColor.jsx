@@ -9,31 +9,31 @@ const color = [
   { id: "4", color: "yellow" },
 ];
 
-export default function ToggleColor() {
-  const [alignment, setAlignment] = React.useState(color[0]);
+const ToggleColor = ({ colorOptions, selectedColor, handleChangeColor }) => {
+  // const [alignment, setAlignment] = React.useState(color[0]);
 
   const handleChange = (event, newAlignment) => {
-    setAlignment(newAlignment);
+    handleChangeColor(newAlignment);
   };
 
   return (
     <ToggleButtonGroup
       color="primary"
-      value={alignment}
+      value={selectedColor}
       exclusive
       onChange={handleChange}
-      aria-label="Platform"
+      aria-label="Color"
     >
-      {color.map((value) => {
+      {colorOptions.map((option) => {
         return (
           <ToggleButton
-            key={value.id}
-            value={value.color}
+            key={option}
+            value={option}
             sx={{
               "&.MuiToggleButton-root": {
                 margin: 0.25,
                 borderRadius: "50%",
-                backgroundColor: value.color,
+                backgroundColor: option,
                 border: "solid",
                 borderColor: "#ffffff",
               },
@@ -46,4 +46,6 @@ export default function ToggleColor() {
       })}
     </ToggleButtonGroup>
   );
-}
+};
+
+export default ToggleColor;

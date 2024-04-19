@@ -208,6 +208,7 @@ function CartSummary(prop) {
                 height: "50px",
                 boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.5)",
               }}
+              disabled={prop.productsList.length>0? false : true}
               onClick={prop.handleNext}
             >
               CheckOut
