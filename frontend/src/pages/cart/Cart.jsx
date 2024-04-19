@@ -53,14 +53,14 @@ export default function CartForm() {
     (sum, obj) => sum + obj.price * obj.quantity,
     0
   ):0;
-  const total = (
+  const total = productsList.length>0?(
     subtotal +
     (value == "Normal Shipping"
       ? 9.99
       : value == "Express Shipping"
       ? 14.99
       : 0)
-  ).toFixed(2);
+  ).toFixed(2):0;
   const [userData, setUserData] = useState([]);
 
   const currentUser = apiInstance.getCurrentUser();
