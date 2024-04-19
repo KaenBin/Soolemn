@@ -99,6 +99,7 @@ export default function Signin() {
           <Link
             onClick={() => navigate("/signup")}
             component="button"
+            type="button"
             className="redirect"
             variant="body1"
             underline="none"

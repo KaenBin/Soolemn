@@ -24,11 +24,9 @@ const SimilarProducts = (props) => {
     );
   }
   return (
-    <Box width="100%">
-      <Grid container flexDirection="column" spacing={2}>
-        {output}
-      </Grid>
-    </Box>
+    <Grid container flexDirection="column" display="flex">
+      {output}
+    </Grid>
   );
 };
 

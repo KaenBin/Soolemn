@@ -5,14 +5,14 @@ import authReducer from "./authReducer";
 // import filterReducer from './filterReducer';
 // import miscReducer from './miscReducer';
 // import productReducer from './productReducer';
-// import profileReducer from './profileReducer';
-import userReducer from './userReducer';
+import profileReducer from "./profileReducer";
+import userReducer from "./userReducer";
 
 const rootReducer = combineReducers({
   // products: productReducer,
   // basket: basketReducer,
   auth: authReducer,
-  // profile: profileReducer,
+  profile: profileReducer,
   // filter: filterReducer,
   users: userReducer,
   // checkout: checkoutReducer,

@@ -32,6 +32,7 @@ import { tableCellClasses } from "@mui/material/TableCell";
 import StoreIcon from "@mui/icons-material/Store";
 import InputAdornment from "@mui/material/InputAdornment";
 import { Add, Remove } from "@mui/icons-material";
+import { useDispatch } from "react-redux";
 
 import img from "@/assets/OIP.jpg";
 import { StyledRating } from "@/utils/utils";
@@ -39,17 +40,19 @@ import { CustomCarousel } from "@/components/carousel";
 import SimilarProducts from "../similarProducts";
 import mock_product from "@/mockdata/products";
 import { ToggleColor, CustomButtonGroup } from "@/components/common";
+import { makePayment } from "@/redux/actions/profileActions";
 
 const ProductInfo = (props) => {
   const [expanded, setExpanded] = React.useState(false);
   const [quantity, setQuantity] = React.useState(1);
+  const dispatch = useDispatch();
 
   const handleIncrease = () => {
     setQuantity(Number(quantity + 1));
   };
 
   const handleDecrease = () => {
-    setQuantity(Number(quantity - 1));
+    if (quantity > 1) setQuantity(Number(quantity - 1));
   };
 
   const toggleExpanded = () => {
@@ -108,7 +111,7 @@ const ProductInfo = (props) => {
         </Table>
       </TableContainer>
       <Typography variant="price3" m={3}>
-        Name of the Product
+        {props.item.name}
       </Typography>
       <Divider />
       <Typography variant="breadCumbs" fontWeight={500} m={3}>
@@ -121,7 +124,7 @@ const ProductInfo = (props) => {
         <ToggleColor />
       </Stack>
       <Typography variant="price3" component="h1" fontWeight={500} m={3}>
-        Total: $208.99
+        Total: ${9.99 + (props.item.price / 2) * quantity}
       </Typography>
       <TextField
         value={quantity}
@@ -158,6 +161,9 @@ const ProductInfo = (props) => {
       />
       <Stack spacing={3} mt={2}>
         <Button
+          onClick={() =>
+            dispatch(makePayment(9.99 + (props.item.price / 2) * quantity))
+          }
           sx={{
             color: "#FEFEFE",
             backgroundColor: "#008060",
@@ -171,7 +177,7 @@ const ProductInfo = (props) => {
           }}
           title="Buy Now"
         >
-          Buy Now{" "}
+          Buy Now
         </Button>
         <Button
           sx={{

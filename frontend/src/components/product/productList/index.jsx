@@ -11,6 +11,7 @@ const ProductList = (props) => {
       display="flex"
       justifyContent="center"
       columnSpacing={props.size == "small" ? 2 : 10}
+      rowSpacing={5}
     >
       {props.list.map((item, idx) => {
         return (

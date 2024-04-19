@@ -1,11 +1,19 @@
 import axios from "axios";
-import { collection, doc, addDoc, getDocs } from "firebase/firestore";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from "./firebase";
+import { collection, doc, updateDoc, getDoc } from "firebase/firestore";
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
+import { auth, db, storage } from "./firebase";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 class API {
   createAccount = (form) => {
-    console.log(form);
+    console.log(form.email, form.password);
+    createUserWithEmailAndPassword(auth, form.email, form.password).catch(
+      (error) => console.log(error)
+    );
+
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -15,8 +23,6 @@ class API {
     axios
       .post("http://localhost:4000/signup", form, config)
       .catch((e) => console.log(e));
-
-    auth.createUserWithEmailAndPassword(email, password);
   };
 
   signIn = (form) => {
@@ -59,6 +65,21 @@ class API {
 
   getCurrentUser = () => auth.currentUser;
 
+  updateUserData = async (wallet, id = auth.currentUser.email) => {
+    const userRef = doc(db, "users", id);
+    await updateDoc(userRef, {
+      wallet,
+    });
+  };
+  // updateMyProfile = (id, updates) => {
+  //   updateProfile(auth.currentUser, updates)
+  //     .then((res) => {
+  //       console.log(res);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
   // passwordUpdate = (password) => this.auth.currentUser.updatePassword(password);
 
   // changePassword = (currentPassword, newPassword) =>
@@ -123,8 +144,71 @@ class API {
 
   // // // PRODUCT ACTIONS --------------
 
-  // getSingleProduct = (id) => this.db.collection("products").doc(id).get();
+  // uploadImage = async (file, quantity) => {
+  //   if (quantity === "single") {
+  //     const dateTime = Date.now();
+  //     const fileName = `images/${dateTime}`;
+  //     const storageRef = ref(storage, fileName);
+  //     const metadata = {
+  //       contentType: file.type,
+  //     };
+  //     await uploadBytesResumable(storageRef, file.buffer, metadata);
+  //     return fileName;
+  //   }
 
+  //   if (quantity === "multiple") {
+  //     for (let i = 0; i < file.images.length; i++) {
+  //       const dateTime = Date.now();
+  //       const fileName = `images/${dateTime}`;
+  //       const storageRef = ref(storage, fileName);
+  //       const metadata = {
+  //         contentType: file.images[i].mimetype,
+  //       };
+
+  //       const saveImage = await Image.create({ imageUrl: fileName });
+  //       file.item.imageId.push({ _id: saveImage._id });
+  //       await file.item.save();
+
+  //       await uploadBytesResumable(storageRef, file.images[i].buffer, metadata);
+  //     }
+  //   }
+  // };
+
+  loadImage = async (url) => {
+    return getDownloadURL(ref(storage, url))
+      .then((url) => {
+        return url;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  getProduct = async (id) => {
+    const productRef = doc(db, "products", id);
+    const productSnap = await getDoc(productRef);
+
+    if (productSnap.exists()) {
+      return productSnap.data();
+    } else {
+      console.log("No such document!");
+    }
+  };
+
+  getProducts = async () => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    };
+    return await axios
+      .get("http://localhost:4000/get-product", config)
+      .then((res) => {
+        return res.data;
+      })
+      .catch((e) => console.log(e));
+  };
   // getProducts = (lastRefKey) => {
   //   let didTimeout = false;
 
@@ -286,5 +370,5 @@ class API {
 }
 
 const apiInstance = new API();
-
+export const products = await apiInstance.getProducts();
 export default apiInstance;

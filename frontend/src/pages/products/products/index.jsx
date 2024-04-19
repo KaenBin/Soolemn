@@ -6,8 +6,9 @@ import { Pagination } from "@mui/material";
 import { setAuthenticating } from "@/redux/actions/miscActions";
 import { ProductGroup, ProductGroup2 } from "@/components/product";
 import mock_product from "@/mockdata/products";
+import { products } from "@/services/apiService";
 
-export default function ProductOverview() {
+export default function ProductOverview(props) {
   const dispatch = useDispatch();
 
   useEffect(
@@ -28,11 +29,7 @@ export default function ProductOverview() {
           alignItems="center"
           direction="column"
         >
-          <ProductGroup2
-            title="Exclusive deal"
-            list={mock_product}
-            block={15}
-          />
+          <ProductGroup2 title="Exclusive deal" list={products} block={15} />
         </Grid>
       </div>
     </main>

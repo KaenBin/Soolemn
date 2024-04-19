@@ -1,16 +1,19 @@
-import { CLEAR_PROFILE, SET_PROFILE, UPDATE_PROFILE_SUCCESS } from '@/constants/constants';
-// import profile from 'static/profile.jpg';
-// import banner from 'static/banner.jpg';
+import {
+  CLEAR_PROFILE,
+  SET_PROFILE,
+  UPDATE_PROFILE_SUCCESS,
+} from "@/constants/constants";
+import avatar from "@/images/defaultAvatar.jpg";
 
-// const initState = {
-//   fullname: 'Pedro Juan',
-//   email: 'juanpedro@gmail.com',
-//   address: '',
-//   mobile: {},
-//   avatar: profile,
-//   banner,
-//   dateJoined: 1954234787348
-// };
+const initState = {
+  fullname: "Unknown",
+  email: "unknown@hotmail.com",
+  address: "",
+  mobile: {},
+  avatar: avatar,
+  dateJoined: 1954234787348,
+  wallet: 0,
+};
 
 export default (state = {}, action) => {
   switch (action.type) {
@@ -19,7 +22,7 @@ export default (state = {}, action) => {
     case UPDATE_PROFILE_SUCCESS:
       return {
         ...state,
-        ...action.payload
+        ...action.payload,
       };
     case CLEAR_PROFILE:
       return {};

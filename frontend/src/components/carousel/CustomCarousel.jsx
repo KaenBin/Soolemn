@@ -17,33 +17,33 @@ import SwipeableCarousel from "./SwipeableCarousel";
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
-const images = [
-  {
-    label: "San Francisco – Oakland Bay Bridge, United States",
-    imgPath:
-      "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
-  },
-  {
-    label: "Bird",
-    imgPath:
-      "https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250&q=60",
-  },
-  {
-    label: "Bali, Indonesia",
-    imgPath:
-      "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250",
-  },
-  {
-    label: "Goč, Serbia",
-    imgPath:
-      "https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60",
-  },
-];
+// const images = [
+//   {
+//     label: "San Francisco – Oakland Bay Bridge, United States",
+//     imgPath:
+//       "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
+//   },
+//   {
+//     label: "Bird",
+//     imgPath:
+//       "https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250&q=60",
+//   },
+//   {
+//     label: "Bali, Indonesia",
+//     imgPath:
+//       "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250",
+//   },
+//   {
+//     label: "Goč, Serbia",
+//     imgPath:
+//       "https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60",
+//   },
+// ];
 
-const CustomCarousel = () => {
+const CustomCarousel = (props) => {
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
-  const maxSteps = images.length;
+  const maxSteps = props.item.images ? props.item.images.length : 0;
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -66,7 +66,7 @@ const CustomCarousel = () => {
         display="flex"
         mx="5px"
         position="absolute"
-        top="30vh"
+        top="45vh"
         zIndex="2"
       >
         <Grid item>
@@ -110,27 +110,33 @@ const CustomCarousel = () => {
         onChangeIndex={handleStepChange}
         enableMouseEvents
       >
-        {images.map((step, index) => (
-          <div key={step.label}>
-            {Math.abs(activeStep - index) <= 2 ? (
-              <Box
-                component="img"
-                sx={{
-                  height: "55vh",
-                  display: "block",
-                  maxWidth: 400,
-                  overflow: "hidden",
-                  width: "100%",
-                  boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.4)",
-                }}
-                src={step.imgPath}
-                alt={step.label}
-              />
-            ) : null}
-          </div>
-        ))}
+        {props.item.images
+          ? props.item.images.map((step, index) => (
+              <div key={step}>
+                {Math.abs(activeStep - index) <= 2 ? (
+                  <Box
+                    component="img"
+                    sx={{
+                      height: "55vh",
+                      display: "block",
+                      maxWidth: 400,
+                      overflow: "hidden",
+                      width: "100%",
+                      boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.4)",
+                    }}
+                    src={step}
+                    alt={"Image " + index}
+                  />
+                ) : null}
+              </div>
+            ))
+          : null}
       </AutoPlaySwipeableViews>
-      <SwipeableCarousel images={images} activeStep={activeStep} />
+      <SwipeableCarousel
+        images={props.item.images ? props.item.images : null}
+        activeStep={activeStep}
+        maxSteps={maxSteps}
+      />
     </Box>
   );
 };

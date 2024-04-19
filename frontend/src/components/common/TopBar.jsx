@@ -1,17 +1,21 @@
 import * as React from "react";
 import { Link, NavLink } from "react-router-dom";
 import { styled, alpha } from "@mui/material/styles";
-import { Stack } from "@mui/material";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Tooltip from "@mui/material/Tooltip";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import InputBase from "@mui/material/InputBase";
-import Badge from "@mui/material/Badge";
-import MenuItem from "@mui/material/MenuItem";
-import Menu from "@mui/material/Menu";
+import {
+  Avatar,
+  AppBar,
+  Stack,
+  Box,
+  Toolbar,
+  Tooltip,
+  IconButton,
+  Typography,
+  InputBase,
+  Badge,
+  MenuItem,
+  Menu,
+  Button,
+} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
@@ -19,6 +23,7 @@ import LocalMallOutlinedIcon from "@mui/icons-material/LocalMallOutlined";
 import { useDispatch } from "react-redux";
 import { signOut } from "@/redux/actions/authActions";
 import * as ROUTE from "@/constants/routes";
+import apiInstance from "@/services/apiService";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -35,7 +40,6 @@ const Search = styled("div")(({ theme }) => ({
     width: "auto",
   },
 }));
-
 const SearchIconWrapper = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 2),
   height: "100%",
@@ -69,7 +73,8 @@ const badgeStyle = {
 export default function TopBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const dispatch = useDispatch();
-
+  const [avatar, setAvatar] = React.useState();
+  const [imageUrl, setImageUrl] = React.useState();
   const isMenuOpen = Boolean(anchorEl);
   const menuId = "primary-search-account-menu";
 
@@ -89,6 +94,7 @@ export default function TopBar() {
         horizontal: "right",
       }}
       id={menuId}
+      disableScrollLock={true}
       keepMounted
       transformOrigin={{
         vertical: "top",
@@ -116,7 +122,16 @@ export default function TopBar() {
       </MenuItem>
     </Menu>
   );
-
+  React.useEffect(() => {
+    apiInstance
+      .loadImage("gs://soolemn-cc5b9.appspot.com/defaultAvatar.jpg")
+      .then((url) => {
+        setImageUrl(url);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
   return (
     <Box sx={{ flexGrow: 1 }} boxShadow={3}>
       <AppBar position="fixed" color="info">
@@ -184,17 +199,17 @@ export default function TopBar() {
                 spacing={1}
               >
                 <Tooltip title="Open settings">
-                  <IconButton
-                    size="large"
+                  <Avatar
+                    id="my"
+                    alt="Account"
+                    src={imageUrl}
                     edge="end"
                     aria-label="account of current user"
                     aria-controls={menuId}
                     aria-haspopup="true"
                     onClick={handleProfileMenuOpen}
-                    color="secondary"
-                  >
-                    <AccountCircleOutlinedIcon />
-                  </IconButton>
+                    style={{ cursor: "pointer" }}
+                  />
                 </Tooltip>
                 {renderMenu}
                 <IconButton

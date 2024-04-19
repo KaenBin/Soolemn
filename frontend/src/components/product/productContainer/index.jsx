@@ -19,19 +19,9 @@ import StarIcon from "@mui/icons-material/Star";
 import img from "@/assets/OIP.jpg";
 import { StyledRating } from "@/utils/utils";
 import { Link, useParams } from "react-router-dom";
+import apiInstance from "@/services/apiService";
 
 const ProductContainer = (props) => {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-
-  const handlePopoverOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handlePopoverClose = () => {
-    setAnchorEl(null);
-  };
-
   const handleProduct = () => History.navigate(`/product/${props.item.id}`);
 
   return (
@@ -51,10 +41,8 @@ const ProductContainer = (props) => {
           aria-haspopup="true"
           component="img"
           height="320"
-          image={img}
+          image={props.item.images[0] ? props.item.images[0] : img}
           alt="the image of a product"
-          onMouseOver={handlePopoverOpen}
-          onMouseLeave={handlePopoverClose}
         />
         {props.size != "small" && <Typography variant="status">NEW</Typography>}
         {props.size != "small" && (

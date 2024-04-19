@@ -34,6 +34,7 @@ import { StyledRating } from "@/utils/utils";
 import { CustomCarousel } from "@/components/carousel";
 import SimilarProducts from "../similarProducts";
 import mock_product from "@/mockdata/products";
+import { products } from "@/services/apiService";
 
 const ProductDescription = (props) => {
   const [expanded, setExpanded] = React.useState(false);
@@ -61,7 +62,7 @@ const ProductDescription = (props) => {
         />
         15 reviews
         <Typography variant="title" m="5px">
-          Name of the Product
+          {props.item.name}
         </Typography>
         <Typography
           display="inline"
@@ -98,7 +99,9 @@ const ProductDescription = (props) => {
               </TableRow>
               <TableRow>
                 <TableCell sx={{ color: "#6C7275" }}>CATEGORY</TableCell>
-                <TableCell sx={{ color: "#141718" }}>category</TableCell>
+                <TableCell sx={{ color: "#141718" }}>
+                  {props.item.category}
+                </TableCell>
               </TableRow>
             </TableBody>
           </Table>
@@ -108,16 +111,18 @@ const ProductDescription = (props) => {
         </Typography>
         {expanded ? (
           <Typography variant="price4" sx={{ fontWeight: "normal" }} m="5px">
-            {props.item.description}
+            {props.item?.description}
           </Typography>
         ) : (
           <Typography variant="price4" sx={{ fontWeight: "normal" }} m="5px">
-            {props.item.description.length > 125
-              ? `${props.item.description.slice(0, 125)}...`
-              : props.item.description}
+            {props.item.description
+              ? props.item.description.length > 125
+                ? `${props.item.description.slice(0, 125)}...`
+                : props.item.description
+              : "No description"}
           </Typography>
         )}
-        {props.item.description.length > 125 && (
+        {props.item.description && props.item.description.length > 125 && (
           <Button onClick={toggleExpanded} color="primary">
             {expanded ? "Show Less" : "Show More"}
           </Button>
@@ -125,7 +130,7 @@ const ProductDescription = (props) => {
         <Typography variant="description" m="5px">
           Similar Product:
         </Typography>
-        <SimilarProducts list={mock_product} block={3} />
+        <SimilarProducts list={products} block={3} />
       </Stack>
     </Box>
   );

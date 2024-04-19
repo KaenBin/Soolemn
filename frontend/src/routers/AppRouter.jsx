@@ -8,42 +8,56 @@ import { TopBar } from "@/components/common";
 import * as ROUTES from "@/constants/routes";
 
 const AppRouter = () => {
-  const store = useSelector((state) => ({ user: state.auth }));
-
-  useEffect(() => {
-    store.user ? History.navigate("/home") : History.navigate("/signin");
-  });
-
+  const store = useSelector((state) => ({
+    user: state.auth,
+  }));
   return (
     <BrowserRouter>
       <>
-        {store.user ? <TopBar /> : null}
         {/* <Basket /> */}
         <NavigateSetter />
         <Routes>
-          <Route path="/" element={<Navigate to="/signin" replace />} />
-          <Route exact path={ROUTES.SIGNIN} Component={page.SignIn} />
-          <Route exact path={ROUTES.SIGNUP} Component={page.SignUp} />
-          <Route exact path={ROUTES.HOME} Component={page.Home} />
-          <Route exact path={ROUTES.PRODUCTS} Component={page.Products} />
+          {store.user ? (
+            <>
+              <Route path="/*" element={<Navigate to="/home" replace />} />
+              <Route exact path={ROUTES.HOME} Component={page.Home} />
+              <Route exact path={ROUTES.PRODUCTS} Component={page.Products} />
+              <Route
+                exact
+                path={ROUTES.DISCOUNTED_PRODUCTS}
+                Component={page.Discounted}
+              />
+              <Route
+                exact
+                path={ROUTES.FEATURED_PRODUCTS}
+                Component={page.Featured}
+              />
+              <Route
+                exact
+                path={ROUTES.CATEGORIES}
+                Component={page.Categories}
+              />
+              <Route
+                exact
+                path={ROUTES.VIEW_PRODUCT}
+                Component={page.ProductDetail}
+              />
+              <Route exact path={ROUTES.CART} Component={page.Cart} />
+              <Route exact path={ROUTES.ACCOUNT} Component={page.Account} />
+            </>
+          ) : (
+            <>
+              <Route path="/*" element={<Navigate to="/signin" replace />} />
+              <Route exact path={ROUTES.SIGNIN} Component={page.SignIn} />
+              <Route exact path={ROUTES.SIGNUP} Component={page.SignUp} />
+            </>
+          )}
+
           <Route
             exact
-            path={ROUTES.DISCOUNTED_PRODUCTS}
-            Component={page.Discounted}
+            path="add-product-form"
+            Component={page.AddProductForm}
           />
-          <Route
-            exact
-            path={ROUTES.FEATURED_PRODUCTS}
-            Component={page.Featured}
-          />
-          <Route exact path={ROUTES.CATEGORIES} Component={page.Categories} />
-          <Route
-            exact
-            path={ROUTES.VIEW_PRODUCT}
-            Component={page.ProductDetail}
-          />
-          <Route exact path={ROUTES.CART} Component={page.Cart} />
-          <Route exact path={ROUTES.ACCOUNT} Component={page.Account} />
 
           {/* <Route component={view.Search} exact path={ROUTES.SEARCH} />
         <Route component={view.Home} exact path={ROUTES.HOME} />
@@ -95,6 +109,7 @@ const AppRouter = () => {
         />
         <PublicRoute component={view.PageNotFound} /> */}
         </Routes>
+        {store.user ? <TopBar /> : null}
         {/* <Footer /> */}
       </>
     </BrowserRouter>
