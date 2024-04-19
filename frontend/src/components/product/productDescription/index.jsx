@@ -78,7 +78,7 @@ const ProductDescription = (props) => {
             style={{ textDecorationLine: "line-through", fontWeight: "normal" }}
             variant="price4"
           >
-            ${props.item.price}
+            ${Number(props.item.price).toFixed(2)}
           </Typography>
         ) : (
           <></>

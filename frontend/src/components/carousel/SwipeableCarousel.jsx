@@ -8,7 +8,7 @@ const SwipeableCarousel = (props) => (
     <Grid
       container
       width="100%"
-      justifyContent="space-between"
+      justifyContent="start"
       display="flex"
       pt="5vh"
       // padding="10px"
@@ -16,7 +16,9 @@ const SwipeableCarousel = (props) => (
       {props.images
         ? props.images
             .slice(
-              props.maxSteps - props.activeStep < 3
+              props.maxSteps < 3
+                ? 0
+                : props.maxSteps - props.activeStep < 3
                 ? props.maxSteps - 3
                 : props.activeStep <= 1
                 ? 0

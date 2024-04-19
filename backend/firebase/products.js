@@ -1,10 +1,11 @@
 const { ref, set, onValue } = require("firebase/database");
-const { db, auth } = require("./index");
+const { getDownloadURL } = require("firebase/storage");
+const { db, auth, storage } = require("./index");
 const addData = require("./addData");
 const getData = require("./getData");
 
 async function addProduct(
-  { adminId, name, description, price, quantity, category, images },
+  { adminId, name, description, price, color, quantity, category, images = [] },
   res
 ) {
   const productID = Date.now();
@@ -13,10 +14,11 @@ async function addProduct(
     name,
     description,
     price,
+    color,
     stock: quantity,
     category,
     images,
-    addedDate: userRef.metadata.creationTime || new Date().getTime(),
+    addedDate: new Date().toUTCString(),
   };
 
   const productRef = await addData("products", productID, productDoc);
@@ -33,4 +35,19 @@ async function getProducts(req, res) {
     .catch((e) => console.log(e));
 }
 
-module.exports = { addProduct, getProducts };
+async function getImageDownloadUrl(filePath) {
+  try {
+    // Create a reference to the file
+    const fileRef = storage.bucket().file(filePath);
+
+    // Get the download URL
+    const downloadUrl = await getDownloadURL(fileRef);
+    console.log(downloadUrl);
+    // return downloadUrl;
+  } catch (error) {
+    console.error("Error getting download URL:", error);
+    throw error;
+  }
+}
+
+module.exports = { addProduct, getProducts, getImageDownloadUrl };

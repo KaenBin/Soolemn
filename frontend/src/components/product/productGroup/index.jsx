@@ -15,7 +15,7 @@ const ProductGroup = (props) => {
 
   for (let i = 0; i < props.block / 4; i++) {
     output.push(
-      <Grid item>
+      <Grid item key={i}>
         <ProductList
           list={props.list.slice((page - 1 + i) * 4, (page - 1 + i) * 4 + 4)}
         />

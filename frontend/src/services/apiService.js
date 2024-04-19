@@ -65,11 +65,9 @@ class API {
 
   getCurrentUser = () => auth.currentUser;
 
-  updateUserData = async (wallet, id = auth.currentUser.email) => {
+  updateUserData = async (updates, id = auth.currentUser.email) => {
     const userRef = doc(db, "users", id);
-    await updateDoc(userRef, {
-      wallet,
-    });
+    await updateDoc(userRef, updates);
   };
   // updateMyProfile = (id, updates) => {
   //   updateProfile(auth.currentUser, updates)
