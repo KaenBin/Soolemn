@@ -73,13 +73,13 @@ export function Row(props) {
         <TableCell align="right">
           <ButtonGroup variant="outlined" aria-label="Basic button group">
             <Button
-              onClick={() => props.handleRemoveQuantity(row.id)}
-              disabled={row.quantity === 1 ? "disabled" : ""}
+              onClick={() => props.handleRemoveQuantity(row.product_id)}
+              disabled={row.quantity === 1 ? true : false}
             >
               <RemoveIcon />
             </Button>
             <Button>{row.quantity}</Button>
-            <Button onClick={() => props.handleAddQuantity(row.id)}>
+            <Button onClick={() => props.handleAddQuantity(row.product_id)}>
               <AddIcon />
             </Button>
           </ButtonGroup>
@@ -87,7 +87,7 @@ export function Row(props) {
         <TableCell align="right">{row.price}</TableCell>
         <TableCell align="right">{row.price*row.quantity}</TableCell>
         <TableCell align="center">
-          <DeleteIcon aria-label="expand row" onClick={()=>{props.handleRemoveCart(row.id)}}></DeleteIcon>
+          <DeleteIcon aria-label="expand row" onClick={()=>{props.handleRemoveCart(row.product_id)}}></DeleteIcon>
         </TableCell>
       </TableRow>
     </React.Fragment>
@@ -99,8 +99,8 @@ function TableCart(prop) {
   function handleColorChange(productId, color) {
     prop.setProducts(
       prop.productsList.map((product) =>
-        product.id == productId
-          ? { ...product, product: { ...product.product, productColor: color } }
+        product.product_id== productId
+          ? { ...product,  color: color }
           : product
       )
     );
@@ -108,7 +108,7 @@ function TableCart(prop) {
   function handleAddQuantity(productId) {
     prop.setProducts(
       prop.productsList.map((product) =>
-        product.id == productId
+        product.product_id == productId
           ? { ...product, quantity: product.quantity + 1 }
           : product
       )
@@ -117,14 +117,14 @@ function TableCart(prop) {
   function handleRemoveQuantity(productId) {
     prop.setProducts(
       prop.productsList.map((product) =>
-        product.id == productId
+        product.product_id == productId
           ? { ...product, quantity: product.quantity - 1 }
           : product
       )
     );
   }
   function handleRemoveCart(productId) {
-    prop.setProducts(prop.productsList.filter((product) => product.id !== productId));
+    prop.setProducts(prop.productsList.filter((product) => product.product_id !== productId));
   }
   return (
     <div>
@@ -143,16 +143,16 @@ function TableCart(prop) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {prop.productsList.map((row) => (
+            {prop.productsList.length>0?prop.productsList.map((row, index) => (
               <Row
-                key={row.name}
+                key={row.product_id}
                 row={row}
                 handleColorChange={handleColorChange}
                 handleAddQuantity={handleAddQuantity}
                 handleRemoveQuantity={handleRemoveQuantity}
                 handleRemoveCart={handleRemoveCart}
               />
-            ))}
+            )):<></>}
           </TableBody>
         </Table>
       </TableContainer>
