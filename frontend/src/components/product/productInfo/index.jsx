@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import {
   Card,
   CardContent,
@@ -41,11 +41,16 @@ import SimilarProducts from "../similarProducts";
 import mock_product from "@/mockdata/products";
 import { ToggleColor, CustomButtonGroup } from "@/components/common";
 import { makePayment } from "@/redux/actions/profileActions";
+import apiInstance from "@/services/apiService";
 
 const ProductInfo = (props) => {
   const [expanded, setExpanded] = React.useState(false);
   const [quantity, setQuantity] = React.useState(1);
+  const [selectedColor, setSelectedColor] = useState("");
   const dispatch = useDispatch();
+  const currentUser = apiInstance.getCurrentUser();
+  const params = useParams();
+  const id = params.id.split("/").pop();
 
   const handleIncrease = () => {
     setQuantity(Number(quantity + 1));
@@ -57,6 +62,40 @@ const ProductInfo = (props) => {
 
   const toggleExpanded = () => {
     setExpanded(!expanded);
+  };
+
+  // console.log(
+  //   props.item.images && props.item.images.length > 0
+  //     ? props.item.images[0]
+  //     : null
+  // );
+
+  const handleChangeColor = (color) => {
+    setSelectedColor(color);
+  };
+
+  const ImageUrl =
+    props.item.images && props.item.images.length > 0
+      ? props.item.images[0]
+      : null;
+
+  const handleAddToCart = async () => {
+    const data = {
+      email: currentUser.email,
+      product_id: id,
+      name: props.item.name,
+      quantity: quantity,
+      color: selectedColor,
+      price: props.item.price / 2,
+      image: ImageUrl,
+    };
+    try {
+      await apiInstance.addToCart(data);
+      alert("Product added to cart successfully!");
+    } catch (error) {
+      alert("Failed to add product to cart.");
+      console.error("Error adding to cart:", error);
+    }
   };
 
   return (
@@ -117,12 +156,20 @@ const ProductInfo = (props) => {
       <Typography variant="breadCumbs" fontWeight={500} m={3}>
         Shipping fee: $9.99
       </Typography>
-      <Stack direction="row" spacing="auto" m={3}>
-        <Typography variant="price4" fontWeight={500}>
-          Choose Color
-        </Typography>
-        <ToggleColor />
-      </Stack>
+
+      {props.item.color ? (
+        <Stack direction="row" spacing="auto" m={3}>
+          <Typography variant="price4" fontWeight={500}>
+            Choose Color
+          </Typography>
+          <ToggleColor
+            colorOptions={props.item.color}
+            selectedColor={selectedColor}
+            handleChangeColor={handleChangeColor}
+          />
+        </Stack>
+      ) : null}
+
       <Typography variant="price3" component="h1" fontWeight={500} m={3}>
         Total: ${9.99 + (props.item.price / 2) * quantity}
       </Typography>
@@ -180,6 +227,7 @@ const ProductInfo = (props) => {
           Buy Now
         </Button>
         <Button
+          onClick={handleAddToCart}
           sx={{
             color: "#FEFEFE",
             backgroundColor: "#141718",
