@@ -48,7 +48,7 @@ function Step3(prop) {
               sx={{ display: "flex", justifyContent: "center", marginTop:"20px" }}
             >
               <Box sx={{ width: "60%" }}>
-                <Grid container xs={12}>
+                <Grid item container xs={12}>
                   <Grid item xs={6}>
                     <Typography fontFamily="" variant="body1" gutterBottom>
                       Order Code
@@ -60,7 +60,7 @@ function Step3(prop) {
                     </Typography>
                   </Grid>
                 </Grid>
-                <Grid container xs={12}>
+                <Grid item container xs={12}>
                   <Grid item xs={6}>
                     <Typography fontFamily="" variant="body1" gutterBottom>
                       Date
@@ -72,7 +72,7 @@ function Step3(prop) {
                     </Typography>
                   </Grid>
                 </Grid>
-                <Grid container xs={12}>
+                <Grid item container xs={12}>
                   <Grid item xs={6}>
                     <Typography fontFamily="" variant="body1" gutterBottom>
                       Total
@@ -84,7 +84,7 @@ function Step3(prop) {
                     </Typography>
                   </Grid>
                 </Grid>
-                <Grid container xs={12}>
+                <Grid item container xs={12}>
                   <Grid item xs={6}>
                     <Typography fontFamily="" variant="body1" gutterBottom>
                       Payment Method
