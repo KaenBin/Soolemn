@@ -7,7 +7,7 @@ import { Box, Grid, Typography, Button } from "@mui/material";
 
 export default function ChooseColor(prop) {
   const Colors = ColorList;
-  const colorChoosen = prop.row.product.productColor;
+  const colorChoosen = prop.row.color;
   function handleColor(color, id) {
     prop.handleColorChange(id, color);
   }
@@ -20,7 +20,7 @@ export default function ChooseColor(prop) {
               sx={{ color: { color } }}
               value={color}
               key={index}
-              onClick={() => handleColor(color, prop.row.id)}
+              onClick={() => handleColor(color, prop.row.product_id)}
             />
           ) : (
             <AdjustRoundedIcon key={index} sx={{ color: { color } }} />

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
@@ -10,6 +10,7 @@ import Step from "@mui/material/Step";
 import { ColorlibConnector, ColorlibStepIcon } from "./Child/StepperComp";
 import { Typography } from "@mui/material";
 import { products } from "./Child/ProductDataBase";
+import apiInstance from "@/services/apiService";
 // import Box from "@mui/material/Box";
 // import Grid from "@mui/material/Unstable_Grid2";
 
@@ -24,7 +25,7 @@ export default function CartForm() {
   const dispatch = useDispatch();
   const steps = ["Shopping Cart", "Checkout Detail", "Order Detail"];
   const [activeStep, setActiveStep] = React.useState(0);
-  const [productsList, setProducts] = React.useState(products);
+  const [productsList, setProducts] = React.useState([]);
   const [value, setValue] = React.useState("Normal Shipping");
   const [contactInfor, setContactInfor] = React.useState({
     firstName: "",
@@ -48,10 +49,10 @@ export default function CartForm() {
     cvc: "",
   });
   // console.log(payment)
-  const subtotal = productsList.reduce(
+  const subtotal = productsList.length>0?productsList.reduce(
     (sum, obj) => sum + obj.price * obj.quantity,
     0
-  );
+  ):0;
   const total = (
     subtotal +
     (value == "Normal Shipping"
@@ -60,6 +61,24 @@ export default function CartForm() {
       ? 14.99
       : 0)
   ).toFixed(2);
+  const [userData, setUserData] = useState([]);
+
+  const currentUser = apiInstance.getCurrentUser();
+  useEffect(() => {
+    const getUserData = async () => {
+      try {
+        const userData = await apiInstance.getUser(currentUser.email);
+
+        setUserData(userData);
+        setProducts(userData.cart);
+      } catch (error) {
+        console.error("Error occurred:", error);
+      }
+    };
+    getUserData();
+  }, []);
+
+  console.log(productsList);
 
   //Contact Infor Function
   function handleFirstName(e) {
