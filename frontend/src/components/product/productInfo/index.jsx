@@ -45,7 +45,7 @@ import apiInstance from "@/services/apiService";
 
 const ProductInfo = (props) => {
   const [expanded, setExpanded] = React.useState(false);
-  const [quantity, setQuantity] = React.useState(1);
+  const [quantity, setQuantity] = act.useState(1);
   const [selectedColor, setSelectedColor] = useState("");
   const dispatch = useDispatch();
   const currentUser = apiInstance.getCurrentUser();
@@ -63,12 +63,6 @@ const ProductInfo = (props) => {
   const toggleExpanded = () => {
     setExpanded(!expanded);
   };
-
-  // console.log(
-  //   props.item.images && props.item.images.length > 0
-  //     ? props.item.images[0]
-  //     : null
-  // );
 
   const handleChangeColor = (color) => {
     setSelectedColor(color);
