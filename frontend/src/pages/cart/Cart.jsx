@@ -49,18 +49,21 @@ export default function CartForm() {
     cvc: "",
   });
   // console.log(payment)
-  const subtotal = productsList.length>0?productsList.reduce(
-    (sum, obj) => sum + obj.price * obj.quantity,
-    0
-  ):0;
-  const total = productsList.length>0?(
-    subtotal +
-    (value == "Normal Shipping"
-      ? 9.99
-      : value == "Express Shipping"
-      ? 14.99
-      : 0)
-  ).toFixed(2):0;
+  const subtotal =
+    productsList.length > 0
+      ? productsList.reduce((sum, obj) => sum + obj.price * obj.quantity, 0)
+      : 0;
+  const total =
+    productsList.length > 0
+      ? (
+          subtotal +
+          (value == "Normal Shipping"
+            ? 9.99
+            : value == "Express Shipping"
+            ? 14.99
+            : 0)
+        ).toFixed(2)
+      : 0;
   const [userData, setUserData] = useState([]);
 
   const currentUser = apiInstance.getCurrentUser();
@@ -78,7 +81,7 @@ export default function CartForm() {
     getUserData();
   }, []);
 
-  console.log(productsList);
+  console.log(userData);
 
   //Contact Infor Function
   function handleFirstName(e) {
@@ -117,7 +120,20 @@ export default function CartForm() {
   const handleStep = (step) => () => {
     setActiveStep(step);
   };
-
+  const handleDeleteFromCart = async (id) => {
+    const data = {
+      email: userData.email,
+      productId: id,
+    };
+    console.log(data)
+    try {
+      await apiInstance.deleteFromCart(userData.email, id);
+      setProducts(productsList.filter((product) => product.product_id !== id));
+    } catch (error) {
+      alert("Failed to delete product from cart.");
+      console.error("Error deleting from cart:", error);
+    }
+  };
   //call effect
   useEffect(
     () => () => {
@@ -177,6 +193,7 @@ export default function CartForm() {
                         value={value}
                         setValue={setValue}
                         handleNext={handleNext}
+                        handleDeleteFromCart={handleDeleteFromCart}
                       />
                     </Grid>
                   ) : activeStep === 1 ? (

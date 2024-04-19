@@ -123,8 +123,10 @@ function TableCart(prop) {
       )
     );
   }
+  
   function handleRemoveCart(productId) {
-    prop.setProducts(prop.productsList.filter((product) => product.product_id !== productId));
+    // prop.setProducts(prop.productsList.filter((product) => product.product_id !== productId));
+    prop.handleDeleteFromCart(productId)
   }
   return (
     <div>

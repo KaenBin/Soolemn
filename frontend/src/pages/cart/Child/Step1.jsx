@@ -14,6 +14,7 @@ function Step1(prop) {
           <TableCart
             productsList={prop.productsList}
             setProducts={prop.setProducts}
+            handleDeleteFromCart={prop.handleDeleteFromCart}
           />
         </Grid>
         <Grid item xs={4}>
