@@ -18,7 +18,6 @@ function* rootSaga() {
       // ACTION.ON_AUTHSTATE_FAIL,
       // ACTION.SET_AUTH_PERSISTENCE,
       // ACTION.RESET_PASSWORD
-      ACTION.MAKE_PAYMENT,
     ],
     authSaga
   );

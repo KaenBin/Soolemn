@@ -15,7 +15,7 @@ const ProductList = (props) => {
     >
       {props.list.map((item, idx) => {
         return (
-          <Grid item>
+          <Grid item key={idx}>
             <ProductContainer {...props} idx={idx} item={item} />
           </Grid>
         );

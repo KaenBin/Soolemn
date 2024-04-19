@@ -32,7 +32,6 @@ export const listFilter = (
   maxPrice = "Highest",
   search = ""
 ) => {
-  console.log(category);
   let filtered = list.filter((item) =>
     item.name.toLowerCase().includes(search.toLowerCase())
   );

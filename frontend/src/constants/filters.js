@@ -9,12 +9,7 @@ export const Sort = [
   { value: "Oldest to newest" },
 ];
 
-export const Category = [
-  { value: "Technology" },
-  { value: "Vegetable" },
-  { value: "Education" },
-  { value: "Furniture" },
-];
+export const Category = [{ value: "Food" }, { value: "Cloth" }];
 
 export const Price = [
   { value: "0" },

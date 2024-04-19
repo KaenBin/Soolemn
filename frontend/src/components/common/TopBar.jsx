@@ -15,12 +15,17 @@ import {
   MenuItem,
   Menu,
   Button,
+  Divider,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import LocalMallOutlinedIcon from "@mui/icons-material/LocalMallOutlined";
-import { useDispatch } from "react-redux";
+import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
+import { useDispatch, useSelector } from "react-redux";
+import Popover from "@mui/material/Popover";
+import { makeStyles } from "@mui/styles";
+
 import { signOut } from "@/redux/actions/authActions";
 import * as ROUTE from "@/constants/routes";
 import apiInstance from "@/services/apiService";
@@ -58,7 +63,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("md")]: {
-      width: "20ch",
+      width: "20vw",
     },
   },
 }));
@@ -70,14 +75,28 @@ const badgeStyle = {
   },
 };
 
+const useStyles = makeStyles((theme) => ({
+  popover: {
+    padding: theme.spacing(2),
+    marginRight: theme.spacing(2),
+    marginLeft: theme.spacing(2),
+    borderRadius: 20,
+  },
+}));
+
 export default function TopBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEL, setAnchorEL] = React.useState(null);
   const dispatch = useDispatch();
   const [avatar, setAvatar] = React.useState();
   const [imageUrl, setImageUrl] = React.useState();
+  const classes = useStyles();
+  const store = useSelector((state) => ({
+    profile: state.profile,
+  }));
   const isMenuOpen = Boolean(anchorEl);
   const menuId = "primary-search-account-menu";
-
+  console.log(store.profile);
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -85,6 +104,16 @@ export default function TopBar() {
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
+
+  const handlePopoverOpen = (event) => {
+    setAnchorEL(event.currentTarget);
+  };
+
+  const handlePopoverClose = () => {
+    setAnchorEL(null);
+  };
+
+  const open = Boolean(anchorEL);
 
   const renderMenu = (
     <Menu
@@ -141,7 +170,7 @@ export default function TopBar() {
             direction="row"
             alignItems="center"
             justifyContent="space-around"
-            spacing={4}
+            spacing={5}
           >
             <Typography
               variant="h6"
@@ -150,7 +179,7 @@ export default function TopBar() {
               sx={{ display: { xs: "none", sm: "block" } }}
             >
               <Link to="/home" className="navigation">
-                Soolemn
+                LBoss
               </Link>
             </Typography>
             <Stack
@@ -158,6 +187,7 @@ export default function TopBar() {
               direction="row"
               alignItems="center"
               justifyContent="center"
+              spacing={2}
             >
               <NavLink className="navigation" to={ROUTE.HOME}>
                 Home
@@ -165,32 +195,22 @@ export default function TopBar() {
               <NavLink className="navigation" to={ROUTE.PRODUCTS}>
                 Product
               </NavLink>
-              <NavLink className="navigation" to={ROUTE.DISCOUNTED_PRODUCTS}>
-                On Sale
-              </NavLink>
-              <NavLink className="navigation" to={ROUTE.FEATURED_PRODUCTS}>
-                Featured
-              </NavLink>
-              <NavLink className="navigation" to={ROUTE.CATEGORIES}>
-                Categories
-              </NavLink>
             </Stack>
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Search…"
+                inputProps={{ "aria-label": "search" }}
+              />
+            </Search>
             <Stack
               direction="row"
               alignItems="center"
               justifyContent="center"
               spacing={1}
             >
-              <Search>
-                <SearchIconWrapper>
-                  <SearchIcon />
-                </SearchIconWrapper>
-                <StyledInputBase
-                  placeholder="Search…"
-                  inputProps={{ "aria-label": "search" }}
-                />
-              </Search>
-              <Box sx={{ flexGrow: 1 }} />
               <Stack
                 sx={{ display: { xs: "none", md: "flex" } }}
                 direction="row"
@@ -212,6 +232,45 @@ export default function TopBar() {
                   />
                 </Tooltip>
                 {renderMenu}
+                <IconButton
+                  size="large"
+                  aria-label="show your wallet"
+                  color="inherit"
+                  onMouseEnter={handlePopoverOpen}
+                  onMouseLeave={handlePopoverClose}
+                >
+                  <Badge sx={badgeStyle}>
+                    <AccountBalanceWalletOutlinedIcon />
+                  </Badge>
+                  <Popover
+                    id="mouse-over-popover"
+                    sx={{
+                      pointerEvents: "none",
+                    }}
+                    aria-haspopup="true"
+                    edge="end"
+                    open={open}
+                    anchorEl={anchorEL}
+                    anchorOrigin={{
+                      vertical: "bottom",
+                      horizontal: "left",
+                    }}
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "left",
+                    }}
+                    onClose={handlePopoverClose}
+                    disableScrollLock
+                    disableRestoreFocus
+                  >
+                    <Box className={classes.popover}>
+                      <Divider>Wallet</Divider>
+                      <Typography pt={1}>
+                        Balance: ${store.profile.wallet}
+                      </Typography>
+                    </Box>
+                  </Popover>
+                </IconButton>
                 <IconButton
                   size="large"
                   aria-label="show 3 new notifications"

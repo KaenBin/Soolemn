@@ -78,7 +78,7 @@ const ProductContainer = (props) => {
               style={{ textDecorationLine: "line-through" }}
               variant="price2"
             >
-              ${props.item.price}
+              ${props.item.price.toFixed(2)}
             </Typography>
           ) : (
             <></>

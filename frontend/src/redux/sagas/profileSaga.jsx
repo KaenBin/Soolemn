@@ -7,6 +7,7 @@ import { call, put, select } from "redux-saga/effects";
 import { setLoading } from "../actions/miscActions";
 import { updateProfileSuccess } from "../actions/profileActions";
 import { MAKE_PAYMENT } from "@/constants/constants";
+import apiInstance from "@/services/apiService";
 
 function* profileSaga({ type, payload }) {
   switch (type) {
@@ -36,7 +37,9 @@ function* profileSaga({ type, payload }) {
     }
     case MAKE_PAYMENT: {
       const state = yield select();
-      yield call(apiInstance.updateUserData(state.profile.wallet - payload));
+      yield call(apiInstance.updateUserData, {
+        wallet: Number.parseFloat(state.profile.wallet - payload, 2).toFixed(2),
+      });
       yield put(
         updateProfileSuccess({
           wallet: Number.parseFloat(state.profile.wallet - payload, 2).toFixed(

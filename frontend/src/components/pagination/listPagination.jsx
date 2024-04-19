@@ -17,13 +17,13 @@ const ListPagination = (props) => {
   for (let i = 1; i <= props.totalPage; i++) {
     if (i == props.page)
       output.push(
-        <IconButton onClick={() => handleSetPage(i)} size="small">
+        <IconButton key={i} onClick={() => handleSetPage(i)} size="small">
           <AdjustIcon color="button" />
         </IconButton>
       );
     else
       output.push(
-        <IconButton onClick={() => handleSetPage(i)} size="small">
+        <IconButton key={i} onClick={() => handleSetPage(i)} size="small">
           <CircleIcon color="button.light" />
         </IconButton>
       );

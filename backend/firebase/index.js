@@ -28,6 +28,7 @@ async function registerUser(req, res) {
     address: "",
     basket: [],
     mobile: { data: {} },
+    wallet: 0,
     role: "USER",
     dateJoined: userRef.metadata.creationTime || new Date().getTime(),
   };

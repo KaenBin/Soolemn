@@ -2,7 +2,11 @@ const express = require("express");
 const cors = require("cors");
 const { authMiddleware, imagesMiddleware } = require("./middleware");
 const { registerUser, signInUser, getUser } = require("./firebase");
-const { addProduct, getProducts } = require("./firebase/products");
+const {
+  addProduct,
+  getProducts,
+  getImageDownloadUrl,
+} = require("./firebase/products");
 const { uploadImage } = require("./firebase/images");
 
 const port = 4000;
@@ -80,6 +84,16 @@ app.post("/test-upload", imagesMiddleware, async (req, res) => {
   } catch (err) {
     console.log(err);
   }
+});
+
+app.get("/get-image-download-url", async (req, res) => {
+  getImageDownloadUrl(req.body.filePath)
+    .then((downloadUrl) => {
+      console.log("Download URL:", downloadUrl);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
 });
 
 app.listen(port, () =>

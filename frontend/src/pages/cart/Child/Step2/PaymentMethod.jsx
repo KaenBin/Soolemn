@@ -30,7 +30,7 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
       "background-color",
       "box-shadow",
     ]),
-    // Use the system font instead of the default Roboto font.
+
     fontFamily: [
       "-apple-system",
       "BlinkMacSystemFont",
@@ -94,7 +94,7 @@ function PaymentMethod(prop) {
                       marginBottom: 1,
                       cursor: "pointer",
                       "&:hover": {
-                        backgroundColor: "lightgray", // Apply hover effect
+                        backgroundColor: "lightgray",
                       },
                     }}
                   >
@@ -118,7 +118,7 @@ function PaymentMethod(prop) {
                       marginBottom: 1,
                       cursor: "pointer",
                       "&:hover": {
-                        backgroundColor: "lightgray", // Apply hover effect
+                        backgroundColor: "lightgray",
                       },
                     }}
                   >
