@@ -145,7 +145,7 @@ function TableCart(prop) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {prop.productsList.length>0?prop.productsList.map((row, index) => (
+            {prop.productsList?.length>0?prop.productsList.map((row, index) => (
               <Row
                 key={row.product_id}
                 row={row}

@@ -11,7 +11,7 @@ function CartSummary(prop) {
   const handleChange = (event) => {
     prop.setValue(event.target.value);
   };
-  
+
   return (
     <div>
       <Box
@@ -176,7 +176,7 @@ function CartSummary(prop) {
               </Typography>
             </Box>
           </Grid>
-          
+
           <Grid item xs={12}>
             <Divider />
           </Grid>
@@ -200,7 +200,15 @@ function CartSummary(prop) {
             </Box>
           </Grid>
           {/* //////////////////////////////////////////////////////////// */}
-          <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", marginTop:"30px" }}>
+          <Grid
+            item
+            xs={12}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "30px",
+            }}
+          >
             <Button
               variant="contained"
               sx={{
@@ -208,7 +216,7 @@ function CartSummary(prop) {
                 height: "50px",
                 boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.5)",
               }}
-              disabled={prop.productsList.length>0? false : true}
+              disabled={prop.productsList?.length > 0 ? false : true}
               onClick={prop.handleNext}
             >
               CheckOut
