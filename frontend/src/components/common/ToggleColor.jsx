@@ -2,13 +2,6 @@ import * as React from "react";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
-const color = [
-  { id: "1", color: "black" },
-  { id: "2", color: "red" },
-  { id: "3", color: "green" },
-  { id: "4", color: "yellow" },
-];
-
 const ToggleColor = ({ colorOptions, selectedColor, handleChangeColor }) => {
   // const [alignment, setAlignment] = React.useState(color[0]);
 
