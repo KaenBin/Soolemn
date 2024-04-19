@@ -77,6 +77,9 @@ export default function TopBar() {
   const [imageUrl, setImageUrl] = React.useState();
   const isMenuOpen = Boolean(anchorEl);
   const menuId = "primary-search-account-menu";
+  const currentUser = apiInstance.getCurrentUser();
+  const [userData, setUserData] = React.useState([]);
+  const [cartLength, setCartLength] = React.useState(0);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -132,6 +135,26 @@ export default function TopBar() {
         console.log(error);
       });
   }, []);
+  React.useEffect(() => {
+    const getUserData = async () => {
+      try {
+        const userData = await apiInstance.getUser(currentUser.email);
+
+        setUserData(userData);
+        // setCartLength(userData.cart.length);
+      } catch (error) {
+        console.error("Error occurred:", error);
+      }
+    };
+    getUserData();
+  }, [currentUser]);
+
+  const cartData = userData?.cart?.length || 0;
+
+  React.useEffect(() => {
+    setCartLength(cartData);
+  }, [userData]);
+
   return (
     <Box sx={{ flexGrow: 1 }} boxShadow={3}>
       <AppBar position="fixed" color="info">
@@ -228,7 +251,7 @@ export default function TopBar() {
                   component={Link}
                   to={ROUTE.CART}
                 >
-                  <Badge badgeContent={2} sx={badgeStyle}>
+                  <Badge badgeContent={cartLength} sx={badgeStyle}>
                     <LocalMallOutlinedIcon />
                   </Badge>
                 </IconButton>
