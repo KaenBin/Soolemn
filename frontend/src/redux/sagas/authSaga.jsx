@@ -157,7 +157,6 @@ function* authSaga({ type, payload }) {
       const user = yield call(apiInstance.getUser, payload.email);
       yield put(setProfile(user));
       yield put(setInitialLoad(user.cart));
-      console.log(user.cart);
       yield put(
         signInSuccess({
           id: payload.uid,
