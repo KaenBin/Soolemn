@@ -96,7 +96,6 @@ export default function TopBar() {
   }));
   const isMenuOpen = Boolean(anchorEl);
   const menuId = "primary-search-account-menu";
-  console.log(store.profile);
   const currentUser = apiInstance.getCurrentUser();
   const [userData, setUserData] = React.useState([]);
   const [cartLength, setCartLength] = React.useState(0);

@@ -254,6 +254,30 @@ class API {
     }
   };
 
+  deleteAllFromCart = async (email) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    };
+
+    try {
+      const response = await axios.delete(
+        `http://localhost:4000/delete_all_cart/${email}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error deleting all from cart:", error);
+      throw error;
+    }
+  };
+
   // getProducts = (lastRefKey) => {
   //   let didTimeout = false;
 

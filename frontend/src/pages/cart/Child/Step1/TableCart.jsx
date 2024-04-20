@@ -85,9 +85,15 @@ export function Row(props) {
           </ButtonGroup>
         </TableCell>
         <TableCell align="right">{row.price}</TableCell>
-        <TableCell align="right">{row.price*row.quantity}</TableCell>
+        <TableCell align="right">{row.price * row.quantity}</TableCell>
         <TableCell align="center">
-          <DeleteIcon aria-label="expand row" onClick={()=>{props.handleRemoveCart(row.product_id)}}></DeleteIcon>
+          <DeleteIcon
+            aria-label="expand row"
+            onClick={() => {
+              props.handleRemoveCart(row.product_id);
+            }}
+            style={{ cursor: "pointer" }}
+          ></DeleteIcon>
         </TableCell>
       </TableRow>
     </React.Fragment>
@@ -95,13 +101,10 @@ export function Row(props) {
 }
 
 function TableCart(prop) {
-
   function handleColorChange(productId, color) {
     prop.setProducts(
       prop.productsList.map((product) =>
-        product.product_id== productId
-          ? { ...product,  color: color }
-          : product
+        product.product_id == productId ? { ...product, color: color } : product
       )
     );
   }
@@ -123,10 +126,13 @@ function TableCart(prop) {
       )
     );
   }
-  
+
   function handleRemoveCart(productId) {
     // prop.setProducts(prop.productsList.filter((product) => product.product_id !== productId));
-    prop.handleDeleteFromCart(productId)
+    prop.handleDeleteFromCart(productId);
+  }
+  function handleRemoveAll() {
+    prop.handleDeleteAll();
   }
   return (
     <div>
@@ -140,21 +146,29 @@ function TableCart(prop) {
               <TableCell align="right">Subtotal&nbsp;($)</TableCell>
               <TableCell align="center">
                 {" "}
-                <DeleteIcon aria-label="expand row"></DeleteIcon>
+                <DeleteIcon
+                  onClick={handleRemoveAll}
+                  aria-label="expand row"
+                  style={{ cursor: "pointer" }}
+                ></DeleteIcon>
               </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {prop.productsList?.length>0?prop.productsList.map((row, index) => (
-              <Row
-                key={row.product_id}
-                row={row}
-                handleColorChange={handleColorChange}
-                handleAddQuantity={handleAddQuantity}
-                handleRemoveQuantity={handleRemoveQuantity}
-                handleRemoveCart={handleRemoveCart}
-              />
-            )):<></>}
+            {prop.productsList?.length > 0 ? (
+              prop.productsList.map((row, index) => (
+                <Row
+                  key={row.product_id}
+                  row={row}
+                  handleColorChange={handleColorChange}
+                  handleAddQuantity={handleAddQuantity}
+                  handleRemoveQuantity={handleRemoveQuantity}
+                  handleRemoveCart={handleRemoveCart}
+                />
+              ))
+            ) : (
+              <></>
+            )}
           </TableBody>
         </Table>
       </TableContainer>

@@ -121,11 +121,6 @@ export default function CartForm() {
     setActiveStep(step);
   };
   const handleDeleteFromCart = async (id) => {
-    const data = {
-      email: userData.email,
-      productId: id,
-    };
-    console.log(data);
     try {
       await apiInstance.deleteFromCart(userData.email, id);
       setProducts(productsList.filter((product) => product.product_id !== id));
@@ -134,6 +129,17 @@ export default function CartForm() {
       console.error("Error deleting from cart:", error);
     }
   };
+
+  const handleDeleteAll = async () => {
+    try {
+      await apiInstance.deleteAllFromCart(userData.email);
+      setProducts([]);
+    } catch (error) {
+      alert("Failed to delete all product from cart.");
+      console.error("Error deleting all from cart:", error);
+    }
+  };
+
   //call effect
   useEffect(
     () => () => {
@@ -194,6 +200,7 @@ export default function CartForm() {
                         setValue={setValue}
                         handleNext={handleNext}
                         handleDeleteFromCart={handleDeleteFromCart}
+                        handleDeleteAll={handleDeleteAll}
                       />
                     </Grid>
                   ) : activeStep === 1 ? (
