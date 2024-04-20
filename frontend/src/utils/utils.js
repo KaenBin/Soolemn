@@ -12,7 +12,6 @@ import ButtonBase from "@mui/material/ButtonBase";
 // navigate
 export const NavigateSetter = () => {
   History.navigate = useNavigate();
-
   return null;
 };
 

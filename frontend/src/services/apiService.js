@@ -4,24 +4,29 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
-import { auth, db, storage } from "./firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
-class API {
-  createAccount = (form) => {
-    console.log(form.email, form.password);
-    createUserWithEmailAndPassword(auth, form.email, form.password).catch(
-      (error) => console.log(error)
-    );
+import { auth, db, storage } from "./firebase";
+import { getCheckoutUrl, getPortalUrl } from "./stripePayment";
 
+class API {
+  createAccount = async (form) => {
+    const userId = await createUserWithEmailAndPassword(
+      auth,
+      form.email,
+      form.password
+    )
+      .then((userCredential) => userCredential._tokenResponse.localId)
+      .catch((error) => console.log(error));
+    console.log(userId);
     const config = {
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
     };
-    axios
-      .post("http://localhost:4000/signup", form, config)
+    await axios
+      .post("http://localhost:4000/signup", { ...form, userId }, config)
       .catch((e) => console.log(e));
   };
 
@@ -276,6 +281,11 @@ class API {
       console.error("Error deleting all from cart:", error);
       throw error;
     }
+  };
+
+  payByStrip = async (data) => {
+    const priceId = "price_1P7KQuIcJNDJCIe2JE6XaVpN";
+    return await getCheckoutUrl(app, priceId);
   };
 
   // getProducts = (lastRefKey) => {
