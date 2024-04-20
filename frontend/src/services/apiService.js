@@ -26,7 +26,11 @@ class API {
       },
     };
     await axios
-      .post("http://localhost:4000/signup", { ...form, userId }, config)
+      .post(
+        "https://soolemn-1.onrender.com/signup",
+        { ...form, userId },
+        config
+      )
       .catch((e) => console.log(e));
   };
 
@@ -61,7 +65,7 @@ class API {
       },
     };
     return await axios
-      .get("http://localhost:4000/user", { params: { email: id } })
+      .get("https://soolemn-1.onrender.com/user", { params: { email: id } })
       .then((res) => {
         return res.data;
       })
@@ -206,7 +210,7 @@ class API {
       },
     };
     return await axios
-      .get("http://localhost:4000/get-product", config)
+      .get("https://soolemn-1.onrender.com/get-product", config)
       .then((res) => {
         return res.data;
       })
@@ -223,7 +227,7 @@ class API {
     };
     try {
       const response = await axios.post(
-        "http://localhost:4000/add_to_cart",
+        "https://soolemn-1.onrender.com/add_to_cart",
         data,
         config
       );
@@ -244,7 +248,7 @@ class API {
 
     try {
       const response = await axios.delete(
-        `http://localhost:4000/delete_from_cart/${productId}`,
+        `https://soolemn-1.onrender.com/delete_from_cart/${productId}`,
         {
           data: { email },
           headers: {
@@ -269,7 +273,7 @@ class API {
 
     try {
       const response = await axios.delete(
-        `http://localhost:4000/delete_all_cart/${email}`,
+        `https://soolemn-1.onrender.com/delete_all_cart/${email}`,
         {
           headers: {
             "Content-Type": "application/json",
