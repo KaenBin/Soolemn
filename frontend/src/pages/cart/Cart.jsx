@@ -11,6 +11,7 @@ import { ColorlibConnector, ColorlibStepIcon } from "./Child/StepperComp";
 import { Typography } from "@mui/material";
 import { products } from "./Child/ProductDataBase";
 import apiInstance from "@/services/apiService";
+import { removeCart } from "../../redux/slice/cartSlice";
 // import Box from "@mui/material/Box";
 // import Grid from "@mui/material/Unstable_Grid2";
 
@@ -124,6 +125,7 @@ export default function CartForm() {
     try {
       await apiInstance.deleteFromCart(userData.email, id);
       setProducts(productsList.filter((product) => product.product_id !== id));
+      dispatch(removeCart({ product_id: id }));
     } catch (error) {
       alert("Failed to delete product from cart.");
       console.error("Error deleting from cart:", error);

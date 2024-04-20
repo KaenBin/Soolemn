@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Card,
   CardContent,
@@ -45,6 +45,7 @@ import {
   NotificationModal,
 } from "@/components/common";
 import { makePayment } from "@/redux/actions/profileActions";
+import { addtoCart } from "../../../redux/slice/cartSlice";
 import apiInstance from "@/services/apiService";
 
 const ProductInfo = (props) => {
@@ -52,9 +53,25 @@ const ProductInfo = (props) => {
   const [quantity, setQuantity] = React.useState(1);
   const [selectedColor, setSelectedColor] = useState("");
   const [notificationOpen, setNotificationOpen] = useState(false);
+  const [userData, setUserData] = useState(null);
+  const [cartLength, setCartLength] = useState(0);
+  const currentUser = apiInstance.getCurrentUser();
+  useEffect(() => {
+    const getUserData = async () => {
+      try {
+        const userData = await apiInstance.getUser(currentUser.email);
+
+        setUserData(userData);
+        setCartLength(userData.cart.length);
+      } catch (error) {
+        console.error("Error occurred:", error);
+      }
+    };
+    getUserData();
+  }, [currentUser.email]);
 
   const dispatch = useDispatch();
-  const currentUser = apiInstance.getCurrentUser();
+
   const params = useParams();
   const id = params.id.split("/").pop();
 
@@ -91,6 +108,8 @@ const ProductInfo = (props) => {
     };
     try {
       await apiInstance.addToCart(data);
+      dispatch(addtoCart(data));
+      // setCartLength((prevLength) => prevLength + 1);
       setNotificationOpen(true);
     } catch (error) {
       alert("Failed to add product to cart.");

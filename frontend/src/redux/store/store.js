@@ -30,6 +30,7 @@ export default () => {
   const store = configureStore(
     {
       reducer: persistedReducer,
+
       middleware: (getDefaultMiddleware) => [sagaMiddleware],
       // getDefaultMiddleware({
       //   serializableCheck: {
