@@ -204,28 +204,29 @@ export default function CartForm() {
                         handleDeleteAll={handleDeleteAll}
                       />
                     </Grid>
-                  ) : activeStep === 1 ? (
-                    <Grid item xs={12} sx={{ paddingBottom: "16px" }}>
-                      <Step2
-                        productsList={productsList}
-                        setProducts={setProducts}
-                        total={total}
-                        subtotal={subtotal}
-                        value={value}
-                        setValue={setValue}
-                        contactInfor={contactInfor}
-                        handleFirstName={handleFirstName}
-                        handleLastName={handleLastName}
-                        handleEmail={handleEmail}
-                        handlePhoneNum={handlePhoneNum}
-                        shippingAddress={shippingAddress}
-                        handleShipping={handleShipping}
-                        payment={payment}
-                        handlePayment={handlePayment}
-                        handleNext={handleNext}
-                      />
-                    </Grid>
                   ) : (
+                    // activeStep === 1 ? (
+                    //   <Grid item xs={12} sx={{ paddingBottom: "16px" }}>
+                    //     <Step2
+                    //       productsList={productsList}
+                    //       setProducts={setProducts}
+                    //       total={total}
+                    //       subtotal={subtotal}
+                    //       value={value}
+                    //       setValue={setValue}
+                    //       contactInfor={contactInfor}
+                    //       handleFirstName={handleFirstName}
+                    //       handleLastName={handleLastName}
+                    //       handleEmail={handleEmail}
+                    //       handlePhoneNum={handlePhoneNum}
+                    //       shippingAddress={shippingAddress}
+                    //       handleShipping={handleShipping}
+                    //       payment={payment}
+                    //       handlePayment={handlePayment}
+                    //       handleNext={handleNext}
+                    //     />
+                    //   </Grid>
+                    // ) :
                     <Grid item xs={12} sx={{ paddingBottom: "16px" }}>
                       <Step3 total={total} method={payment.method} />
                     </Grid>

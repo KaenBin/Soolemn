@@ -127,10 +127,10 @@ const ProductDescription = (props) => {
             {expanded ? "Show Less" : "Show More"}
           </Button>
         )}
-        <Typography variant="description" m="5px">
+        {/* <Typography variant="description" m="5px">
           Similar Product:
         </Typography>
-        <SimilarProducts list={products} block={3} />
+        <SimilarProducts list={products} block={3} /> */}
       </Stack>
     </Box>
   );

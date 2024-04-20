@@ -6,8 +6,14 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import Divider from "@mui/material/Divider";
+import apiInstance from "@/services/apiService";
 
 function CartSummary(prop) {
+  const handlePurchase = async (data) => {
+    await apiInstance.payByStrip(data).then((checkOutUrl) => {
+      window.location.assign(checkOutUrl);
+    });
+  };
   const handleChange = (event) => {
     prop.setValue(event.target.value);
   };
@@ -217,7 +223,8 @@ function CartSummary(prop) {
                 boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.5)",
               }}
               disabled={prop.productsList?.length > 0 ? false : true}
-              onClick={prop.handleNext}
+              // onClick={prop.handleNext}
+              onClick={() => handlePurchase()}
             >
               CheckOut
             </Button>

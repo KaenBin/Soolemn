@@ -5,8 +5,15 @@ import ContactInfo from "./ContactInfo";
 import ShippAddress from "./ShippAddress";
 import PaymentMethod from "./PaymentMethod";
 import Button from "@mui/material/Button";
+import apiInstance from "@/services/apiService";
 
 function FullForm(prop) {
+  const handlePurchase = async (data) => {
+    await apiInstance.payByStrip(data).then((checkOutUrl) => {
+      window.location.assign(checkOutUrl);
+    });
+  };
+
   return (
     <div>
       <Grid container>
@@ -41,7 +48,8 @@ function FullForm(prop) {
               boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.5)",
             }}
             disabled={prop.productsList?.length > 0 ? false : true}
-            onClick={prop.handleNext}
+            // onClick={prop.handleNext}
+            onClick={() => handlePurchase()}
           >
             Place Order
           </Button>

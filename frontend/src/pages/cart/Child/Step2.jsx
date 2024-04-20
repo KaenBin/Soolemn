@@ -38,7 +38,7 @@ function Step2(prop) {
               <OrderSum
                 productsList={prop.productsList}
                 setProducts={prop.setProducts}
-                total={prop.total}
+                total={prop.total - 9.99}
                 subtotal={prop.subtotal}
                 value={prop.value}
                 setValue={prop.setValue}
