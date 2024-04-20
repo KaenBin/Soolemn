@@ -7,6 +7,7 @@ import authReducer from "./authReducer";
 // import productReducer from './productReducer';
 import profileReducer from "./profileReducer";
 import userReducer from "./userReducer";
+import cartSlice from "../slice/cartSlice";
 
 const rootReducer = combineReducers({
   // products: productReducer,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   profile: profileReducer,
   // filter: filterReducer,
   users: userReducer,
+  cart: cartSlice,
   // checkout: checkoutReducer,
   // app: miscReducer
 });

@@ -15,6 +15,7 @@ function Step1(prop) {
             productsList={prop.productsList}
             setProducts={prop.setProducts}
             handleDeleteFromCart={prop.handleDeleteFromCart}
+            handleDeleteAll={prop.handleDeleteAll}
           />
         </Grid>
         <Grid item xs={4}>

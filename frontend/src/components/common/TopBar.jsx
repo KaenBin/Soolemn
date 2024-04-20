@@ -96,10 +96,9 @@ export default function TopBar() {
   }));
   const isMenuOpen = Boolean(anchorEl);
   const menuId = "primary-search-account-menu";
-  console.log(store.profile);
   const currentUser = apiInstance.getCurrentUser();
   const [userData, setUserData] = React.useState([]);
-  const [cartLength, setCartLength] = React.useState(0);
+  // const [cartLength, setCartLength] = React.useState(0);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -179,11 +178,13 @@ export default function TopBar() {
     getUserData();
   }, [currentUser]);
 
-  const cartData = userData?.cart?.length || 0;
+  // const cartData = userData?.cart?.length || 0;
 
-  React.useEffect(() => {
-    setCartLength(cartData);
-  }, [userData]);
+  // React.useEffect(() => {
+  //   setCartLength(cartData);
+  // }, [userData]);
+
+  const cartItems = useSelector((state) => state.cart.cart);
 
   return (
     <Box sx={{ flexGrow: 1 }} boxShadow={3}>
@@ -311,7 +312,7 @@ export default function TopBar() {
                   component={Link}
                   to={ROUTE.CART}
                 >
-                  <Badge badgeContent={cartLength} sx={badgeStyle}>
+                  <Badge badgeContent={cartItems.length} sx={badgeStyle}>
                     <LocalMallOutlinedIcon />
                   </Badge>
                 </IconButton>

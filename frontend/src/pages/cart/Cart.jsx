@@ -11,6 +11,7 @@ import { ColorlibConnector, ColorlibStepIcon } from "./Child/StepperComp";
 import { Typography } from "@mui/material";
 import { products } from "./Child/ProductDataBase";
 import apiInstance from "@/services/apiService";
+import { removeCart } from "../../redux/slice/cartSlice";
 // import Box from "@mui/material/Box";
 // import Grid from "@mui/material/Unstable_Grid2";
 
@@ -121,19 +122,26 @@ export default function CartForm() {
     setActiveStep(step);
   };
   const handleDeleteFromCart = async (id) => {
-    const data = {
-      email: userData.email,
-      productId: id,
-    };
-    console.log(data);
     try {
       await apiInstance.deleteFromCart(userData.email, id);
       setProducts(productsList.filter((product) => product.product_id !== id));
+      dispatch(removeCart({ product_id: id }));
     } catch (error) {
       alert("Failed to delete product from cart.");
       console.error("Error deleting from cart:", error);
     }
   };
+
+  const handleDeleteAll = async () => {
+    try {
+      await apiInstance.deleteAllFromCart(userData.email);
+      setProducts([]);
+    } catch (error) {
+      alert("Failed to delete all product from cart.");
+      console.error("Error deleting all from cart:", error);
+    }
+  };
+
   //call effect
   useEffect(
     () => () => {
@@ -194,6 +202,7 @@ export default function CartForm() {
                         setValue={setValue}
                         handleNext={handleNext}
                         handleDeleteFromCart={handleDeleteFromCart}
+                        handleDeleteAll={handleDeleteAll}
                       />
                     </Grid>
                   ) : activeStep === 1 ? (

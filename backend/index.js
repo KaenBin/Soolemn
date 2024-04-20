@@ -7,7 +7,11 @@ const {
   getProducts,
   getImageDownloadUrl,
 } = require("./firebase/products");
-const { addToCart, deleteFromCart } = require("./firebase/cart");
+const {
+  addToCart,
+  deleteFromCart,
+  deleteAllFromCart,
+} = require("./firebase/cart");
 const { uploadImage } = require("./firebase/images");
 
 const port = 4000;
@@ -113,6 +117,16 @@ app.delete("/delete_from_cart/:productId", async (req, res) => {
     const { email } = req.body;
     const { productId } = req.params;
     const response = await deleteFromCart(email, productId);
+    res.send(response);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.delete("/delete_all_cart/:email", async (req, res) => {
+  try {
+    const { email } = req.params;
+    const response = await deleteAllFromCart(email);
     res.send(response);
   } catch (error) {
     res.status(500).json({ error: error.message });

@@ -23,6 +23,7 @@ import apiInstance from "@/services/apiService";
 // import { setAuthenticating, setAuthStatus } from "@/redux/actions/miscActions";
 import { clearProfile, setProfile } from "@/redux/actions/profileActions";
 import { updateProfileSuccess } from "@/redux/actions/profileActions";
+import { addtoCart, setInitialLoad } from "../slice/cartSlice";
 
 function* handleError(e) {
   const obj = { success: false, type: "auth", isError: true };
@@ -155,6 +156,8 @@ function* authSaga({ type, payload }) {
       yield initRequest();
       const user = yield call(apiInstance.getUser, payload.email);
       yield put(setProfile(user));
+      yield put(setInitialLoad(user.cart));
+      console.log(user.cart);
       yield put(
         signInSuccess({
           id: payload.uid,
@@ -163,6 +166,7 @@ function* authSaga({ type, payload }) {
           provider: payload.providerData[0].providerId,
         })
       );
+
       // } else if (
       //   payload.providerData[0].providerId !== "password" &&
       //   !snapshot.data()
