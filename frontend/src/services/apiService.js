@@ -5,7 +5,6 @@ import {
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { useRouter } from "next/navigation";
 
 import { auth, db, storage } from "./firebase";
 import { getCheckoutUrl, getPortalUrl } from "./stripePayment";

@@ -3,7 +3,6 @@ import { styled } from "@mui/material/styles";
 import { createTheme } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import ButtonBase from "@mui/material/ButtonBase";
-import { useRouter } from "next/navigation";
 
 // const History = {
 //   navigate: null,
