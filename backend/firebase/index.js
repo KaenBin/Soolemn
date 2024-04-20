@@ -12,7 +12,8 @@ const auth = admin.auth();
 const storage = admin.storage();
 
 async function registerUser(req, res) {
-  const id = req.body.email;
+  console.log(req.body);
+
   const userRef = await admin.auth().createUser({
     fullname: req.body.fullname,
     email: req.body.email,
@@ -20,6 +21,7 @@ async function registerUser(req, res) {
     emailVerified: false,
     disabled: false,
   });
+
   const user = {
     fullname: req.body.fullname,
     // avatar: defaultAvatar,
@@ -32,7 +34,7 @@ async function registerUser(req, res) {
     role: "USER",
     dateJoined: userRef.metadata.creationTime || new Date().getTime(),
   };
-  return db.collection("users").doc(id).set(user);
+  return db.collection("users").doc(req.body.userId).set(user);
 }
 
 async function getUser(req, res) {
