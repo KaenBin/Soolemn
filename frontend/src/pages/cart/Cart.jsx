@@ -48,13 +48,13 @@ export default function CartForm() {
     expDate: "",
     cvc: "",
   });
-  // console.log(payment)
+
   const subtotal =
-    productsList.length > 0
+    productsList?.length > 0
       ? productsList.reduce((sum, obj) => sum + obj.price * obj.quantity, 0)
       : 0;
   const total =
-    productsList.length > 0
+    productsList?.length > 0
       ? (
           subtotal +
           (value == "Normal Shipping"
@@ -125,7 +125,7 @@ export default function CartForm() {
       email: userData.email,
       productId: id,
     };
-    console.log(data)
+    console.log(data);
     try {
       await apiInstance.deleteFromCart(userData.email, id);
       setProducts(productsList.filter((product) => product.product_id !== id));

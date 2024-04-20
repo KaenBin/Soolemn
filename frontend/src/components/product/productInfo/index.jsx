@@ -45,7 +45,7 @@ import apiInstance from "@/services/apiService";
 
 const ProductInfo = (props) => {
   const [expanded, setExpanded] = React.useState(false);
-  const [quantity, setQuantity] = act.useState(1);
+  const [quantity, setQuantity] = React.useState(1);
   const [selectedColor, setSelectedColor] = useState("");
   const dispatch = useDispatch();
   const currentUser = apiInstance.getCurrentUser();

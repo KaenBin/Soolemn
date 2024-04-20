@@ -50,7 +50,6 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
 }));
 
 function OrderSum(props) {
-  
   return (
     <div>
       <Box
@@ -68,7 +67,7 @@ function OrderSum(props) {
             </Typography>
           </Grid>
           <Grid container item xs={12}>
-            {props.productsList.map((product, index) => (
+            {props.productsList?.map((product, index) => (
               <Grid item xs={12} key={index} sx={{ marginTop: "10px" }}>
                 <ProductDetail productinfo={product} />
               </Grid>
