@@ -11,7 +11,7 @@ import { ColorlibConnector, ColorlibStepIcon } from "./Child/StepperComp";
 import { Typography } from "@mui/material";
 import { products } from "./Child/ProductDataBase";
 import apiInstance from "@/services/apiService";
-import { removeCart } from "../../redux/slice/cartSlice";
+import { removeAll, removeCart } from "../../redux/slice/cartSlice";
 // import Box from "@mui/material/Box";
 // import Grid from "@mui/material/Unstable_Grid2";
 
@@ -82,8 +82,6 @@ export default function CartForm() {
     getUserData();
   }, []);
 
-  console.log(userData);
-
   //Contact Infor Function
   function handleFirstName(e) {
     setContactInfor({ ...contactInfor, firstName: e.target.value });
@@ -136,6 +134,7 @@ export default function CartForm() {
     try {
       await apiInstance.deleteAllFromCart(userData.email);
       setProducts([]);
+      dispatch(removeAll());
     } catch (error) {
       alert("Failed to delete all product from cart.");
       console.error("Error deleting all from cart:", error);
