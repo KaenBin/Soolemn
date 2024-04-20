@@ -68,6 +68,14 @@ const ProductInfo = (props) => {
     setSelectedColor(color);
   };
 
+  const handlePurchase = async (data) => {
+
+    
+    await apiInstance.payByStrip(data).then((checkOutUrl) => {
+      window.location.assign(checkOutUrl);
+    });
+  };
+
   const ImageUrl =
     props.item.images && props.item.images.length > 0
       ? props.item.images[0]
@@ -202,9 +210,7 @@ const ProductInfo = (props) => {
       />
       <Stack spacing={3} mt={2}>
         <Button
-          onClick={() =>
-            dispatch(makePayment(9.99 + (props.item.price / 2) * quantity))
-          }
+          onClick={() => handlePurchase("hi")}
           sx={{
             color: "#FEFEFE",
             backgroundColor: "#008060",

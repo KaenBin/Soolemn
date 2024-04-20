@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const { authMiddleware, imagesMiddleware } = require("./middleware");
-const { registerUser, signInUser, getUser } = require("./firebase");
+const { registerUser, getUser } = require("./firebase");
 const {
   addProduct,
   getProducts,
@@ -9,10 +9,16 @@ const {
 } = require("./firebase/products");
 const { addToCart, deleteFromCart } = require("./firebase/cart");
 const { uploadImage } = require("./firebase/images");
+const { default: Stripe } = require("stripe");
+const { createStripeCheckout } = require("./firebase/payment/payment");
 
 const port = 4000;
 
 const app = express();
+
+const stripe = Stripe(
+  "sk_test_51P4emDIcJNDJCIe2S5d5KZViJAHfWV45vjCZ4VloaX7jH6ektWN6UaG0lt6W5sNa0c22FqNjwtCch2z9yzmNB9Ko00DyF4CpuJ"
+);
 
 // app.use("/", authMiddleware);
 
@@ -32,14 +38,14 @@ app.post("/signup", async (req, res) => {
   }
 });
 
-app.post("/signin", async (req, res) => {
-  try {
-    const response = await signInUser(req, res);
-    res.send(response);
-  } catch (error) {
-    res.send(error);
-  }
-});
+// app.post("/signin", async (req, res) => {
+//   try {
+//     const response = await signInUser(req, res);
+//     res.send(response);
+//   } catch (error) {
+//     res.send(error);
+//   }
+// });
 
 // user
 app.get("/user", async (req, res) => {
@@ -117,6 +123,17 @@ app.delete("/delete_from_cart/:productId", async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
+});
+
+app.post("/pay-product", async (req, res) => {
+  await createStripeCheckout(req, res)
+    .then((response) => {
+      const sessionId = response.data.id;
+      stripe.redirectToCheckout({ sessionId: sessionId });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 });
 
 app.listen(port, () =>
