@@ -453,5 +453,4 @@ class API {
 }
 
 const apiInstance = new API();
-export const products = await apiInstance.getProducts();
 export default apiInstance;

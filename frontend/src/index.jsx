@@ -21,9 +21,9 @@ auth.onAuthStateChanged((user) => {
   }
 
   root.render(
-    // <React.StrictMode>
-    <App store={store} persistor={persistor} />
-    // </React.StrictMode>
+    <React.StrictMode>
+      <App store={store} persistor={persistor} />
+    </React.StrictMode>
   );
 });
 

@@ -9,7 +9,7 @@ import ProductList from "../productList";
 import { ListPagination } from "@/components/pagination";
 
 const ProductGroup = (props) => {
-  const [page, setPage] = React.useState(props.list.length ? 1 : 0);
+  const [page, setPage] = React.useState(0);
 
   const output = [];
 
@@ -23,6 +23,11 @@ const ProductGroup = (props) => {
       </Grid>
     );
   }
+
+  React.useEffect(() => {
+    setPage(props.list.length ? 1 : 0);
+  }, [props.list]);
+
   return (
     <Box width="90vw">
       <Grid container flexDirection="column" display="flex" spacing={5}>

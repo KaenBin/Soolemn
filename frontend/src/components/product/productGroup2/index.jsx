@@ -17,14 +17,18 @@ import mock_product from "@/mockdata/products";
 import mock_categories from "@/mockdata/categories";
 import { Sort, Price, Category } from "@/constants/filters";
 import { listFilter } from "@/utils/utils";
+import { useEffect } from "react";
 
 const ProductGroup2 = (props) => {
-  const [page, setPage] = React.useState(props.list.length ? 1 : 0);
+  const [page, setPage] = React.useState(0);
   const [category, setCategory] = React.useState([]);
   const [minPrice, setMinPrice] = React.useState();
   const [maxPrice, setMaxPrice] = React.useState();
   const [sort, setSort] = React.useState(Sort[0].value);
 
+  useEffect(() => {
+    setPage(props.list.length ? 1 : 0);
+  }, [props.list]);
   return (
     <Box width="90vw">
       <Grid

@@ -33,11 +33,25 @@ import img from "@/assets/OIP.jpg";
 import { StyledRating } from "@/utils/utils";
 import SimilarProducts from "../similarProducts";
 import mock_product from "@/mockdata/products";
-import { products } from "@/services/apiService";
+import { useEffect } from "react";
+import apiInstance from "@/services/apiService";
 
 const ProductDescription = (props) => {
   const [expanded, setExpanded] = React.useState(false);
+  const [products, setProducts] = React.useState([]);
 
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const products = await apiInstance.getProducts();
+        setProducts(products);
+      } catch (error) {
+        console.error("Error occurred:", error);
+      }
+    };
+    fetchProducts();
+  }, [products]);
+  
   const toggleExpanded = () => {
     setExpanded(!expanded);
   };
