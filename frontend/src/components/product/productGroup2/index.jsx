@@ -23,7 +23,7 @@ const ProductGroup2 = (props) => {
   const [category, setCategory] = React.useState([]);
   const [minPrice, setMinPrice] = React.useState();
   const [maxPrice, setMaxPrice] = React.useState();
-  const [sort, setSort] = React.useState(Sort[0]);
+  const [sort, setSort] = React.useState(Sort[0].value);
 
   return (
     <Box width="90vw">
@@ -44,7 +44,7 @@ const ProductGroup2 = (props) => {
           display="flex"
           justifyContent="space-between"
         >
-          <Grid item>
+          <Grid>
             <CheckboxFilter
               value={category}
               setValue={setCategory}
@@ -53,7 +53,6 @@ const ProductGroup2 = (props) => {
             />
           </Grid>
           <Grid
-            item
             flexDirection="row"
             width="30vw"
             display="flex"
@@ -74,7 +73,7 @@ const ProductGroup2 = (props) => {
               list={Price.slice(1)}
             />
           </Grid>
-          <Grid item>
+          <Grid>
             <NormalFilter
               value={sort}
               setValue={setSort}
@@ -83,7 +82,7 @@ const ProductGroup2 = (props) => {
             />
           </Grid>
         </Grid>
-        <Grid item display="flex" justifyContent="center">
+        <Grid display="flex" justifyContent="center">
           <ProductList
             list={listFilter(props.list, category, minPrice, maxPrice).slice(
               0,
@@ -92,7 +91,7 @@ const ProductGroup2 = (props) => {
           />
         </Grid>
         {page * 20 < props.list.length ? (
-          <Grid item>
+          <Grid>
             <Button
               onClick={() => setPage(page + 1)}
               style={{

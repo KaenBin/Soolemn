@@ -6,7 +6,6 @@ import "./index.css";
 import {
   onAuthStateFail,
   onAuthStateSuccess,
-  signOut,
 } from "@/redux/actions/authActions";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
@@ -21,7 +20,11 @@ auth.onAuthStateChanged((user) => {
     store.dispatch(onAuthStateFail("Failed to authenticate"));
   }
 
-  root.render(<App store={store} persistor={persistor} />);
+  root.render(
+    <React.StrictMode>
+      <App store={store} persistor={persistor} />
+    </React.StrictMode>
+  );
 });
 
 reportWebVitals();

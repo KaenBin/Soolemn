@@ -91,9 +91,7 @@ export default function TopBar() {
   const [avatar, setAvatar] = React.useState();
   const [imageUrl, setImageUrl] = React.useState();
   const classes = useStyles();
-  const store = useSelector((state) => ({
-    profile: state.profile,
-  }));
+  const profile = useSelector((state) => state.profile);
   const isMenuOpen = Boolean(anchorEl);
   const menuId = "primary-search-account-menu";
 
@@ -291,9 +289,7 @@ export default function TopBar() {
                   >
                     <Box className={classes.popover}>
                       <Divider>Wallet</Divider>
-                      <Typography pt={1}>
-                        Balance: ${store.profile.wallet}
-                      </Typography>
+                      <Typography pt={1}>Balance: ${profile.wallet}</Typography>
                     </Box>
                   </Popover>
                 </IconButton>

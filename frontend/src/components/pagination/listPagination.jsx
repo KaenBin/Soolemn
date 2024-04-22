@@ -31,8 +31,8 @@ const ListPagination = (props) => {
 
   return (
     <Grid container spacing={2} display="flex" justifyContent="space-between">
-      <Grid item>{output}</Grid>
-      <Grid item></Grid>
+      <Grid>{output}</Grid>
+      {/* <Grid></Grid> */}
     </Grid>
   );
 };

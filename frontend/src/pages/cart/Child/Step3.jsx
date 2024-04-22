@@ -45,52 +45,56 @@ function Step3(prop) {
               item
               container
               xs={12}
-              sx={{ display: "flex", justifyContent: "center", marginTop:"20px" }}
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                marginTop: "20px",
+              }}
             >
               <Box sx={{ width: "60%" }}>
-                <Grid item container xs={12}>
-                  <Grid item xs={6}>
+                <Grid container xs={12}>
+                  <Grid xs={6}>
                     <Typography fontFamily="" variant="body1" gutterBottom>
                       Order Code
                     </Typography>
                   </Grid>
-                  <Grid item xs={6}>
+                  <Grid xs={6}>
                     <Typography fontFamily="" variant="body1" gutterBottom>
                       #0123_45678
                     </Typography>
                   </Grid>
                 </Grid>
-                <Grid item container xs={12}>
-                  <Grid item xs={6}>
+                <Grid container xs={12}>
+                  <Grid xs={6}>
                     <Typography fontFamily="" variant="body1" gutterBottom>
                       Date
                     </Typography>
                   </Grid>
-                  <Grid item xs={6}>
+                  <Grid xs={6}>
                     <Typography fontFamily="" variant="body1" gutterBottom>
                       December 12, 2023
                     </Typography>
                   </Grid>
                 </Grid>
-                <Grid item container xs={12}>
-                  <Grid item xs={6}>
+                <Grid container xs={12}>
+                  <Grid xs={6}>
                     <Typography fontFamily="" variant="body1" gutterBottom>
                       Total
                     </Typography>
                   </Grid>
-                  <Grid item xs={6}>
+                  <Grid xs={6}>
                     <Typography fontFamily="" variant="body1" gutterBottom>
                       ${prop.total}
                     </Typography>
                   </Grid>
                 </Grid>
-                <Grid item container xs={12}>
-                  <Grid item xs={6}>
+                <Grid container xs={12}>
+                  <Grid xs={6}>
                     <Typography fontFamily="" variant="body1" gutterBottom>
                       Payment Method
                     </Typography>
                   </Grid>
-                  <Grid item xs={6}>
+                  <Grid xs={6}>
                     <Typography fontFamily="" variant="body1" gutterBottom>
                       {prop.method}
                     </Typography>

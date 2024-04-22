@@ -24,13 +24,13 @@ function CartSummary(prop) {
       >
         <Grid container>
           {/* //////////////////////////////////////////////////////////// */}
-          <Grid item xs={12}>
+          <Grid xs={12}>
             <Typography fontFamily="" variant="h5" gutterBottom>
               Cart Summary
             </Typography>
           </Grid>
           {/* //////////////////////////////////////////////////////////// */}
-          <Grid item xs={12}>
+          <Grid xs={12}>
             <FormControl sx={{ width: "100%" }}>
               <FormLabel
                 id="demo-controlled-radio-buttons-group"
@@ -58,7 +58,7 @@ function CartSummary(prop) {
                   }}
                 >
                   <Grid container>
-                    <Grid item xs={8}>
+                    <Grid xs={8}>
                       <FormControlLabel
                         value="Normal Shipping"
                         control={<Radio />}
@@ -96,7 +96,7 @@ function CartSummary(prop) {
                   value="Express Shipping"
                 >
                   <Grid container>
-                    <Grid item xs={8}>
+                    <Grid xs={8}>
                       <FormControlLabel
                         value="Express Shipping"
                         control={<Radio />}
@@ -133,7 +133,7 @@ function CartSummary(prop) {
                   }}
                 >
                   <Grid container>
-                    <Grid item xs={8}>
+                    <Grid xs={8}>
                       <FormControlLabel
                         value="Pick Up"
                         control={<Radio />}
@@ -160,7 +160,7 @@ function CartSummary(prop) {
             </FormControl>
           </Grid>
           {/* //////////////////////////////////////////////////////////// */}
-          <Grid item xs={12} sx={{ marginTop: "10px" }}>
+          <Grid xs={12} sx={{ marginTop: "10px" }}>
             <Box
               sx={{
                 width: "100%",
@@ -177,11 +177,11 @@ function CartSummary(prop) {
             </Box>
           </Grid>
 
-          <Grid item xs={12}>
+          <Grid xs={12}>
             <Divider />
           </Grid>
           {/* //////////////////////////////////////////////////////////// */}
-          <Grid item xs={12}>
+          <Grid xs={12}>
             <Divider />
             <Box
               sx={{

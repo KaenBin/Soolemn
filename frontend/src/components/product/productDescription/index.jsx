@@ -31,7 +31,6 @@ import { tableCellClasses } from "@mui/material/TableCell";
 
 import img from "@/assets/OIP.jpg";
 import { StyledRating } from "@/utils/utils";
-import { CustomCarousel } from "@/components/carousel";
 import SimilarProducts from "../similarProducts";
 import mock_product from "@/mockdata/products";
 import { products } from "@/services/apiService";

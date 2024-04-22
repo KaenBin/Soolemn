@@ -36,7 +36,6 @@ import { useDispatch } from "react-redux";
 
 import img from "@/assets/OIP.jpg";
 import { StyledRating } from "@/utils/utils";
-import { CustomCarousel } from "@/components/carousel";
 import SimilarProducts from "../similarProducts";
 import mock_product from "@/mockdata/products";
 import {
@@ -56,6 +55,8 @@ const ProductInfo = (props) => {
   const [userData, setUserData] = useState(null);
   const [cartLength, setCartLength] = useState(0);
   const currentUser = apiInstance.getCurrentUser();
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const getUserData = async () => {
       try {
@@ -68,9 +69,7 @@ const ProductInfo = (props) => {
       }
     };
     getUserData();
-  }, [currentUser.email]);
-
-  const dispatch = useDispatch();
+  }, [currentUser, userData, cartLength]);
 
   const params = useParams();
   const id = params.id.split("/").pop();
@@ -201,7 +200,6 @@ const ProductInfo = (props) => {
         </Typography>
         <TextField
           value={quantity}
-          defaultValue={1}
           onChange={(e) => setQuantity(e.target.value)}
           sx={{
             color: "#121212",

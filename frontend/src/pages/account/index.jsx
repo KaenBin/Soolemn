@@ -141,7 +141,7 @@ export default function Account() {
         return (
           <>
             <Grid container xs={12} spacing={5}>
-              <Grid item xs={6}>
+              <Grid xs={6}>
                 <Card sx={{ border: "2px solid black" }}>
                   <CardHeader
                     action={
@@ -165,7 +165,7 @@ export default function Account() {
                 </Card>
               </Grid>
 
-              <Grid item xs={6}>
+              <Grid xs={6}>
                 <Card sx={{ border: "2px solid black" }}>
                   <CardHeader
                     action={
@@ -268,7 +268,7 @@ export default function Account() {
                         justifyContent="center"
                         alignItems="center"
                       >
-                        <Grid item xs={4}>
+                        <Grid xs={4}>
                           <img
                             src={product1}
                             alt="product1"
@@ -276,7 +276,7 @@ export default function Account() {
                             height="75"
                           />
                         </Grid>
-                        <Grid item xs={8}>
+                        <Grid xs={8}>
                           <b>Tray Table</b>
                           <br />
                           <p>Color: Black</p>
@@ -313,7 +313,7 @@ export default function Account() {
             <h1>My Account</h1>
           </div>
           <Grid container xs={12}>
-            <Grid item xs={4}>
+            <Grid xs={4}>
               <div style={{ backgroundColor: "#F3F5F7", width: "90%" }}>
                 <div style={{ padding: "50px" }}>
                   <Grid
@@ -409,7 +409,7 @@ export default function Account() {
                 </div>
               </div>
             </Grid>
-            <Grid item xs={8}>
+            <Grid xs={8}>
               <h2>Your {selectedTab}</h2>
               {renderTabContent()}
             </Grid>

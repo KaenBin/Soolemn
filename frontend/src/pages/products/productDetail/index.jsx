@@ -71,13 +71,13 @@ export default function ProductDetail(props) {
           justifyContent="center"
           columnSpacing={5}
         >
-          <Grid item>
+          <Grid>
             <ProductImage item={product} />
           </Grid>
-          <Grid item>
+          <Grid>
             <ProductDescription item={product} />
           </Grid>
-          <Grid item>
+          <Grid>
             <ProductInfo item={product} />
           </Grid>
         </Grid>

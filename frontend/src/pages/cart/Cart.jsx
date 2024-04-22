@@ -2,7 +2,7 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
+import Grid from "@mui/material/Unstable_Grid2";
 import Box from "@mui/material/Box";
 import StepLabel from "@mui/material/StepLabel";
 import Stepper from "@mui/material/Stepper";
@@ -162,11 +162,7 @@ export default function CartForm() {
             marginBottom="32px"
           >
             {/* stepper */}
-            <Grid
-              item
-              xs={12}
-              sx={{ display: "flex", justifyContent: "center" }}
-            >
+            <Grid xs={12} sx={{ display: "flex", justifyContent: "center" }}>
               <Box sx={{ width: "60%", marginBottom: "50px" }}>
                 <Stepper
                   // alternativeLabel
@@ -186,12 +182,12 @@ export default function CartForm() {
                 </Stepper>
               </Box>
             </Grid>
-            <Grid item xs={12}>
+            <Grid xs={12}>
               <Box>
                 <React.Fragment>
                   {/* Change Step */}
                   {activeStep === 0 ? (
-                    <Grid item xs={12} sx={{ paddingBottom: "16px" }}>
+                    <Grid xs={12} sx={{ paddingBottom: "16px" }}>
                       <Step1
                         productsList={productsList}
                         setProducts={setProducts}
@@ -205,7 +201,7 @@ export default function CartForm() {
                       />
                     </Grid>
                   ) : activeStep === 1 ? (
-                    <Grid item xs={12} sx={{ paddingBottom: "16px" }}>
+                    <Grid xs={12} sx={{ paddingBottom: "16px" }}>
                       <Step2
                         productsList={productsList}
                         setProducts={setProducts}
@@ -226,12 +222,12 @@ export default function CartForm() {
                       />
                     </Grid>
                   ) : (
-                    <Grid item xs={12} sx={{ paddingBottom: "16px" }}>
+                    <Grid xs={12} sx={{ paddingBottom: "16px" }}>
                       <Step3 total={total} method={payment.method} />
                     </Grid>
                   )}
                   {/* Back and Next Step */}
-                  {/* <Grid item xs={12}>
+                  {/* <Grid xs={12}>
                     <Box
                       sx={{
                         display: "flex",

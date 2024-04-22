@@ -36,24 +36,24 @@ export function Row(props) {
         <TableCell component="th" scope="row">
           {/* <Box sx={{ width: "100%" }}>
             <Grid container>
-              <Grid item xs={5}>
+              <Grid xs={5}>
                 <img src={row.product.productImg} alt="Logo" />
               </Grid>
               <Grid container item xs={7}>
                 <Grid container item xs={12}>
                   <Grid container item xs={12}>
-                    <Grid item xs={12}>
+                    <Grid xs={12}>
                       <Typography fontFamily="" variant="h6" gutterBottom>
                         {row.product.productName}
                       </Typography>
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid xs={12}>
                       <Typography fontFamily="" variant="body1" gutterBottom>
                         Color: {row.product.productColor}
                       </Typography>
                     </Grid>
                   </Grid>
-                  <Grid item xs={12}>
+                  <Grid xs={12}>
                     <ChooseColor
                       row={row}
                       handleColorChange={props.handleColorChange}

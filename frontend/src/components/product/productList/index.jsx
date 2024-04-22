@@ -8,6 +8,7 @@ const ProductList = (props) => {
   return (
     <Grid
       container
+      key={props.index}
       display="flex"
       justifyContent="center"
       columnSpacing={props.size == "small" ? 2 : 10}
@@ -15,7 +16,7 @@ const ProductList = (props) => {
     >
       {props.list.map((item, idx) => {
         return (
-          <Grid item key={idx}>
+          <Grid key={idx}>
             <ProductContainer {...props} idx={idx} item={item} />
           </Grid>
         );
