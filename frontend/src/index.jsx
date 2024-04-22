@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
+import { render } from 'react-dom';
 import configureStore from "@/redux/store/store";
 import { auth } from "./services/firebase";
 import "./index.css";
@@ -11,7 +11,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 const { store, persistor } = configureStore();
-const root = ReactDOM.createRoot(document.getElementById("app"));
+const root = document.getElementById('app');
 
 auth.onAuthStateChanged((user) => {
   if (user) {
@@ -20,11 +20,8 @@ auth.onAuthStateChanged((user) => {
     store.dispatch(onAuthStateFail("Failed to authenticate"));
   }
 
-  root.render(
-    <React.StrictMode>
-      <App store={store} persistor={persistor} />
-    </React.StrictMode>
-  );
+  render(<App store={store} persistor={persistor} />, root);
+
 });
 
 reportWebVitals();
