@@ -12,7 +12,6 @@
     "@mui/styles": "^5.15.15",
     "@mui/x-data-grid": "^7.1.1",
     "@reduxjs/toolkit": "^2.0.1",
-    "@vitejs/plugin-react": "^4.2.0",
     "axios": "^1.6.2",
     "firebase": "^10.7.1",
     "history": "^5.3.0",
@@ -28,7 +27,6 @@
     "redux-persist": "^6.0.0",
     "redux-saga": "^1.2.3",
     "styled-components": "^6.1.8",
-    "vite": "^5.0.2",
     "web-vitals": "^2.1.4"
   },
   "peerDependencies": {
@@ -38,7 +36,7 @@
   "scripts": {
     "start": "react-scripts start",
     "dev": "vite",
-    "build": "react-scripts build",
+    "build": "vite build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -59,5 +57,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.2.1",
+    "vite": "^5.2.10"
   }
 }
