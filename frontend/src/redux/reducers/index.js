@@ -4,13 +4,13 @@ import authReducer from "./authReducer";
 // import checkoutReducer from './checkoutReducer';
 // import filterReducer from './filterReducer';
 // import miscReducer from './miscReducer';
-// import productReducer from './productReducer';
+import productReducer from "./productReducer";
 import profileReducer from "./profileReducer";
 import userReducer from "./userReducer";
 import cartSlice from "../slice/cartSlice";
 
 const rootReducer = combineReducers({
-  // products: productReducer,
+  products: productReducer,
   // basket: basketReducer,
   auth: authReducer,
   profile: profileReducer,

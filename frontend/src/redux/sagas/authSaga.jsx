@@ -24,6 +24,7 @@ import apiInstance from "@/services/apiService";
 import { clearProfile, setProfile } from "@/redux/actions/profileActions";
 import { updateProfileSuccess } from "@/redux/actions/profileActions";
 import { addtoCart, setInitialLoad } from "../slice/cartSlice";
+import { getProducts } from "@/redux/actions/productActions";
 
 function* handleError(e) {
   const obj = { success: false, type: "auth", isError: true };
@@ -157,6 +158,7 @@ function* authSaga({ type, payload }) {
       const user = yield call(apiInstance.getUser, payload.email);
       yield put(setProfile(user));
       yield put(setInitialLoad(user.cart));
+      yield put(getProducts());
       yield put(
         signInSuccess({
           id: payload.uid,

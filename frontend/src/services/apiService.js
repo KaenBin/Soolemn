@@ -26,11 +26,7 @@ class API {
       },
     };
     await axios
-      .post(
-        "https://soolemn-1.onrender.com/signup",
-        { ...form, userId },
-        config
-      )
+      .post("http://localhost:4000/signup", { ...form, userId }, config)
       .catch((e) => console.log(e));
   };
 
@@ -65,7 +61,7 @@ class API {
       },
     };
     return await axios
-      .get("https://soolemn-1.onrender.com/user", { params: { email: id } })
+      .get("http://localhost:4000/user", { params: { email: id } })
       .then((res) => {
         return res.data;
       })
@@ -210,9 +206,9 @@ class API {
       },
     };
     return await axios
-      .get("https://soolemn-1.onrender.com/get-product", config)
+      .get("http://localhost:4000/get-product", config)
       .then((res) => {
-        return res.data;
+        return { products: res.data, total: res.data.length };
       })
       .catch((e) => console.log(e));
   };
@@ -227,7 +223,7 @@ class API {
     };
     try {
       const response = await axios.post(
-        "https://soolemn-1.onrender.com/add_to_cart",
+        "http://localhost:4000/add_to_cart",
         data,
         config
       );
@@ -248,7 +244,7 @@ class API {
 
     try {
       const response = await axios.delete(
-        `https://soolemn-1.onrender.com/delete_from_cart/${productId}`,
+        `http://localhost:4000/delete_from_cart/${productId}`,
         {
           data: { email },
           headers: {
@@ -273,7 +269,7 @@ class API {
 
     try {
       const response = await axios.delete(
-        `https://soolemn-1.onrender.com/delete_all_cart/${email}`,
+        `http://localhost:4000/delete_all_cart/${email}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -293,18 +289,30 @@ class API {
   // };
 
   getCheckoutUrl = async (priceId) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    };
+
     const userId = auth.currentUser?.uid;
     if (!userId) throw new Error("User is not authenticated.");
 
     try {
       const response = await axios.post(
-        `https://soolemn-1.onrender.com/pay-product`,
-        { priceId }
+        `http://localhost:4000/pay-product`,
+        {
+          priceId,
+          success_url: window.location.origin,
+          cancel_url: window.location.origin,
+        },
+        config
       );
-      console.log(response);
-      return response.data;
+      console.log(response.data);
+      window.location.replace(response.data);
     } catch (error) {
-      console.error("Error deleting all from cart:", error);
+      console.error("Error paying product:", error);
       throw error;
     }
   };

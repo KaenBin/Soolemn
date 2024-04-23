@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Unstable_Grid2";
 
@@ -10,19 +10,8 @@ import apiInstance from "@/services/apiService";
 
 export default function Home() {
   const dispatch = useDispatch();
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const products = await apiInstance.getProducts();
-        setProducts(products);
-      } catch (error) {
-        console.error("Error occurred:", error);
-      }
-    };
-    fetchProducts();
-  }, []);
+  const store = useSelector((state) => state.products);
+  console.log(store);
 
   useEffect(
     () => () => {
@@ -41,7 +30,7 @@ export default function Home() {
             justifyContent="center"
             alignItems="center"
           >
-            <ProductGroup title="Newest" list={products} block={4} />
+            <ProductGroup title="Newest" list={store.items} block={4} />
           </Grid>
           <Grid
             marginTop={5}
@@ -49,7 +38,7 @@ export default function Home() {
             justifyContent="center"
             alignItems="center"
           >
-            <ProductGroup title="Exclusive deal" list={products} block={4} />
+            <ProductGroup title="Exclusive deal" list={store.items} block={4} />
           </Grid>
           <Grid
             marginTop={5}
@@ -57,7 +46,7 @@ export default function Home() {
             justifyContent="center"
             alignItems="center"
           >
-            <ProductGroup title="Popular" list={products} block={8} />
+            <ProductGroup title="Popular" list={store.items} block={8} />
           </Grid>
           <Grid
             marginTop={5}
@@ -67,7 +56,7 @@ export default function Home() {
           >
             <ProductGroup
               title="Recommended for you"
-              list={products}
+              list={store.items}
               block={8}
             />
           </Grid>

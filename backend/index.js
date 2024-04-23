@@ -13,16 +13,11 @@ const {
   deleteAllFromCart,
 } = require("./firebase/cart");
 const { uploadImage } = require("./firebase/images");
-const { default: Stripe } = require("stripe");
 const { createStripeCheckout } = require("./firebase/payment/payment");
 
 const port = 4000;
 
 const app = express();
-
-const stripe = Stripe(
-  "sk_test_51P4emDIcJNDJCIe2S5d5KZViJAHfWV45vjCZ4VloaX7jH6ektWN6UaG0lt6W5sNa0c22FqNjwtCch2z9yzmNB9Ko00DyF4CpuJ"
-);
 
 const corsOptions = {
   origin: [
@@ -148,10 +143,9 @@ app.delete("/delete_all_cart/:email", async (req, res) => {
 });
 
 app.post("/pay-product", async (req, res) => {
-  await createStripeCheckout(req, res)
+  await createStripeCheckout(req.body)
     .then((response) => {
-      console.log(response.url);
-      res.redirect(303, response.url);
+      res.send(response.url);
     })
     .catch((error) => {
       console.log(error);
