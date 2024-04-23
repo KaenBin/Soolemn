@@ -25,7 +25,11 @@ const stripe = Stripe(
 );
 
 const corsOptions = {
-  origin: ["http://localhost:3000", "https://soolemn-ui-2.onrender.com"],
+  origin: [
+    "http://localhost:3000",
+    "https://soolemn-ui-2.onrender.com",
+    "https://soolemn-fe.onrender.com",
+  ],
 };
 
 // app.use("/", authMiddleware);
