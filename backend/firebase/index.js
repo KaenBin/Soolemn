@@ -12,15 +12,14 @@ const auth = admin.auth();
 const storage = admin.storage();
 
 async function registerUser(req, res) {
-  console.log(req.body);
-
-  const userRef = await admin.auth().createUser({
-    fullname: req.body.fullname,
-    email: req.body.email,
-    password: req.body.password,
-    emailVerified: false,
-    disabled: false,
-  });
+  const userRef = await auth
+    .getUserByEmail(req.body.email)
+    .then((userRecord) => {
+      return userRecord;
+    })
+    .catch((error) => {
+      console.log("Error fetching user data:", error);
+    });
 
   const user = {
     fullname: req.body.fullname,
@@ -28,12 +27,15 @@ async function registerUser(req, res) {
     // banner: defaultBanner,
     email: req.body.email,
     address: "",
-    basket: [],
+    cart: [],
     mobile: { data: {} },
     wallet: 0,
     role: "USER",
     dateJoined: userRef.metadata.creationTime || new Date().getTime(),
   };
+
+  console.log(user);
+
   return db.collection("users").doc(req.body.userId).set(user);
 }
 
