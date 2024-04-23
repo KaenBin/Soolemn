@@ -17,12 +17,25 @@ import {
   ProductInfo,
 } from "@/components/product";
 import mock_product from "@/mockdata/products";
-import apiInstance, { products } from "@/services/apiService";
+import apiInstance from "@/services/apiService";
 
 export default function ProductDetail(props) {
   const dispatch = useDispatch();
   const { id } = useParams();
   const [product, setProduct] = useState({});
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const products = await apiInstance.getProducts();
+        setProducts(products);
+      } catch (error) {
+        console.error("Error occurred:", error);
+      }
+    };
+    fetchProducts();
+  }, []);
 
   const breadcrumbs = [
     <NavLink
@@ -71,13 +84,13 @@ export default function ProductDetail(props) {
           justifyContent="center"
           columnSpacing={5}
         >
-          <Grid item>
+          <Grid>
             <ProductImage item={product} />
           </Grid>
-          <Grid item>
+          <Grid>
             <ProductDescription item={product} />
           </Grid>
-          <Grid item>
+          <Grid>
             <ProductInfo item={product} />
           </Grid>
         </Grid>

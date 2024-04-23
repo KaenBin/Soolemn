@@ -51,7 +51,6 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
 }));
 
 function PaymentMethod(prop) {
-
   return (
     <div>
       <Box
@@ -60,7 +59,7 @@ function PaymentMethod(prop) {
           border: "1px solid black",
           borderRadius: 1,
           marginBottom: "20px",
-          boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.5)'
+          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.5)",
         }}
       >
         <Box
@@ -72,12 +71,12 @@ function PaymentMethod(prop) {
           }}
         >
           <Grid container>
-            <Grid item xs={12}>
+            <Grid xs={12}>
               <Typography fontFamily="" variant="h5" gutterBottom>
                 Payment Method
               </Typography>
             </Grid>
-            <Grid item xs={12}>
+            <Grid xs={12}>
               <FormControl variant="standard" sx={{ width: "100%" }}>
                 <RadioGroup
                   aria-labelledby="demo-controlled-radio-buttons-group"
@@ -99,7 +98,7 @@ function PaymentMethod(prop) {
                     }}
                   >
                     <Grid container>
-                      <Grid item xs={12}>
+                      <Grid xs={12}>
                         <FormControlLabel
                           value="Pay By Cash"
                           control={<Radio />}
@@ -123,7 +122,7 @@ function PaymentMethod(prop) {
                     }}
                   >
                     <Grid container>
-                      <Grid item xs={12}>
+                      <Grid xs={12}>
                         <FormControlLabel
                           value="Pay By Card Credit"
                           control={<Radio />}
@@ -138,11 +137,11 @@ function PaymentMethod(prop) {
             </Grid>
             {prop.payment.method == "Pay By Card Credit" ? (
               <>
-                <Grid item xs={12}>
+                <Grid xs={12}>
                   <Divider />
                 </Grid>
                 <Grid container item xs={12}>
-                  <Grid item xs={12}>
+                  <Grid xs={12}>
                     <FormControl variant="standard" sx={{ width: "100%" }}>
                       <InputLabel
                         shrink
@@ -153,11 +152,15 @@ function PaymentMethod(prop) {
                           Card Number
                         </Typography>
                       </InputLabel>
-                      <BootstrapInput defaultValue={prop.payment.cardNum} id="bootstrap-input" onChange={(e) => prop.handlePayment(e, "cardNum")}/>
+                      <BootstrapInput
+                        defaultValue={prop.payment.cardNum}
+                        id="bootstrap-input"
+                        onChange={(e) => prop.handlePayment(e, "cardNum")}
+                      />
                     </FormControl>
                   </Grid>
-                  <Grid item xs={12} container spacing={2}>
-                    <Grid item xs={6}>
+                  <Grid xs={12} container spacing={2}>
+                    <Grid xs={6}>
                       <FormControl variant="standard" sx={{ width: "100%" }}>
                         <InputLabel
                           shrink
@@ -168,11 +171,15 @@ function PaymentMethod(prop) {
                             Expiration Date
                           </Typography>
                         </InputLabel>
-                        <BootstrapInput defaultValue={prop.payment.expDate} id="bootstrap-input" onChange={(e) => prop.handlePayment(e, "expDate")}/>
+                        <BootstrapInput
+                          defaultValue={prop.payment.expDate}
+                          id="bootstrap-input"
+                          onChange={(e) => prop.handlePayment(e, "expDate")}
+                        />
                       </FormControl>
                     </Grid>
 
-                    <Grid item xs={6}>
+                    <Grid xs={6}>
                       <FormControl variant="standard" sx={{ width: "100%" }}>
                         <InputLabel
                           shrink
@@ -183,7 +190,11 @@ function PaymentMethod(prop) {
                             CVC
                           </Typography>
                         </InputLabel>
-                        <BootstrapInput defaultValue={prop.payment.cvc} id="bootstrap-input" onChange={(e) => prop.handlePayment(e, "cvc")}/>
+                        <BootstrapInput
+                          defaultValue={prop.payment.cvc}
+                          id="bootstrap-input"
+                          onChange={(e) => prop.handlePayment(e, "cvc")}
+                        />
                       </FormControl>
                     </Grid>
                   </Grid>

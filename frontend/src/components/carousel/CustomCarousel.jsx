@@ -69,7 +69,7 @@ const CustomCarousel = (props) => {
         top="45vh"
         zIndex="2"
       >
-        <Grid item>
+        <Grid>
           <IconButton
             onClick={handleBack}
             sx={{
@@ -86,7 +86,7 @@ const CustomCarousel = (props) => {
             <KeyboardArrowLeft />
           </IconButton>
         </Grid>
-        <Grid item>
+        <Grid>
           <IconButton
             onClick={handleNext}
             sx={{
@@ -110,27 +110,29 @@ const CustomCarousel = (props) => {
         onChangeIndex={handleStepChange}
         enableMouseEvents
       >
-        {props.item.images
-          ? props.item.images.map((step, index) => (
-              <div key={step}>
-                {Math.abs(activeStep - index) <= 2 ? (
-                  <Box
-                    component="img"
-                    sx={{
-                      height: "55vh",
-                      display: "block",
-                      maxWidth: 400,
-                      overflow: "hidden",
-                      width: "100%",
-                      boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.4)",
-                    }}
-                    src={step}
-                    alt={"Image " + index}
-                  />
-                ) : null}
-              </div>
-            ))
-          : null}
+        {props.item.images ? (
+          props.item.images.map((step, index) => (
+            <div key={step}>
+              {Math.abs(activeStep - index) <= 2 ? (
+                <Box
+                  component="img"
+                  sx={{
+                    height: "55vh",
+                    display: "block",
+                    maxWidth: 400,
+                    overflow: "hidden",
+                    width: "100%",
+                    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.4)",
+                  }}
+                  src={step}
+                  alt={"Image " + index}
+                />
+              ) : null}
+            </div>
+          ))
+        ) : (
+          <></>
+        )}
       </AutoPlaySwipeableViews>
       <SwipeableCarousel
         images={props.item.images ? props.item.images : null}

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import Grid from "@mui/material/Unstable_Grid2";
 import { Pagination } from "@mui/material";
@@ -6,10 +6,23 @@ import { Pagination } from "@mui/material";
 import { setAuthenticating } from "@/redux/actions/miscActions";
 import { ProductGroup, ProductGroup2 } from "@/components/product";
 import mock_product from "@/mockdata/products";
-import { products } from "@/services/apiService";
+import apiInstance from "@/services/apiService";
 
 export default function ProductOverview(props) {
   const dispatch = useDispatch();
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const products = await apiInstance.getProducts();
+        setProducts(products);
+      } catch (error) {
+        console.error("Error occurred:", error);
+      }
+    };
+    fetchProducts();
+  }, []);
 
   useEffect(
     () => () => {

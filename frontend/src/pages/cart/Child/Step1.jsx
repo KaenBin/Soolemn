@@ -10,7 +10,7 @@ function Step1(prop) {
   return (
     <div>
       <Grid container>
-        <Grid item xs={8}>
+        <Grid xs={8}>
           <TableCart
             productsList={prop.productsList}
             setProducts={prop.setProducts}
@@ -18,7 +18,7 @@ function Step1(prop) {
             handleDeleteAll={prop.handleDeleteAll}
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid xs={4}>
           <Box
             sx={{ width: "100%", display: "flex", justifyContent: "center" }}
           >

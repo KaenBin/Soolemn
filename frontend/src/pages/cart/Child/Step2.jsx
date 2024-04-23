@@ -8,7 +8,7 @@ function Step2(prop) {
   return (
     <div>
       <Grid container>
-        <Grid item xs={8}>
+        <Grid xs={8}>
           <FullForm
             handleFirstName={prop.handleFirstName}
             contactInfor={prop.contactInfor}
@@ -23,7 +23,7 @@ function Step2(prop) {
             productsList={prop.productsList}
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid xs={4}>
           <Box
             sx={{ width: "100%", display: "flex", justifyContent: "center" }}
           >

@@ -9,32 +9,33 @@ import ProductList from "../productList";
 import { ListPagination } from "@/components/pagination";
 
 const ProductGroup = (props) => {
-  const [page, setPage] = React.useState(props.list.length ? 1 : 0);
+  const [page, setPage] = React.useState(0);
 
   const output = [];
 
   for (let i = 0; i < props.block / 4; i++) {
     output.push(
-      <Grid item key={i}>
+      <Grid key={i}>
         <ProductList
+          index={i}
           list={props.list.slice((page - 1 + i) * 4, (page - 1 + i) * 4 + 4)}
         />
       </Grid>
     );
   }
+
+  React.useEffect(() => {
+    setPage(props.list.length ? 1 : 0);
+  }, [props.list]);
+
   return (
     <Box width="90vw">
       <Grid container flexDirection="column" display="flex" spacing={5}>
-        <Grid
-          container
-          flexDirection="row"
-          display="flex"
-          justifyContent="space-between"
-        >
-          <Grid item>
+        <Grid flexDirection="row" display="flex" justifyContent="space-between">
+          <Grid>
             <Typography variant="title">{props.title}</Typography>
           </Grid>
-          <Grid item>
+          <Grid>
             <ListPagination page={page} setPage={setPage} totalPage={3} />
           </Grid>
         </Grid>

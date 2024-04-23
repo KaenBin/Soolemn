@@ -10,7 +10,7 @@ function FullForm(prop) {
   return (
     <div>
       <Grid container>
-        <Grid item xs={12}>
+        <Grid xs={12}>
           <ContactInfo
             handleFirstName={prop.handleFirstName}
             handleLastName={prop.handleLastName}
@@ -20,19 +20,19 @@ function FullForm(prop) {
             handleShipping={prop.handleShipping}
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid xs={12}>
           <ShippAddress
             shippingAddress={prop.shippingAddress}
             handleShipping={prop.handleShipping}
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid xs={12}>
           <PaymentMethod
             payment={prop.payment}
             handlePayment={prop.handlePayment}
           />
         </Grid>
-        <Grid item xs={12} sx={{ display: "flex", justifyContent: "center" }}>
+        <Grid xs={12} sx={{ display: "flex", justifyContent: "center" }}>
           <Button
             variant="contained"
             sx={{

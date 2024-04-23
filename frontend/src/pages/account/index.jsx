@@ -36,6 +36,7 @@ export default function Account() {
   const dispatch = useDispatch();
   const [selectedTab, setSelectedTab] = useState("Account");
   const [userData, setUserData] = useState([]);
+  const [imageUrl, setImageUrl] = useState();
 
   const currentUser = apiInstance.getCurrentUser();
 
@@ -59,6 +60,17 @@ export default function Account() {
     },
     []
   );
+
+  useEffect(() => {
+    apiInstance
+      .loadImage("gs://soolemn-cc5b9.appspot.com/defaultAvatar.jpg")
+      .then((url) => {
+        setImageUrl(url);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   const ColorButton = styled(Button)(({ theme }) => ({
     color: theme.palette.getContrastText(grey[900]),
@@ -141,7 +153,7 @@ export default function Account() {
         return (
           <>
             <Grid container xs={12} spacing={5}>
-              <Grid item xs={6}>
+              <Grid xs={6}>
                 <Card sx={{ border: "2px solid black" }}>
                   <CardHeader
                     action={
@@ -165,7 +177,7 @@ export default function Account() {
                 </Card>
               </Grid>
 
-              <Grid item xs={6}>
+              <Grid xs={6}>
                 <Card sx={{ border: "2px solid black" }}>
                   <CardHeader
                     action={
@@ -268,7 +280,7 @@ export default function Account() {
                         justifyContent="center"
                         alignItems="center"
                       >
-                        <Grid item xs={4}>
+                        <Grid xs={4}>
                           <img
                             src={product1}
                             alt="product1"
@@ -276,7 +288,7 @@ export default function Account() {
                             height="75"
                           />
                         </Grid>
-                        <Grid item xs={8}>
+                        <Grid xs={8}>
                           <b>Tray Table</b>
                           <br />
                           <p>Color: Black</p>
@@ -313,7 +325,7 @@ export default function Account() {
             <h1>My Account</h1>
           </div>
           <Grid container xs={12}>
-            <Grid item xs={4}>
+            <Grid xs={4}>
               <div style={{ backgroundColor: "#F3F5F7", width: "90%" }}>
                 <div style={{ padding: "50px" }}>
                   <Grid
@@ -321,10 +333,7 @@ export default function Account() {
                     xs={12}
                     sx={{ display: "flex", justifyContent: "center" }}
                   >
-                    <Avatar
-                      sx={{ width: 100, height: 100 }}
-                      src="/broken-image.jpg"
-                    />
+                    <Avatar sx={{ width: 100, height: 100 }} src={imageUrl} />
                   </Grid>
                   <Grid
                     item
@@ -409,7 +418,7 @@ export default function Account() {
                 </div>
               </div>
             </Grid>
-            <Grid item xs={8}>
+            <Grid xs={8}>
               <h2>Your {selectedTab}</h2>
               {renderTabContent()}
             </Grid>

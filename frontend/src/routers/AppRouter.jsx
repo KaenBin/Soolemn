@@ -8,16 +8,14 @@ import { TopBar } from "@/components/common";
 import * as ROUTES from "@/constants/routes";
 
 const AppRouter = () => {
-  const store = useSelector((state) => ({
-    user: state.auth,
-  }));
+  const user = useSelector((state) => state.auth);
   return (
     <BrowserRouter>
       <>
         {/* <Basket /> */}
         <NavigateSetter />
         <Routes>
-          {store.user ? (
+          {user ? (
             <>
               <Route path="/*" element={<Navigate to="/home" replace />} />
               <Route exact path={ROUTES.HOME} Component={page.Home} />
@@ -109,7 +107,7 @@ const AppRouter = () => {
         />
         <PublicRoute component={view.PageNotFound} /> */}
         </Routes>
-        {store.user ? <TopBar /> : null}
+        {user ? <TopBar /> : null}
         {/* <Footer /> */}
       </>
     </BrowserRouter>

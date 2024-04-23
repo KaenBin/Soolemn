@@ -61,14 +61,14 @@ function OrderSum(props) {
         }}
       >
         <Grid container>
-          <Grid item xs={12}>
+          <Grid xs={12}>
             <Typography fontFamily="" variant="h5" gutterBottom>
               Order Summary
             </Typography>
           </Grid>
           <Grid container item xs={12}>
             {props.productsList?.map((product, index) => (
-              <Grid item xs={12} key={index} sx={{ marginTop: "10px" }}>
+              <Grid xs={12} key={index} sx={{ marginTop: "10px" }}>
                 <ProductDetail productinfo={product} />
               </Grid>
             ))}
@@ -104,8 +104,8 @@ function OrderSum(props) {
               <Button variant="contained">Voucher</Button>
             </Grid>
           </Grid>
-          <Grid item container xs={12}>
-            <Grid item xs={12}>
+          <Grid container xs={12}>
+            <Grid xs={12}>
               <Box
                 sx={{
                   width: "100%",
@@ -125,12 +125,12 @@ function OrderSum(props) {
                 </Typography>
               </Box>
             </Grid>
-            <Grid item xs={12}>
+            <Grid xs={12}>
               <Divider />
             </Grid>
           </Grid>
-          <Grid item container xs={12}>
-            <Grid item xs={12}>
+          <Grid container xs={12}>
+            <Grid xs={12}>
               <Box
                 sx={{
                   width: "100%",
@@ -149,12 +149,12 @@ function OrderSum(props) {
               </Box>
             </Grid>
 
-            <Grid item xs={12}>
+            <Grid xs={12}>
               <Divider />
             </Grid>
           </Grid>
-          <Grid item container xs={12}>
-            <Grid item xs={12}>
+          <Grid container xs={12}>
+            <Grid xs={12}>
               <Box
                 sx={{
                   width: "100%",
@@ -173,12 +173,12 @@ function OrderSum(props) {
               </Box>
             </Grid>
 
-            <Grid item xs={12}>
+            <Grid xs={12}>
               <Divider />
             </Grid>
           </Grid>
-          <Grid item container xs={12}>
-            <Grid item xs={12}>
+          <Grid container xs={12}>
+            <Grid xs={12}>
               <Box
                 sx={{
                   width: "100%",

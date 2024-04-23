@@ -53,7 +53,9 @@ export default function NormalFilter(props) {
           onChange={handleChange}
         >
           {props.list.map((item) => (
-            <MenuItem value={item.value}>{item.value}</MenuItem>
+            <MenuItem key={item.value} value={item.value}>
+              {item.value}
+            </MenuItem>
           ))}
         </Select>
       </FormControl>

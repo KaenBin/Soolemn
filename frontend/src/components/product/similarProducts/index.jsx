@@ -15,7 +15,7 @@ const SimilarProducts = (props) => {
 
   for (let i = 0; i < props.block / 3; i++) {
     output.push(
-      <Grid item>
+      <Grid key={i}>
         <ProductList
           list={props.list.slice((page - 1 + i) * 3, (page - 1 + i) * 3 + 3)}
           size="small"

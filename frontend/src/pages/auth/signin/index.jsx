@@ -62,7 +62,7 @@ export default function Signin() {
             {...register("password")}
           />
           <Grid className="spacing" container alignItems="center">
-            <Grid item xs>
+            <Grid xs>
               <FormControlLabel
                 control={
                   <Controller
@@ -87,7 +87,7 @@ export default function Signin() {
                 label="Remember me"
               />
             </Grid>
-            <Grid item>
+            <Grid>
               <Link href="#" variant="body1" underline="none">
                 <Box fontWeight="bold" display="inline">
                   Forgot password?

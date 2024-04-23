@@ -17,14 +17,18 @@ import mock_product from "@/mockdata/products";
 import mock_categories from "@/mockdata/categories";
 import { Sort, Price, Category } from "@/constants/filters";
 import { listFilter } from "@/utils/utils";
+import { useEffect } from "react";
 
 const ProductGroup2 = (props) => {
-  const [page, setPage] = React.useState(props.list.length ? 1 : 0);
+  const [page, setPage] = React.useState(0);
   const [category, setCategory] = React.useState([]);
   const [minPrice, setMinPrice] = React.useState();
   const [maxPrice, setMaxPrice] = React.useState();
-  const [sort, setSort] = React.useState(Sort[0]);
+  const [sort, setSort] = React.useState(Sort[0].value);
 
+  useEffect(() => {
+    setPage(props.list.length ? 1 : 0);
+  }, [props.list]);
   return (
     <Box width="90vw">
       <Grid
@@ -44,7 +48,7 @@ const ProductGroup2 = (props) => {
           display="flex"
           justifyContent="space-between"
         >
-          <Grid item>
+          <Grid>
             <CheckboxFilter
               value={category}
               setValue={setCategory}
@@ -53,7 +57,6 @@ const ProductGroup2 = (props) => {
             />
           </Grid>
           <Grid
-            item
             flexDirection="row"
             width="30vw"
             display="flex"
@@ -74,7 +77,7 @@ const ProductGroup2 = (props) => {
               list={Price.slice(1)}
             />
           </Grid>
-          <Grid item>
+          <Grid>
             <NormalFilter
               value={sort}
               setValue={setSort}
@@ -83,7 +86,7 @@ const ProductGroup2 = (props) => {
             />
           </Grid>
         </Grid>
-        <Grid item display="flex" justifyContent="center">
+        <Grid display="flex" justifyContent="center">
           <ProductList
             list={listFilter(props.list, category, minPrice, maxPrice).slice(
               0,
@@ -92,7 +95,7 @@ const ProductGroup2 = (props) => {
           />
         </Grid>
         {page * 20 < props.list.length ? (
-          <Grid item>
+          <Grid>
             <Button
               onClick={() => setPage(page + 1)}
               style={{

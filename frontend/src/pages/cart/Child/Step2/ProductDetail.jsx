@@ -13,7 +13,7 @@ function ProductDetail(prop) {
   return (
     <Box sx={{ width: "100%" }}>
       <Grid container>
-        <Grid item xs={4} sx={{ display: "flex", alignItems: "center" }}>
+        <Grid xs={4} sx={{ display: "flex", alignItems: "center" }}>
           <img src={row.image} alt="Logo" />
         </Grid>
         <Grid container item xs={8}>
@@ -32,15 +32,15 @@ function ProductDetail(prop) {
                   {row.name}
                 </Typography>
                 <Typography fontFamily="" variant="h5">
-                  ${row.quantity*row.price}
+                  ${row.quantity * row.price}
                 </Typography>
               </Grid>
-              <Grid item xs={12}>
+              <Grid xs={12}>
                 <Typography fontFamily="" variant="body1" gutterBottom>
                   Color: {row.color}
                 </Typography>
               </Grid>
-              <Grid item xs={12}>
+              <Grid xs={12}>
                 <Typography fontFamily="" variant="body1" gutterBottom>
                   Quantity: {row.quantity}
                 </Typography>
@@ -48,7 +48,7 @@ function ProductDetail(prop) {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={12}>
+        <Grid xs={12}>
           <Divider />
         </Grid>
       </Grid>

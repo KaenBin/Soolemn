@@ -67,12 +67,12 @@ function ShippAddress(prop) {
           }}
         >
           <Grid container>
-            <Grid item xs={12}>
+            <Grid xs={12}>
               <Typography fontFamily="" variant="h5" gutterBottom>
                 Shipping Address
               </Typography>
             </Grid>
-            <Grid item xs={12}>
+            <Grid xs={12}>
               <FormControl variant="standard" sx={{ width: "100%" }}>
                 <InputLabel
                   shrink
@@ -90,13 +90,13 @@ function ShippAddress(prop) {
                 />
               </FormControl>
             </Grid>
-            <Grid item xs={12}>
+            <Grid xs={12}>
               <SelectCountry
                 shippingAddress={prop.shippingAddress}
                 handleShipping={prop.handleShipping}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid xs={12}>
               {" "}
               <FormControl variant="standard" sx={{ width: "100%" }}>
                 <InputLabel
@@ -115,8 +115,8 @@ function ShippAddress(prop) {
                 />
               </FormControl>
             </Grid>
-            <Grid item xs={12} container spacing={2}>
-              <Grid item xs={6}>
+            <Grid xs={12} container spacing={2}>
+              <Grid xs={6}>
                 <FormControl variant="standard" sx={{ width: "100%" }}>
                   <InputLabel
                     shrink
@@ -127,11 +127,15 @@ function ShippAddress(prop) {
                       State
                     </Typography>
                   </InputLabel>
-                  <BootstrapInput defaultValue={prop.shippingAddress.state} id="bootstrap-input" onChange={(e) => prop.handleShipping(e, "state")}/>
+                  <BootstrapInput
+                    defaultValue={prop.shippingAddress.state}
+                    id="bootstrap-input"
+                    onChange={(e) => prop.handleShipping(e, "state")}
+                  />
                 </FormControl>
               </Grid>
 
-              <Grid item xs={6}>
+              <Grid xs={6}>
                 <FormControl variant="standard" sx={{ width: "100%" }}>
                   <InputLabel
                     shrink
@@ -142,7 +146,11 @@ function ShippAddress(prop) {
                       Zip Code
                     </Typography>
                   </InputLabel>
-                  <BootstrapInput defaultValue={prop.shippingAddress.zip} id="bootstrap-input" onChange={(e) => prop.handleShipping(e, "zip")}/>
+                  <BootstrapInput
+                    defaultValue={prop.shippingAddress.zip}
+                    id="bootstrap-input"
+                    onChange={(e) => prop.handleShipping(e, "zip")}
+                  />
                 </FormControl>
               </Grid>
             </Grid>
