@@ -35,7 +35,7 @@ export default function ProductDetail(props) {
       }
     };
     fetchProducts();
-  }, [products]);
+  }, []);
 
   const breadcrumbs = [
     <NavLink

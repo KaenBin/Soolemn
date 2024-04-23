@@ -309,7 +309,7 @@ export default function TopBar() {
                   component={Link}
                   to={ROUTE.CART}
                 >
-                  <Badge badgeContent={cartItems.length} sx={badgeStyle}>
+                  <Badge badgeContent={cartItems?.length} sx={badgeStyle}>
                     <LocalMallOutlinedIcon />
                   </Badge>
                 </IconButton>

@@ -22,7 +22,7 @@ export default function ProductOverview(props) {
       }
     };
     fetchProducts();
-  }, [products]);
+  }, []);
 
   useEffect(
     () => () => {
