@@ -36,6 +36,7 @@ export default function Account() {
   const dispatch = useDispatch();
   const [selectedTab, setSelectedTab] = useState("Account");
   const [userData, setUserData] = useState([]);
+  const [imageUrl, setImageUrl] = useState();
 
   const currentUser = apiInstance.getCurrentUser();
 
@@ -59,6 +60,17 @@ export default function Account() {
     },
     []
   );
+
+  useEffect(() => {
+    apiInstance
+      .loadImage("gs://soolemn-cc5b9.appspot.com/defaultAvatar.jpg")
+      .then((url) => {
+        setImageUrl(url);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   const ColorButton = styled(Button)(({ theme }) => ({
     color: theme.palette.getContrastText(grey[900]),
@@ -321,10 +333,7 @@ export default function Account() {
                     xs={12}
                     sx={{ display: "flex", justifyContent: "center" }}
                   >
-                    <Avatar
-                      sx={{ width: 100, height: 100 }}
-                      src="/broken-image.jpg"
-                    />
+                    <Avatar sx={{ width: 100, height: 100 }} src={imageUrl} />
                   </Grid>
                   <Grid
                     item
