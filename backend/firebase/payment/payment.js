@@ -2,26 +2,19 @@ const { functions } = require("./index");
 const { db } = require("../index");
 
 exports.createStripeCheckout = functions.https.onCall(async (data, context) => {
-  const stripe = require("stripe")(functions.config().stripe.secret_key);
-  const line_items = data.line_items;
-  const success_url = data.success_url;
-  const cancel_url = data.cancel_url;
-  const customer = data.customer;
-
   const session = await stripe.checkout.sessions.create({
-    payment_method_types: ["card"],
+    line_items: [
+      {
+        // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+        price: "{{PRICE_ID}}",
+        quantity: 1,
+      },
+    ],
     mode: "payment",
-    success_url: data.success_url,
-    cancel_url: data.cancel_url,
-    // shipping_address_collection: {
-    //   allowed_countries: ["VN"],
-    // },
-    line_items: data.line_items,
+    success_url: `${YOUR_DOMAIN}?success=true`,
+    cancel_url: `${YOUR_DOMAIN}?canceled=true`,
   });
-
-  return {
-    id: session.id,
-  };
+  return { url };
 });
 
 exports.stripeWebhook = functions.https.onRequest(async (req, res) => {

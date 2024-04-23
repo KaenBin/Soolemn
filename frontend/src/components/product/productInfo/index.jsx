@@ -91,9 +91,7 @@ const ProductInfo = (props) => {
   };
 
   const handlePurchase = async (data) => {
-    await apiInstance.payByStrip(data).then((checkOutUrl) => {
-      window.location.assign(checkOutUrl);
-    });
+    await apiInstance.getCheckoutUrl("price_1P7cZHIcJNDJCIe2iSfjXMxG");
   };
 
   const ImageUrl =

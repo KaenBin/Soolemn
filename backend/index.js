@@ -150,8 +150,8 @@ app.delete("/delete_all_cart/:email", async (req, res) => {
 app.post("/pay-product", async (req, res) => {
   await createStripeCheckout(req, res)
     .then((response) => {
-      const sessionId = response.data.id;
-      stripe.redirectToCheckout({ sessionId: sessionId });
+      console.log(response.url);
+      res.redirect(303, response.url);
     })
     .catch((error) => {
       console.log(error);

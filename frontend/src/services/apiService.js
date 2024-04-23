@@ -287,9 +287,26 @@ class API {
     }
   };
 
-  payByStrip = async (data) => {
-    const priceId = "price_1P7KQuIcJNDJCIe2JE6XaVpN";
-    return await getCheckoutUrl(app, priceId);
+  // payByStrip = async (data) => {
+  //   const priceId = "price_1P7KQuIcJNDJCIe2JE6XaVpN";
+  //   return await getCheckoutUrl(app, priceId);
+  // };
+
+  getCheckoutUrl = async (priceId) => {
+    const userId = auth.currentUser?.uid;
+    if (!userId) throw new Error("User is not authenticated.");
+
+    try {
+      const response = await axios.post(
+        `https://soolemn-1.onrender.com/pay-product`,
+        { priceId }
+      );
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      console.error("Error deleting all from cart:", error);
+      throw error;
+    }
   };
 
   // getProducts = (lastRefKey) => {
