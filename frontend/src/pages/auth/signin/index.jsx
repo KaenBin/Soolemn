@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Checkbox,
+  CircularProgress,
   Container,
   FormControlLabel,
   Grid,
@@ -11,15 +12,31 @@ import {
 } from "@mui/material";
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
 import { signIn } from "@/redux/actions/authActions";
 import { setAuthStatus, setAuthenticating } from "@/redux/actions/miscActions";
+import {
+  emailValidation,
+  passwordValidation,
+} from "@/constants/validateSchema";
+import {
+  AuthLoader,
+  AuthenticatingLoader,
+} from "@/components/button/authLoader";
 
 export default function Signin() {
-  const { register, handleSubmit, control } = useForm();
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const app = useSelector((state) => state.app);
+  console.log(app);
 
   useEffect(
     () => () => {
@@ -29,8 +46,8 @@ export default function Signin() {
     []
   );
   return (
-    <Container component="main" maxWidth="xs" className="login-box">
-      <div>
+    <main className="auth">
+      <Container component="main" maxWidth="xs" className="login-box">
         <Typography component="h1" variant="h4">
           Sign In
         </Typography>
@@ -47,7 +64,9 @@ export default function Signin() {
             label="Email Address"
             autoComplete="email"
             autoFocus
-            {...register("email")}
+            error={!!errors?.email}
+            helperText={errors?.email ? errors.email.message : ""}
+            {...register("email", emailValidation)}
           />
           <TextField
             className="user-box"
@@ -59,7 +78,9 @@ export default function Signin() {
             type="password"
             id="password"
             autoComplete="current-password"
-            {...register("password")}
+            error={!!errors?.password}
+            helperText={errors?.password ? errors.password.message : ""}
+            {...register("password", passwordValidation)}
           />
           <Grid className="spacing" container alignItems="center">
             <Grid xs>
@@ -106,21 +127,16 @@ export default function Signin() {
           >
             Sign Up
           </Link>
-          <Button
-            type="submit"
-            className="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-          >
-            <span />
-            <span />
-            <span />
-            <span />
-            Sign In
-          </Button>
+          {app?.authenticating ? (
+            <AuthenticatingLoader
+              authStatus={app.authStatus}
+              title="SIGNING IN..."
+            />
+          ) : (
+            <AuthLoader authStatus={app.authStatus} title="SIGN IN" />
+          )}
         </form>
-      </div>
-    </Container>
+      </Container>
+    </main>
   );
 }

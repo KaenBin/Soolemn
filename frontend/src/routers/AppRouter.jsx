@@ -6,58 +6,52 @@ import * as page from "@/pages";
 import { NavigateSetter } from "@/utils/utils";
 import { TopBar } from "@/components/common";
 import * as ROUTES from "@/constants/routes";
+import CustomerRouter from "./CustomerRouter";
+import VendorRouter from "./VendorRouter";
+import { CssBaseline } from "@mui/material";
 
 const AppRouter = () => {
   const user = useSelector((state) => state.auth);
+
+  const routes = () => {
+    switch (user?.role) {
+      case "USER":
+        return <CustomerRouter />;
+      case "VENDOR":
+        return <VendorRouter />;
+      // case "ROLE_RECRUITER":
+      //   return RECerRoutes;
+      // case "ROLE_ADMIN":
+      //   return AdminRoutes;
+      default:
+        return (
+          <Routes>
+            <Route
+              exact
+              path="/*"
+              element={<Navigate to="/signin" replace />}
+            />
+            <Route path={ROUTES.SIGNIN} Component={page.SignIn} />
+            <Route path={ROUTES.SIGNUP} Component={page.SignUp} />
+          </Routes>
+        );
+    }
+  };
+
   return (
     <BrowserRouter>
       <>
+        <CssBaseline />
         {/* <Basket /> */}
         <NavigateSetter />
-        <Routes>
-          {user ? (
-            <>
-              <Route path="/*" element={<Navigate to="/home" replace />} />
-              <Route exact path={ROUTES.HOME} Component={page.Home} />
-              <Route exact path={ROUTES.PRODUCTS} Component={page.Products} />
-              <Route
-                exact
-                path={ROUTES.DISCOUNTED_PRODUCTS}
-                Component={page.Discounted}
-              />
-              <Route
-                exact
-                path={ROUTES.FEATURED_PRODUCTS}
-                Component={page.Featured}
-              />
-              <Route
-                exact
-                path={ROUTES.CATEGORIES}
-                Component={page.Categories}
-              />
-              <Route
-                exact
-                path={ROUTES.VIEW_PRODUCT}
-                Component={page.ProductDetail}
-              />
-              <Route exact path={ROUTES.CART} Component={page.Cart} />
-              <Route exact path={ROUTES.ACCOUNT} Component={page.Account} />
-            </>
-          ) : (
-            <>
-              <Route path="/*" element={<Navigate to="/signin" replace />} />
-              <Route exact path={ROUTES.SIGNIN} Component={page.SignIn} />
-              <Route exact path={ROUTES.SIGNUP} Component={page.SignUp} />
-            </>
-          )}
-
-          <Route
+        {routes()}
+        {/* <Route
             exact
             path="add-product-form"
             Component={page.AddProductForm}
-          />
+          /> */}
 
-          {/* <Route component={view.Search} exact path={ROUTES.SEARCH} />
+        {/* <Route component={view.Search} exact path={ROUTES.SEARCH} />
         <Route component={view.Home} exact path={ROUTES.HOME} />
         <Route component={view.Shop} exact path={ROUTES.SHOP} />
         <Route
@@ -70,9 +64,9 @@ const AppRouter = () => {
           exact
           path={ROUTES.RECOMMENDED_PRODUCTS}
         /> */}
-          {/* <PublicRoute component={page.SignUp} path={ROUTES.SIGNUP} />
+        {/* <PublicRoute component={page.SignUp} path={ROUTES.SIGNUP} />
         <PublicRoute component={page.SignIn} exact path={ROUTES.SIGNIN} /> */}
-          {/* <PublicRoute
+        {/* <PublicRoute
           component={view.ForgotPassword}
           path={ROUTES.FORGOT_PASSWORD}
         />
@@ -106,8 +100,7 @@ const AppRouter = () => {
           path={`${ROUTES.EDIT_PRODUCT}/:id`}
         />
         <PublicRoute component={view.PageNotFound} /> */}
-        </Routes>
-        {user ? <TopBar /> : null}
+
         {/* <Footer /> */}
       </>
     </BrowserRouter>

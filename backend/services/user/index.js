@@ -1,4 +1,4 @@
-const { db } = require("./index");
+const { db } = require("../configuration");
 const { ref, set } = require("firebase/database");
 
 async function addToCart(email, newItem) {

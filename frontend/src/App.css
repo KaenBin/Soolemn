@@ -39,26 +39,28 @@
 :root {
   --primary-color: #141718;
   --secondary-color: #d5dadc;
-}
-
-.content {
-  width: 100%;
-  height: 100%;
-  background-color: white;
-  min-height: 100vh;
-  /* max-width: 100vw; */
-  padding-top: 10vh;
+  --tertiary-color: #81c784;
+  --loading-primary-color: #64b5f6;
+  --loading-secondary-color: #1976d2;
+  --success-primary-color: #a5d6a7;
+  --success-secondary-color: #4caf50;
 }
 
 .home {
   padding: 20px;
   height: 100%;
+  width: 100%;
 }
 
 .navigation {
-  padding: 10px 2vw;
+  padding: 24px 3vw;
+  border-radius: 15px 15px 0px 0px;
   color: var(--primary-color);
-  text-decoration: none;
+}
+
+#navigation-menu .navigation:hover {
+  background: var(--secondary-color);
+  color: var(--primary-color);
 }
 
 #navigation-menu a.active {
@@ -98,13 +100,13 @@
   padding: 10px 0;
 }
 
-.login-box form .submit {
+.login-box form .submit,
+.login-box form .authenticating,
+.login-box form .autheticated {
   position: relative;
-  display: inline-block;
-  padding: 8px 0px;
-  background-color: #141718;
   color: #fff;
-  text-decoration: none;
+  display: inline-block;
+  padding: 10px 0px;
   overflow: hidden;
   transition: 0.5s;
   margin-top: 50px;
@@ -113,26 +115,55 @@
   text-align: center;
 }
 
-.login-box .submit:hover {
-  background: #aa96da;
-  color: #fff;
+.login-box form .error {
+  position: relative;
+  display: inline-block;
+  padding: 10px 0px;
+  overflow: hidden;
+  transition: 0.5s;
+  margin-top: 50px;
   border-radius: 5px;
-  box-shadow: 0 0 5px #03e9f4, 0 0 25px #03e9f4, 0 0 50px #03e9f4,
-    0 0 100px #03e9f4;
+  width: 100%;
+  text-align: center;
 }
 
-.login-box button span {
+.login-box form .submit {
+  background-color: var(--primary-color);
+}
+
+.login-box form .authenticating {
+  background-color: var(--loading-primary-color);
+}
+
+.login-box form .authenticated {
+  background-color: var(--success-primary-color);
+}
+
+.login-box .submit:hover {
+  background: var(--success-secondary-color);
+  color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 5px var(--success-primary-color),
+    0 0 25px var(--success-primary-color), 0 0 50px var(--success-primary-color),
+    0 0 100px var(--success-primary-color);
+}
+
+.login-box .authenticating span {
   position: absolute;
   display: block;
   border-radius: 5px;
 }
 
-.login-box button span:nth-child(1) {
+.login-box .authenticating span:nth-child(1) {
   top: 0;
   left: -100%;
   width: 100%;
   height: 2px;
-  background: linear-gradient(to right, #282c34, #03e9f4);
+  background: linear-gradient(
+    to right,
+    var(--loading-secondary-color),
+    var(--loading-primary-color)
+  );
   animation: btn-animate1 1s linear infinite;
 }
 
@@ -147,12 +178,16 @@
   }
 }
 
-.login-box button span:nth-child(2) {
+.login-box .authenticating span:nth-child(2) {
   top: -100%;
   right: 0;
   width: 2px;
   height: 100%;
-  background: linear-gradient(to bottom, #282c34, #03e9f4);
+  background: linear-gradient(
+    to bottom,
+    var(--loading-secondary-color),
+    var(--loading-primary-color)
+  );
   animation: btn-animate2 1s linear infinite;
   animation-delay: 0.25s;
 }
@@ -168,12 +203,16 @@
   }
 }
 
-.login-box button span:nth-child(3) {
+.login-box .authenticating span:nth-child(3) {
   bottom: 0;
   right: -100%;
   width: 100%;
   height: 2px;
-  background: linear-gradient(to left, #282c34, #03e9f4);
+  background: linear-gradient(
+    to left,
+    var(--loading-secondary-color),
+    var(--loading-primary-color)
+  );
   animation: btn-animate3 1s linear infinite;
   animation-delay: 0.5s;
 }
@@ -189,12 +228,16 @@
   }
 }
 
-.login-box button span:nth-child(4) {
+.login-box .authenticating span:nth-child(4) {
   bottom: -100%;
   left: 0;
   width: 2px;
   height: 100%;
-  background: linear-gradient(to top, #282c34, #03e9f4);
+  background: linear-gradient(
+    to top,
+    var(--loading-secondary-color),
+    var(--loading-primary-color)
+  );
   animation: btn-animate4 1s linear infinite;
   animation-delay: 0.75s;
 }
@@ -225,4 +268,89 @@
 .login-box form a div {
   color: #141718;
   font-weight: 600;
+}
+
+:root {
+  --transparent-black: rgba(0, 0, 0, 0.294);
+  --black: #111111;
+  --grey: rgba(255, 255, 255, 0.597);
+  --orange: #ff805d;
+  --green: rgb(54, 234, 54);
+  --orange-gradient: linear-gradient(
+    268.35deg,
+    rgba(255, 70, 70, 0.99) 3.47%,
+    rgba(255, 114, 70, 0.99) 60.18%
+  );
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+#dashboard {
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--black);
+  color: white;
+  font-family: "Public Sans", sans-serif;
+  overflow: hidden;
+}
+
+.theme-container {
+  background: rgba(0, 0, 0, 0.59);
+  border-radius: 20px;
+  padding: 2rem;
+}
+
+.gradient-red {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background: #ff5d5d;
+  filter: blur(90px);
+}
+.gradient-orange {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background: var(--orange);
+  filter: blur(90px);
+}
+.gradient-blue {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background: #5dc9ff;
+  filter: blur(90px);
+}
+
+.grey-container {
+  border-top: 0.3px solid rgba(255, 255, 255, 0.185);
+  border-bottom: 0.3px solid rgba(255, 255, 255, 0.185);
+  background: linear-gradient(
+    90deg,
+    rgba(53, 53, 53, 0) 1.21%,
+    rgba(53, 53, 53, 0.46) 49.45%,
+    rgba(53, 53, 53, 0) 103.83%
+  );
+  padding: 1.5rem 1rem;
+}
+
+/* scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  width: 5px;
 }

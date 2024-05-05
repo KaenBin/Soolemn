@@ -1,8 +1,8 @@
 import { Rating } from "@mui/material";
-import { styled } from "@mui/material/styles";
-import { createTheme } from "@mui/material/styles";
+import { styled, createTheme } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import ButtonBase from "@mui/material/ButtonBase";
+import { green } from "@mui/material/colors";
 
 // const History = {
 //   navigate: null,
@@ -47,6 +47,50 @@ export const listFilter = (
   }
 
   return filtered;
+};
+
+// read file
+export const readFile = (name, type) => {
+  function previewFile() {
+    const preview = document.querySelector("img");
+    const file = document.querySelector("input[type=file]").files[0];
+    const reader = new FileReader();
+
+    reader.addEventListener(
+      "load",
+      () => {
+        // convert image file to base64 string
+        preview.src = reader.result;
+      },
+      false
+    );
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  }
+  return preview;
+};
+
+export const encodeImage = (base64Image) => {
+  const base64String = base64Image.replace(
+    /^data:image\/(png|jpeg|jpg);base64,/,
+    ""
+  );
+
+  // Convert the Base64 string to a binary data
+  const binaryString = atob(base64String);
+
+  // Create a Uint8Array to hold the binary data
+  const byteArray = new Uint8Array(binaryString.length);
+
+  // Populate the Uint8Array with binary data
+  for (let i = 0; i < binaryString.length; i++) {
+    byteArray[i] = binaryString.charCodeAt(i);
+  }
+
+  // Create a Blob object from the Uint8Array
+  return new Blob([byteArray], { type: "image/png" });
 };
 
 // styling
@@ -111,6 +155,7 @@ export const theme = createTheme({
       backgroundColor: "blue",
     },
   },
+
   components: {
     MuiTypography: {
       defaultProps: {
@@ -122,6 +167,23 @@ export const theme = createTheme({
           price4: "h3",
           description: "h2",
           breadCumbs: "h4",
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textDecoration: "none",
+        },
+      },
+    },
+    MuiCircularProgress: {
+      styleOverrides: {
+        root: {
+          color: green[500],
+          // position: "absolute",
+          top: "20%",
+          left: "47%",
         },
       },
     },

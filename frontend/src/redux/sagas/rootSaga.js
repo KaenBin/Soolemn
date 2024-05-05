@@ -23,7 +23,7 @@ function* rootSaga() {
   );
   yield takeLatest(
     [
-      //   ACTION.ADD_PRODUCT,
+      ACTION.ADD_PRODUCT,
       //   ACTION.SEARCH_PRODUCT,
       //   ACTION.REMOVE_PRODUCT,
       //   ACTION.EDIT_PRODUCT,

@@ -12,7 +12,7 @@ const SimilarProducts = (props) => {
   const [page, setPage] = React.useState(props.list.length ? 1 : 0);
 
   const output = [];
-
+  console.log(props);
   for (let i = 0; i < props.block / 3; i++) {
     output.push(
       <Grid key={i}>

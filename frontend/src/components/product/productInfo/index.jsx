@@ -71,9 +71,6 @@ const ProductInfo = (props) => {
     getUserData();
   }, [currentUser, userData, cartLength]);
 
-  const params = useParams();
-  const id = params.id.split("/").pop();
-
   const handleIncrease = () => {
     setQuantity(Number(quantity + 1));
   };
@@ -90,23 +87,21 @@ const ProductInfo = (props) => {
     setSelectedColor(color);
   };
 
-  const handlePurchase = async (data) => {
-    await apiInstance.getCheckoutUrl("price_1P7cZHIcJNDJCIe2iSfjXMxG");
+  const handlePurchase = async () => {
+    await apiInstance.getCheckoutUrl(props.item.id, quantity);
   };
 
   const ImageUrl =
-    props.item.images && props.item.images.length > 0
-      ? props.item.images[0]
-      : null;
+    props.item?.images?.length > 0 ? props.item?.images[0] : null;
 
   const handleAddToCart = async () => {
     const data = {
       email: currentUser.email,
-      product_id: id,
-      name: props.item.name,
+      product_id: props.item.id,
+      name: props.item?.name,
       quantity: quantity,
       color: selectedColor,
-      price: props.item.price / 2,
+      price: props.item?.price / 2,
       image: ImageUrl,
     };
     try {
@@ -152,7 +147,9 @@ const ProductInfo = (props) => {
                   <StoreIcon style={{ width: "100px", height: "100px" }} />
                 </TableCell>
                 <TableCell style={{ padding: "0" }}>
-                  <Typography variant="price3">Name of the Shop</Typography>
+                  <Typography variant="price3">
+                    {"Seller: " + props.item?.metadata?.vendorId}
+                  </Typography>
                 </TableCell>
               </TableRow>
               <TableRow>
@@ -173,20 +170,23 @@ const ProductInfo = (props) => {
           </Table>
         </TableContainer>
         <Typography variant="price3" m={3}>
-          {props.item.name}
+          {props.item?.name}
         </Typography>
         <Divider />
         <Typography variant="breadCumbs" fontWeight={500} m={3}>
-          Shipping fee: $9.99
+          Shipping fee:{" "}
+          {(10000).toLocaleString("en-US") +
+            " " +
+            props.item?.metadata?.currency?.toUpperCase()}
         </Typography>
 
-        {props.item.color ? (
+        {props.item?.color ? (
           <Stack direction="row" spacing="auto" m={3}>
             <Typography variant="price4" fontWeight={500}>
               Choose Color
             </Typography>
             <ToggleColor
-              colorOptions={props.item.color}
+              colorOptions={props.item?.color}
               selectedColor={selectedColor}
               handleChangeColor={handleChangeColor}
             />
@@ -194,7 +194,13 @@ const ProductInfo = (props) => {
         ) : null}
 
         <Typography variant="price3" component="h1" fontWeight={500} m={3}>
-          Total: ${9.99 + (props.item.price / 2) * quantity}
+          Total:{" "}
+          {(
+            10000 +
+            (props.item?.metadata?.price / 2) * quantity
+          ).toLocaleString("en-US") +
+            " " +
+            props.item?.metadata?.currency?.toUpperCase()}
         </Typography>
         <TextField
           value={quantity}
@@ -230,7 +236,7 @@ const ProductInfo = (props) => {
         />
         <Stack spacing={3} mt={2}>
           <Button
-            onClick={() => handlePurchase({})}
+            onClick={() => handlePurchase()}
             sx={{
               color: "#FEFEFE",
               backgroundColor: "#008060",

@@ -1,5 +1,5 @@
 import { useEffectm, useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Unstable_Grid2";
 import Button from "@mui/material/Button";
@@ -29,6 +29,8 @@ import product1 from "../../assets/OIP.jpg";
 import apiInstance from "../../services/apiService";
 
 import { setAuthenticating } from "@/redux/actions/miscActions";
+import OrderHistory from "./OrderHistory";
+import AccountDetails from "./AccountDetails";
 // import mock_product from "@/mockdata/products";
 // import { ProductGroup } from "@/components/product";
 
@@ -37,7 +39,8 @@ export default function Account() {
   const [selectedTab, setSelectedTab] = useState("Account");
   const [userData, setUserData] = useState([]);
   const [imageUrl, setImageUrl] = useState();
-
+  const profile = useSelector((state) => state.profile);
+  console.log(profile);
   const currentUser = apiInstance.getCurrentUser();
 
   useEffect(() => {
@@ -87,68 +90,7 @@ export default function Account() {
   const renderTabContent = () => {
     switch (selectedTab) {
       case "Account":
-        return (
-          <>
-            <TextField
-              id="outlined-basic"
-              label="User Name"
-              variant="outlined"
-              value={userData.fullname}
-              InputLabelProps={{ shrink: true }}
-              InputProps={{
-                readOnly: true,
-              }}
-              sx={{ width: "100%", marginBottom: "3%" }}
-            />
-            <TextField
-              id="outlined-basic"
-              label="Email"
-              value={userData.email}
-              variant="outlined"
-              InputLabelProps={{ shrink: true }}
-              InputProps={{
-                readOnly: true,
-              }}
-              sx={{ width: "100%", marginBottom: "3%" }}
-            />
-            <TextField
-              id="outlined-basic"
-              label="Address"
-              InputLabelProps={{ shrink: true }}
-              value={
-                userData.address !== "" ? userData.address : "Add an address..."
-              }
-              InputProps={{
-                readOnly: true,
-              }}
-              variant="outlined"
-              sx={{ width: "100%", marginBottom: "3%" }}
-            />
-            <h3>Password</h3>
-            <TextField
-              id="outlined-basic"
-              label="Old Password"
-              variant="outlined"
-              type="password"
-              sx={{ width: "100%", marginBottom: "3%" }}
-            />
-            <TextField
-              id="outlined-basic"
-              label="New Password"
-              variant="outlined"
-              type="password"
-              sx={{ width: "100%", marginBottom: "3%" }}
-            />
-            <TextField
-              id="outlined-basic"
-              label="Repeat New Password"
-              variant="outlined"
-              type="password"
-              sx={{ width: "100%", marginBottom: "3%" }}
-            />
-            <ColorButton variant="contained">Save Changes</ColorButton>
-          </>
-        );
+        return <AccountDetails profile={profile} />;
       case "Address":
         return (
           <>
@@ -204,46 +146,7 @@ export default function Account() {
           </>
         );
       case "Order":
-        return (
-          <>
-            <TableContainer
-              component={Paper}
-              sx={{
-                // width: "80vw",
-                margin: "auto",
-                marginTop: "3%",
-              }}
-            >
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Number ID</TableCell>
-                    <TableCell>Dates</TableCell>
-                    <TableCell>Status</TableCell>
-                    <TableCell>Price</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow
-                    // key={index}
-                    // onClick={() => handleRowClick(user._id.$oid)}
-                    sx={{
-                      "&:hover": {
-                        backgroundColor: "#e0e0e0",
-                        cursor: "pointer",
-                      },
-                    }}
-                  >
-                    <TableCell>#0123_45678</TableCell>
-                    <TableCell>December 12, 2023</TableCell>
-                    <TableCell>Processing</TableCell>
-                    <TableCell>$597.00</TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </>
-        );
+        return <OrderHistory />;
       case "Wishlist":
         return (
           <>
@@ -340,7 +243,7 @@ export default function Account() {
                     xs={12}
                     sx={{ display: "flex", justifyContent: "center" }}
                   >
-                    <h2>User Name</h2>
+                    <h2>{profile?.username}</h2>
                   </Grid>
                   <TableContainer
                     component={Paper}

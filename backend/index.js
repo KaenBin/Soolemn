@@ -1,19 +1,21 @@
 const express = require("express");
 const cors = require("cors");
 const { authMiddleware, imagesMiddleware } = require("./middleware");
-const { registerUser, getUser } = require("./firebase");
+const { registerUser, getUser } = require("./services/account");
 const {
   addProduct,
   getProducts,
   getImageDownloadUrl,
-} = require("./firebase/products");
+  uploadImage,
+  getProduct,
+} = require("./services/product");
 const {
   addToCart,
   deleteFromCart,
   deleteAllFromCart,
-} = require("./firebase/cart");
-const { uploadImage } = require("./firebase/images");
-const { createStripeCheckout } = require("./firebase/payment/payment");
+} = require("./services/user");
+const { createStripeCheckout } = require("./services/payment");
+const { getOrderByCustomer } = require("./services/order");
 
 const port = 4000;
 
@@ -54,27 +56,37 @@ app.post("/signup", async (req, res) => {
 //   }
 // });
 
-// user
-app.get("/user", async (req, res) => {
+// USERS
+app.get("/user/:userId", async (req, res) => {
   try {
-    const response = await getUser(req, res);
-    res.send(response.data());
-  } catch (error) {
-    res.send(error);
-  }
-});
-
-// product
-app.post("/add-product", async (req, res) => {
-  try {
-    const response = await addProduct(req.body, res);
+    const { userId } = req.params;
+    const response = await getUser(userId);
     res.send(response);
   } catch (error) {
     res.send(error);
   }
 });
 
+// PRODUCTS
+app.post("/product/add", async (req, res) => {
+  try {
+    const response = await addProduct(req.body);
+    res.send(response);
+  } catch (error) {
+    throw new Error(JSON.stringify({ status: 400, error: error.message }));
+  }
+});
+
 app.get("/get-product", async (req, res) => {
+  try {
+    const response = await getProduct(req.body.id);
+    res.send(response);
+  } catch (error) {
+    res.send(error);
+  }
+});
+
+app.get("/get-products", async (req, res) => {
   try {
     const response = await getProducts(req, res);
     res.send(response);
@@ -83,6 +95,7 @@ app.get("/get-product", async (req, res) => {
   }
 });
 
+// IMAGES
 app.post("/test-upload", imagesMiddleware, async (req, res) => {
   const file = {
     type: req.file.mimetype,
@@ -110,6 +123,7 @@ app.get("/get-image-download-url", async (req, res) => {
     });
 });
 
+// CART
 app.post("/add_to_cart", async (req, res) => {
   try {
     const { email, product_id, name, quantity, price, image, color } = req.body;
@@ -142,14 +156,39 @@ app.delete("/delete_all_cart/:email", async (req, res) => {
   }
 });
 
-app.post("/pay-product", async (req, res) => {
-  await createStripeCheckout(req.body)
-    .then((response) => {
-      res.send(response.url);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+// PAYMENT
+app.post("/payment/checkout/:userId/:productId?", async (req, res) => {
+  try {
+    const { userId, productId } = req.params || null;
+    const response = await createStripeCheckout(
+      { ...req.body, userId, productId },
+      productId ? "single" : "multiple"
+    );
+    res.send(response);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// app.put("/payment/checkout/:userId/:productId?/success", async (req, res) => {
+//   try {
+//     const { customerId } = req.params;
+//     const response = await handleStripeCheckoutSuccess(customerId);
+//     res.send(response);
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// });
+
+// ORDER
+app.get("/order/get-orders/:userId", async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const response = await getOrderByCustomer(userId);
+    res.send(response);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 app.listen(port, () =>

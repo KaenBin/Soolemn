@@ -16,6 +16,7 @@ import {
   Menu,
   Button,
   Divider,
+  CssBaseline,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
@@ -186,8 +187,8 @@ export default function TopBar() {
   const cartItems = useSelector((state) => state.cart.cart);
 
   return (
-    <Box sx={{ flexGrow: 1 }} boxShadow={3}>
-      <AppBar position="fixed" color="info">
+    <Box sx={{ display: "flex" }} boxShadow={3}>
+      <AppBar position="absolute" color="info">
         <Toolbar>
           <Stack
             width="100%"
@@ -211,7 +212,7 @@ export default function TopBar() {
               direction="row"
               alignItems="center"
               justifyContent="center"
-              spacing={2}
+              spacing={1}
             >
               <NavLink className="navigation" to={ROUTE.HOME}>
                 Home

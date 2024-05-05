@@ -6,12 +6,15 @@ import {
 import avatar from "@/images/defaultAvatar.jpg";
 
 const initState = {
+  username: "Unknown",
   fullname: "Unknown",
   email: "unknown@hotmail.com",
   address: "",
-  mobile: {},
+  cart: [],
+  order: [],
+  paymentHistory: [],
   avatar: avatar,
-  dateJoined: 1954234787348,
+  dateJoined: 0,
   wallet: 0,
 };
 

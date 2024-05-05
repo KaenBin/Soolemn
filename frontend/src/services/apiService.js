@@ -4,10 +4,11 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 import { auth, db, storage } from "./firebase";
 import { getCheckoutUrl, getPortalUrl } from "./stripePayment";
+import { readFile, encodeImage } from "@/utils/utils";
 
 class API {
   createAccount = async (form) => {
@@ -17,8 +18,13 @@ class API {
       form.password
     )
       .then((userCredential) => userCredential._tokenResponse.localId)
-      .catch((error) => console.log(error));
-    console.log(userId);
+      .catch((error) => {
+        const newError = new Error(error);
+        newError.code = error.code;
+        newError.message = error.message;
+        throw newError;
+      });
+
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -30,13 +36,8 @@ class API {
       .catch((e) => console.log(e));
   };
 
-  signIn = (form) => {
-    signInWithEmailAndPassword(auth, form.email, form.password)
-      .then((res) => localStorage.setItem("user", res.user.accessToken))
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  signIn = (form) =>
+    signInWithEmailAndPassword(auth, form.email, form.password);
 
   // signInWithGoogle = () =>
   //   this.auth.signInWithPopup(new app.auth.GoogleAuthProvider());
@@ -60,8 +61,13 @@ class API {
         "Access-Control-Allow-Origin": "*",
       },
     };
+
     return await axios
-      .get("http://localhost:4000/user", { params: { email: id } })
+      .get(
+        `http://localhost:4000/user/${id}`,
+        { params: { email: id } },
+        config
+      )
       .then((res) => {
         return res.data;
       })
@@ -145,8 +151,7 @@ class API {
   // setAuthPersistence = () =>
   //   this.auth.setPersistence(app.auth.Auth.Persistence.LOCAL);
 
-  // // // PRODUCT ACTIONS --------------
-
+  // PRODUCT
   // uploadImage = async (file, quantity) => {
   //   if (quantity === "single") {
   //     const dateTime = Date.now();
@@ -187,10 +192,43 @@ class API {
       });
   };
 
+  uploadImage = async (file) => {
+    /** @type {any} */
+    const metadata = {
+      contentType: "image/png",
+    };
+
+    const storageRef = ref(storage, "images/");
+    return await uploadBytes(
+      storageRef,
+      encodeImage(file)
+      // metadata
+    )
+      .then((snapshot) => getDownloadURL(snapshot.ref))
+      .catch((error) => {
+        // A full list of error codes is available at
+        // https://firebase.google.com/docs/storage/web/handle-errors
+        switch (error.code) {
+          case "storage/unauthorized":
+            // User doesn't have permission to access the object
+            break;
+          case "storage/canceled":
+            // User canceled the upload
+            break;
+
+          // ...
+
+          case "storage/unknown":
+            // Unknown error occurred, inspect error.serverResponse
+            break;
+        }
+      });
+  };
+
   getProduct = async (id) => {
     const productRef = doc(db, "products", id);
     const productSnap = await getDoc(productRef);
-
+    console.log(id);
     if (productSnap.exists()) {
       return productSnap.data();
     } else {
@@ -206,9 +244,53 @@ class API {
       },
     };
     return await axios
-      .get("http://localhost:4000/get-product", config)
+      .get("http://localhost:4000/get-products", config)
       .then((res) => {
         return { products: res.data, total: res.data.length };
+      })
+      .catch((e) => console.log(e));
+  };
+
+  addProduct = async (data) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    };
+
+    const userId = auth.currentUser?.uid;
+    if (!userId) throw new Error("User is not authenticated.");
+
+    const imageUrl = await this.uploadImage(data.images);
+
+    return await axios
+      .post(
+        "http://localhost:4000/product/add",
+        {
+          ...data,
+          vendorId: userId,
+          name: data.productName,
+          stock: data.quantity,
+          size: {},
+          images: [imageUrl],
+          currency: "vnd",
+        },
+        config
+      )
+      .then((res) => {
+        console.log(res);
+        return {
+          id: res.data.id,
+          name: res.data.name,
+          description: res.data.description,
+          images: [imageUrl],
+          stripe_metadata_price: res.data.metadata.price,
+          stripe_metadata_currency: res.data.metadata.currency,
+          stripe_metadata_category: res.data.metadata.category,
+          stripe_metadata_stock: res.data.metadata.stock,
+          stripe_metadata_vendorId: res.data.metadata.vendorId,
+        };
       })
       .catch((e) => console.log(e));
   };
@@ -288,7 +370,7 @@ class API {
   //   return await getCheckoutUrl(app, priceId);
   // };
 
-  getCheckoutUrl = async (priceId) => {
+  getCheckoutUrl = async (productId, quantity) => {
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -301,22 +383,43 @@ class API {
 
     try {
       const response = await axios.post(
-        `http://localhost:4000/pay-product`,
+        `http://localhost:4000/payment/checkout/${userId}/${productId}`,
         {
-          priceId,
-          success_url: window.location.origin,
-          cancel_url: window.location.origin,
+          quantity,
+          base_url: window.location.origin,
         },
         config
       );
-      console.log(response.data);
-      window.location.replace(response.data);
+      console.log(response.data.url);
+      window.location.replace(response.data.url);
     } catch (error) {
       console.error("Error paying product:", error);
       throw error;
     }
   };
 
+  getOrders = async () => {
+    const userId = auth.currentUser?.uid;
+    if (!userId) throw new Error("User is not authenticated.");
+    console.log(userId);
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    };
+
+    try {
+      const response = await axios.get(
+        `http://localhost:4000/order/get-orders/${userId}`,
+        config
+      );
+      return response;
+    } catch (error) {
+      console.error("Error paying product:", error);
+      throw error;
+    }
+  };
   // getProducts = (lastRefKey) => {
   //   let didTimeout = false;
 
@@ -462,8 +565,8 @@ class API {
 
   // generateKey = () => this.db.collection("products").doc().id;
 
-  // storeImage = async (id, folder, imageFile) => {
-  //   const snapshot = await this.storage.ref(folder).child(id).put(imageFile);
+  // uploadImage = async (id, folder, imageFile) => {
+  //   const snapshot = await storage.ref(folder).child(id).put(imageFile);
   //   const downloadURL = await snapshot.ref.getDownloadURL();
 
   //   return downloadURL;

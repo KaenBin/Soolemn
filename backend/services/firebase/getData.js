@@ -1,5 +1,5 @@
 const { doc, getDoc } = require("firebase/firestore");
-const { db } = require("./index");
+const { db } = require("../configuration");
 
 async function getData(collection, id) {
   let result = null;

@@ -5,10 +5,13 @@ export const DISCOUNTED_PRODUCTS = "/discounted";
 export const FEATURED_PRODUCTS = "/featured";
 export const RECOMMENDED_PRODUCTS = "/recommended";
 export const CATEGORIES = "/categories";
+export const DASHBOARD = "/dashboard";
 export const ACCOUNT = "/account";
 export const ACCOUNT_EDIT = "/account/edit";
-export const ADMIN_DASHBOARD = "/admin/dashboard";
-export const ADMIN_PRODUCTS = "/admin/products";
+
+export const MANAGE_PRODUCTS = "/product/manage";
+export const ADD_PRODUCTS = "/product/add";
+
 export const ADMIN_USERS = "/admin/users";
 export const ADD_PRODUCT = "/admin/add";
 export const EDIT_PRODUCT = "/admin/edit";

@@ -28,30 +28,18 @@ import SwipeableViews from "react-swipeable-views";
 import { Link, useParams } from "react-router-dom";
 import Grid from "@mui/material/Unstable_Grid2";
 import { tableCellClasses } from "@mui/material/TableCell";
+import { useSelector } from "react-redux";
 
 import img from "@/assets/OIP.jpg";
 import { StyledRating } from "@/utils/utils";
 import SimilarProducts from "../similarProducts";
 import mock_product from "@/mockdata/products";
-import { useEffect } from "react";
 import apiInstance from "@/services/apiService";
 
 const ProductDescription = (props) => {
   const [expanded, setExpanded] = React.useState(false);
-  const [products, setProducts] = React.useState([]);
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const products = await apiInstance.getProducts();
-        setProducts(products);
-      } catch (error) {
-        console.error("Error occurred:", error);
-      }
-    };
-    fetchProducts();
-  }, [products]);
-  
+  // const products = useSelector((state) => state.products);
+  // console.log(products);
   const toggleExpanded = () => {
     setExpanded(!expanded);
   };
@@ -75,7 +63,7 @@ const ProductDescription = (props) => {
         />
         15 reviews
         <Typography variant="title" m="5px">
-          {props.item.name}
+          {props.item?.name}
         </Typography>
         <Typography
           display="inline"
@@ -83,7 +71,9 @@ const ProductDescription = (props) => {
           variant="price3"
           m="10px"
         >
-          ${(props.item.price / 2).toFixed(2)}
+          {(props.item?.metadata?.price / 2).toLocaleString("en-US") +
+            " " +
+            props.item?.metadata?.currency.toUpperCase()}
         </Typography>{" "}
         {true ? (
           <Typography
@@ -91,7 +81,9 @@ const ProductDescription = (props) => {
             style={{ textDecorationLine: "line-through", fontWeight: "normal" }}
             variant="price4"
           >
-            ${Number(props.item.price).toFixed(2)}
+            {Number(props.item?.metadata?.price).toLocaleString("en-US") +
+              " " +
+              props.item?.metadata?.currency.toUpperCase()}
           </Typography>
         ) : (
           <></>
@@ -113,7 +105,7 @@ const ProductDescription = (props) => {
               <TableRow>
                 <TableCell sx={{ color: "#6C7275" }}>CATEGORY</TableCell>
                 <TableCell sx={{ color: "#141718" }}>
-                  {props.item.category}
+                  {props.item?.metadata?.category}
                 </TableCell>
               </TableRow>
             </TableBody>
@@ -128,14 +120,13 @@ const ProductDescription = (props) => {
           </Typography>
         ) : (
           <Typography variant="price4" sx={{ fontWeight: "normal" }} m="5px">
-            {props.item.description
-              ? props.item.description.length > 125
-                ? `${props.item.description.slice(0, 125)}...`
-                : props.item.description
-              : "No description"}
+            {props.item?.description?.length > 125
+              ? `${props.item?.description.slice(0, 125)}...`
+              : props.item?.description ||
+                "This product does not have description"}
           </Typography>
         )}
-        {props.item.description && props.item.description.length > 125 && (
+        {props.item?.description?.length > 125 && (
           <Button onClick={toggleExpanded} color="primary">
             {expanded ? "Show Less" : "Show More"}
           </Button>
@@ -143,7 +134,7 @@ const ProductDescription = (props) => {
         <Typography variant="description" m="5px">
           Similar Product:
         </Typography>
-        <SimilarProducts list={products} block={3} />
+        {/* <SimilarProducts list={products.items} block={3} /> */}
       </Stack>
     </Box>
   );

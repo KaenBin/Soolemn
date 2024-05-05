@@ -58,61 +58,65 @@ function* productSaga({ type, payload }) {
       }
       break;
 
-    // case ADD_PRODUCT: {
-    //   try {
-    //     yield initRequest();
+    case ADD_PRODUCT: {
+      try {
+        yield initRequest();
+        yield put(setLoading(true));
+        const newProduct = yield call(apiInstance.addProduct, payload);
+        console.log(newProduct);
+        yield put(addProductSuccess(newProduct));
 
-    //     const { imageCollection } = payload;
-    //     const key = yield call(firebase.generateKey);
-    //     const downloadURL = yield call(
-    //       firebase.storeImage,
-    //       key,
-    //       "products",
-    //       payload.image
-    //     );
-    //     const image = { id: key, url: downloadURL };
-    //     let images = [];
+        // const { imageCollection } = payload;
+        // const key = yield call(firebase.generateKey);
+        // const downloadURL = yield call(
+        //   apiInstance.storeImage,
+        //   key,
+        //   "products",
+        //   payload.image
+        // );
+        // const image = { id: key, url: downloadURL };
+        // let images = [];
 
-    //     if (imageCollection.length !== 0) {
-    //       const imageKeys = yield all(
-    //         imageCollection.map(() => firebase.generateKey)
-    //       );
-    //       const imageUrls = yield all(
-    //         imageCollection.map((img, i) =>
-    //           firebase.storeImage(imageKeys[i](), "products", img.file)
-    //         )
-    //       );
-    //       images = imageUrls.map((url, i) => ({
-    //         id: imageKeys[i](),
-    //         url,
-    //       }));
-    //     }
+        // if (imageCollection.length !== 0) {
+        //   const imageKeys = yield all(
+        //     imageCollection.map(() => firebase.generateKey)
+        //   );
+        //   const imageUrls = yield all(
+        //     imageCollection.map((img, i) =>
+        //       firebase.storeImage(imageKeys[i](), "products", img.file)
+        //     )
+        //   );
+        //   images = imageUrls.map((url, i) => ({
+        //     id: imageKeys[i](),
+        //     url,
+        //   }));
+        // }
 
-    //     const product = {
-    //       ...payload,
-    //       image: downloadURL,
-    //       imageCollection: [image, ...images],
-    //     };
+        //   const product = {
+        //     ...payload,
+        //     image: downloadURL,
+        //     imageCollection: [image, ...images],
+        //   };
 
-    //     yield call(firebase.addProduct, key, product);
-    //     yield put(
-    //       addProductSuccess({
-    //         id: key,
-    //         ...product,
-    //       })
-    //     );
-    //     yield handleAction(ADMIN_PRODUCTS, "Item succesfully added", "success");
-    //     yield put(setLoading(false));
-    //   } catch (e) {
-    //     yield handleError(e);
-    //     yield handleAction(
-    //       undefined,
-    //       `Item failed to add: ${e?.message}`,
-    //       "error"
-    //     );
-    //   }
-    //   break;
-    // }
+        //   yield call(firebase.addProduct, key, product);
+        //   yield put(
+        //     addProductSuccess({
+        //       id: key,
+        //       ...product,
+        //     })
+        //   );
+        //   yield handleAction(ADMIN_PRODUCTS, "Item succesfully added", "success");
+        yield put(setLoading(false));
+      } catch (e) {
+        yield handleError(e);
+        // yield handleAction(
+        //   undefined,
+        //   `Item failed to add: ${e?.message}`,
+        //   "error"
+        // );
+      }
+      break;
+    }
     // case EDIT_PRODUCT: {
     //   try {
     //     yield initRequest();

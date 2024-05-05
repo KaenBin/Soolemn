@@ -1,4 +1,4 @@
-const firebase = require("./firebase/index");
+const firebase = require("./services/configuration");
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");

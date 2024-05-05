@@ -23,19 +23,6 @@ export default function ProductDetail(props) {
   const dispatch = useDispatch();
   const { id } = useParams();
   const [product, setProduct] = useState({});
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const products = await apiInstance.getProducts();
-        setProducts(products);
-      } catch (error) {
-        console.error("Error occurred:", error);
-      }
-    };
-    fetchProducts();
-  }, []);
 
   const breadcrumbs = [
     <NavLink
@@ -47,7 +34,7 @@ export default function ProductDetail(props) {
       Products
     </NavLink>,
     <Typography key="2" variant="subBreadCumbs">
-      Category{" "}
+      Category
     </Typography>,
     <Typography key="3" variant="breadCumbs">
       Product Detail
@@ -58,6 +45,7 @@ export default function ProductDetail(props) {
     apiInstance
       .getProduct(id)
       .then((product) => {
+        console.log(product);
         setProduct(product);
       })
       .catch((error) => {
@@ -91,7 +79,7 @@ export default function ProductDetail(props) {
             <ProductDescription item={product} />
           </Grid>
           <Grid>
-            <ProductInfo item={product} />
+            <ProductInfo item={{ ...product, id }} />
           </Grid>
         </Grid>
       </div>

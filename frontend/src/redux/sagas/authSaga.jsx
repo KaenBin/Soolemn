@@ -43,18 +43,24 @@ function* handleError(e) {
       yield put(
         setAuthStatus({
           ...obj,
-          message: "Email is already in use. Please use another email",
+          message: "Email is already in use.",
         })
       );
       break;
     case "auth/wrong-password":
-      yield put(
-        setAuthStatus({ ...obj, message: "Incorrect email or password" })
-      );
+      yield put(setAuthStatus({ ...obj, message: "Incorrect password." }));
       break;
     case "auth/user-not-found":
       yield put(
-        setAuthStatus({ ...obj, message: "Incorrect email or password" })
+        setAuthStatus({
+          ...obj,
+          message: "User not found. Incorrect email or password.",
+        })
+      );
+      break;
+    case "auth/invalid-credentials":
+      yield put(
+        setAuthStatus({ ...obj, message: "Incorrect email or password." })
       );
       break;
     case "auth/reset-password-error":
@@ -155,7 +161,7 @@ function* authSaga({ type, payload }) {
     // }
     case ON_AUTHSTATE_SUCCESS: {
       yield initRequest();
-      const user = yield call(apiInstance.getUser, payload.email);
+      const user = yield call(apiInstance.getUser, payload.uid);
       yield put(setProfile(user));
       yield put(setInitialLoad(user.cart));
       yield put(getProducts());
